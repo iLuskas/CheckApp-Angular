@@ -1,0 +1,36 @@
+.header{
+    display: flex;
+    align-items: center;
+    
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(124, 122, 122);
+}
+
+.header .logo {
+    max-height: 32px;
+}
+
+.header .title-group {
+    display: flex;
+    padding-left: 10px;
+}
+
+.header .title-group i {
+    padding-right: 5px;
+    margin-left: 5px;
+}
+
+.btnLogout_span {
+    display: inline-block;
+    margin-left: auto;
+}
+
+.lblSair {
+    font-size: 0.8em;
+    opacity: 0.5;
+}

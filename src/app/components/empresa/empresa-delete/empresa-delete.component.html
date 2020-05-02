@@ -1,0 +1,186 @@
+<div class="empresa-form">
+  <mat-card>
+    <mat-card-title>Editar Empresa</mat-card-title>
+
+    <form [formGroup]="formDelete">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Nome"
+          name="nome"
+          formControlName="razaoSocial"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="CNPJ"
+          name="price"
+          formControlName="cnpj"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Incrição Estadual"
+          name="inscricao_estadual"
+          formControlName="inscricao_estadual"
+        />
+      </mat-form-field>
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelEndOpenState = true"
+          (closed)="panelEndOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i
+                class="material-icons v-middle visibility_icon"
+                matTooltip="Editar"
+              >
+                {{ panelEndOpenState ? "visibility_off" : "visibility" }}
+              </i>
+              <span class="panel-title">Endereços</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              Contém Informações de endereços da empresa.
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div formArrayName="enderecoDTOs">
+            <div *ngFor="let endereco of enderecoDTOsArray; let i = index">
+              <div [formGroupName]="i">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="País"
+                    name="cidade_end"
+                    formControlName="pais_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Cidade"
+                    name="cidade_end"
+                    formControlName="cidade_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Estado"
+                    name="estado_end"
+                    formControlName="estado_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Bairro"
+                    name="bairro_end"
+                    formControlName="bairro_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Rua"
+                    name="rua_end"
+                    formControlName="rua_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Número"
+                    name="numero_end"
+                    formControlName="numero_end"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="CEP"
+                    name="cep_end"
+                    formControlName="cep_end"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel
+          class="panel-telefone"
+          (opened)="panelTelOpenState = true"
+          (closed)="panelTelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i
+                class="material-icons v-middle visibility_icon"
+                matTooltip="Editar"
+              >
+                {{ panelTelOpenState ? "visibility_off" : "visibility" }}
+              </i>
+              <span class="panel-title">Telefones</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              Contém Informações de telefones da empresa.
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div formArrayName="telefoneDTOs">
+            <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
+              <div [formGroupName]="i">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="DDD"
+                    name="ddd_tel"
+                    formControlName="ddd_tel"
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Telefone"
+                    name="telefone_tel"
+                    formControlName="telefone_tel"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+
+    <button mat-raised-button (click)="deleteEmpresa()" color="warn">
+      Excluir
+    </button>
+
+    <button mat-raised-button (click)="cancelar()">
+      Cancelar
+    </button>
+  </mat-card>
+</div>
