@@ -9,7 +9,7 @@ import { map, catchError } from "rxjs/operators";
   providedIn: "root",
 })
 export class EmpresaClienteService {
-  baseURL = "http://52.67.168.149/checkapp/api/EmpresaCliente";
+  baseURL = "https://www.safetyplan.net.br/checkapp/api/EmpresaCliente";
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
