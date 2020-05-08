@@ -15,6 +15,8 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatPaginatorModule,
     MatCardModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +52,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatSnackBarModule,
     MatSortModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule
   ],
   providers: [],
 })

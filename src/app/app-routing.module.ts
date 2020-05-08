@@ -14,13 +14,14 @@ import { EmpresaCrudComponent } from './view/empresa-crud/empresa-crud.component
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
+import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: "empresas/create",
         component: EmpresaCreateComponent
+      },
+      {
+        path: "empresas/read/:id",
+        component: EmpresaReadLayoutComponent
       },
       {
         path: "empresas/update/:id",

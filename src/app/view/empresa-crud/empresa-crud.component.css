@@ -1,6 +1,9 @@
-button {
+.container-curd {
     display: flex;
-    flex-direction: column;
+    flex-wrap: row wrap;
+}
+
+button {
     margin-left: auto;
     margin-bottom: 20px;
     align-items: center;

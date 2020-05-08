@@ -3,51 +3,61 @@
     <mat-card-title>Editar Empresa</mat-card-title>
 
     <form [formGroup]="formUpdate">
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="Nome"
-          name="nome"
-          formControlName="razaoSocial"
-        />
-        <mat-error *ngIf="isFieldInvalid('razaoSocial')">
-          Por favor, Informe a razão social.
-        </mat-error>
-        <mat-error *ngIf="hasError('razaoSocial', 'maxlength')">
-          O máximo de caracteres é 255
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="CNPJ"
-          name="price"
-          formControlName="cnpj"
-        />
-        <mat-error *ngIf="isFieldInvalid('cnpj')">
-          Por favor, Informe o CNPJ.
-        </mat-error>
-        <mat-error *ngIf="hasError('cnpj', 'maxlength')">
-          O máximo de caracteres é 14
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="Incrição Estadual"
-          name="inscricao_estadual"
-          formControlName="inscricao_estadual"
-        />
-        <mat-error *ngIf="isFieldInvalid('inscricao_estadual')">
-          Por favor, Informe a inscrição estadual.
-        </mat-error>
-        <mat-error *ngIf="hasError('inscricao_estadual', 'maxlength')">
-          O máximo de caracteres é 14
-        </mat-error>
-      </mat-form-field>
+      <div fxLayout="row" fxLayout.xs="column">
+        <div fxFlex="40">
+          <mat-form-field class="input-razaoSocial">
+            <input
+              matInput
+              type="text"
+              placeholder="Nome"
+              name="nome"
+              formControlName="razaoSocial"
+            />
+            <mat-error *ngIf="isFieldInvalid('razaoSocial')">
+              Por favor, Informe a razão social.
+            </mat-error>
+            <mat-error *ngIf="hasError('razaoSocial', 'maxlength')">
+              O máximo de caracteres é 255
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="CNPJ"
+              name="cnpj"
+              formControlName="cnpj"
+            />
+            <mat-error *ngIf="isFieldInvalid('cnpj')">
+              Por favor, Informe o CNPJ.
+            </mat-error>
+            <mat-error *ngIf="hasError('cnpj', 'maxlength')">
+              O máximo de caracteres é 14
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Incrição Estadual"
+              name="inscricao_estadual"
+              formControlName="inscricao_estadual"
+            />
+            <mat-error *ngIf="isFieldInvalid('inscricao_estadual')">
+              Por favor, Informe a inscrição estadual.
+            </mat-error>
+            <mat-error *ngIf="hasError('inscricao_estadual', 'maxlength')">
+              O máximo de caracteres é 14
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Inicío Accordion -->
       <mat-accordion>
         <mat-expansion-panel
           (opened)="panelEndOpenState = true"
@@ -68,15 +78,15 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <div formArrayName="enderecoDTOs">
+          <div formArrayName="enderecoDTOs" fxLayout="row wrap">
             <div *ngFor="let endereco of enderecoDTOsArray; let i = index">
-              <div [formGroupName]="i">
+              <div [formGroupName]="i" fxLayoutGap="2%">
                 <mat-form-field>
                   <input
                     matInput
                     type="text"
                     placeholder="País"
-                    name="cidade_end"
+                    name="pais_end"
                     formControlName="pais_end"
                   />
                   <mat-error *ngIf="isFieldArrayEndInvalid(i, 'pais_end')">
@@ -210,12 +220,8 @@
                     O máximo de caracteres é 8
                   </mat-error>
                 </mat-form-field>
-                <div  class="button-remove-container">
-                  <button
-                    mat-mini-fab
-                    color="warn"               
-                    (click)="removeEndereco(i)"
-                  >
+                <div class="button-remove-container">
+                  <button mat-mini-fab color="warn" (click)="removeEndereco(i)">
                     <i class="material-icons" matTooltip="Remover">
                       remove
                     </i>
@@ -255,10 +261,10 @@
               Contém Informações de telefones da empresa.
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div formArrayName="telefoneDTOs">
+          <div formArrayName="telefoneDTOs" fxLayout="row wrap">
             <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
-              <div [formGroupName]="i">
-                <mat-form-field>
+              <div [formGroupName]="i" fxLayoutGap="3%">
+                <mat-form-field fxFlex="20" class="container-input-field">
                   <input
                     matInput
                     type="text"
@@ -269,12 +275,16 @@
                   <mat-error *ngIf="isFieldArrayTelInvalid(i, 'ddd_tel')">
                     Por favor, Informe o DDD.
                   </mat-error>
-                  <mat-error *ngIf="hasErrorArray(i, 'ddd_tel', 'maxlength', true, false)">
+                  <mat-error
+                    *ngIf="
+                      hasErrorArray(i, 'ddd_tel', 'maxlength', true, false)
+                    "
+                  >
                     O máximo de caracteres é 3
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field class="container-input-field"> 
                   <input
                     matInput
                     type="text"
@@ -286,7 +296,9 @@
                     Por favor, Informe o Telefone.
                   </mat-error>
                   <mat-error
-                    *ngIf="hasErrorArray(i, 'telefone_tel', 'maxlength', true, false)"
+                    *ngIf="
+                      hasErrorArray(i, 'telefone_tel', 'maxlength', true, false)
+                    "
                   >
                     O máximo de caracteres é 9
                   </mat-error>
@@ -314,6 +326,7 @@
           </button>
         </mat-expansion-panel>
       </mat-accordion>
+      <!-- Fim Accordion -->
     </form>
 
     <button

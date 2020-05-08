@@ -2,8 +2,13 @@ table {
     width: 100%;
 }
 
+
 .edit {
-    margin-right: 10px;
+    margin: 0 10px 0 10px;
+}
+
+.read > i{
+    color: #3F51B5;
 }
 
 .edit > i{
@@ -13,3 +18,69 @@ table {
 .delete > i{
     color: #e35e6b;
 }
+
+.content {
+    margin-bottom: 10px;
+}
+
+.button-add-empresa {
+    margin-left: auto;
+}
+
+.button-add-empresa > button {
+    margin-top: 13px;
+}
+
+.input-filtrar {
+    font-size: 1em;
+}
+
+.box-pesquisa:hover > .input-pesquisar-txt{
+    width: 240px;
+    padding: 0 6px;
+  }
+
+  .box-pesquisa:focus > .input-pesquisar-txt{
+    width: 240px;
+    padding: 0 6px;
+  }
+
+.box-pesquisa {
+    position: absolute;
+    transform: translate(0%, -100%);
+    background-color: #ddd;
+    margin-top: 50px;
+    left: 1%;
+    height: 20px;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.btnPesquisar {
+    color: black;
+    float: right;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .input-pesquisar-txt {
+    border: none;
+    background: none;
+    outline:  none;
+    float: left;
+    padding: 0;
+    color: black;
+    font-size: 1em;
+    transition: 0.4s;
+    line-height: 20px;
+    width: 0px;
+  }
+
+
+
+

@@ -31,6 +31,7 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
+import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
 
 registerLocaleData(localePt);
 
@@ -53,7 +54,8 @@ registerLocaleData(localePt);
     EmpresaReadComponent,
     EmpresaUpdateComponent,
     EmpresaCreateComponent,
-    EmpresaDeleteComponent
+    EmpresaDeleteComponent,
+    EmpresaReadLayoutComponent
   ],
   imports: [
     BrowserModule,

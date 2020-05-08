@@ -2,6 +2,12 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* para fins de testes*/
+.border {
+    border: 1px solid red;;
+}
+/* para fins de testes*/
+
 .green {
     color: #28a745;
 }

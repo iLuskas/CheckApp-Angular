@@ -1,35 +1,45 @@
 <div class="empresa-form">
   <mat-card>
-    <mat-card-title>Editar Empresa</mat-card-title>
-
+    <mat-card-title>Excluir Empresa</mat-card-title>
     <form [formGroup]="formDelete">
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="Nome"
-          name="nome"
-          formControlName="razaoSocial"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="CNPJ"
-          name="price"
-          formControlName="cnpj"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          placeholder="Incrição Estadual"
-          name="inscricao_estadual"
-          formControlName="inscricao_estadual"
-        />
-      </mat-form-field>
+      <div fxLayout="row" fxLayout.xs="column">
+        <div fxFlex="40">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Nome"
+              name="nome"
+              class="input-razaoSocial"
+              formControlName="razaoSocial"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="CNPJ"
+              name="price"
+              formControlName="cnpj"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Incrição Estadual"
+              name="inscricao_estadual"
+              formControlName="inscricao_estadual"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Inicío Accordion -->
       <mat-accordion>
         <mat-expansion-panel
           (opened)="panelEndOpenState = true"
@@ -50,9 +60,9 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <div formArrayName="enderecoDTOs">
+          <div formArrayName="enderecoDTOs" fxLayout="row wrap">
             <div *ngFor="let endereco of enderecoDTOsArray; let i = index">
-              <div [formGroupName]="i">
+              <div [formGroupName]="i" fxLayoutGap="2%">
                 <mat-form-field>
                   <input
                     matInput
@@ -146,10 +156,10 @@
               Contém Informações de telefones da empresa.
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div formArrayName="telefoneDTOs">
+          <div formArrayName="telefoneDTOs" fxLayout="row wrap">
             <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
-              <div [formGroupName]="i">
-                <mat-form-field>
+              <div [formGroupName]="i" fxLayoutGap="2%">
+                <mat-form-field fxFlex="20">
                   <input
                     matInput
                     type="text"
@@ -173,6 +183,7 @@
           </div>
         </mat-expansion-panel>
       </mat-accordion>
+      <!-- Fim Accordion -->
     </form>
 
     <button mat-raised-button (click)="deleteEmpresa()" color="warn">

@@ -26,8 +26,4 @@ export class EmpresaCrudComponent implements OnInit {
   ngAfterViewInit() {
     this.cdref.detectChanges();
   }
-
-  navigateToCreate() {
-    this.router.navigate(['/empresas/create']);
-  }
 }
