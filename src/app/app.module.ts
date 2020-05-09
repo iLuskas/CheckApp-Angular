@@ -32,6 +32,12 @@ import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empr
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 registerLocaleData(localePt);
 
@@ -55,7 +61,7 @@ registerLocaleData(localePt);
     EmpresaUpdateComponent,
     EmpresaCreateComponent,
     EmpresaDeleteComponent,
-    EmpresaReadLayoutComponent
+    EmpresaReadLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,13 @@ registerLocaleData(localePt);
     FormsModule,  
     AngularMaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule  
+    ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule  
   ],
   providers: [{
     provide: LOCALE_ID,

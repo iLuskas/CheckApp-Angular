@@ -1,8 +1,8 @@
 <mat-toolbar class="header mat-elevation-z4 app-header">
-  <span class="title-group">
-   <a routerLink="/home">
-    <img class="logo" src="assets/img/checkApp.png" alt="logo">
-   </a>
+  <span class="title-group" fxShow.xs="false" fxShow="true">
+    <a routerLink="/home">
+      <img class="logo" src="assets/img/checkApp.png" alt="logo" />
+    </a>
   </span>
   <span class="title-group">
     <a routerLink="{{ routerUrl }}">
@@ -12,7 +12,8 @@
       {{ title }}
     </a>
   </span>
-  <span class="nav-tool-items btnLogout_span">
+  <span class="spacer-flex-right-left"></span>
+  <div fxShow.xs="false" fxShow="true" class="container-Logout_">
     <span class="lblSair">Sair</span>
     <button
       mat-icon-button
@@ -25,5 +26,5 @@
         exit_to_app
       </i>
     </button>
-  </span>
+  </div>
 </mat-toolbar>

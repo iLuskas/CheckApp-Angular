@@ -1,51 +1,99 @@
-<mat-sidenav-container class="container">
+<!--header início-->
+<mat-toolbar class="header mat-elevation-z4 app-header">
+  <span class="title-group" fxShow.xs="false" fxShow="true">
+    <a routerLink="/home">
+      <img class="logo" src="assets/img/checkApp.png" alt="logo" />
+    </a>
+  </span>
+  <div class="container-btn-toglles-sidenav" fxShow.gt-xs="false" fxShow="true">
+    <a
+      type="button"
+      aria-label="sidenav menu"
+      class="btn-toglle-sidebar material-icons"
+      (click)="drawer.toggle()"
+    >
+      {{ isOpened ? "close" : "menu" }}
+    </a>
+  </div>
+  <span class="title-group">
+    <a routerLink="{{ routerUrl }}">
+      <i class="material-icons">
+        {{ icone }}
+      </i>
+      {{ title }}
+    </a>
+  </span>
+  <span class="spacer-flex-right-left"></span>
+  <div fxShow.gt-xs="false" fxShow="true" class="container-Logout_">
+    <span class="lblSair">Sair</span>
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="button para sair"
+      class="btnLogout"
+      (click)="onLogout()"
+    >
+      <i class="material-icons" matTooltip="Sair">
+        exit_to_app
+      </i>
+    </button>
+  </div>
+</mat-toolbar>
+<!--header fim-->
+
+<!--sidenav início-->
+<mat-sidenav-container
+  class="container-sidenav"
+  [hasBackdrop]="'false'"
+  fxLayout="column"
+>
   <mat-sidenav
     class="sidenav"
     mode="side"
-    opened
-    fixedInViewport="true"
-    fixedTopGap="64"
+    #drawer
+    fixedInViewport
+    fixedTopGap="58"
+    [attr.role]="(isHandSet$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandSet$ | async) ? 'push' : 'side'"
+    [opened]="(isHandSet$ | async) === false"
+    (opened)="sidebarOpen()"
+    (closed)="sidebarClose()"
   >
-    <mat-nav-list class="nav-list left hide-on-med-and-down">
-      <a mat-list-item routerLink="/home">
-        <i class="material-icons">
-          home
-        </i>
-        Inicio
-      </a>
-      <a mat-list-item routerLink="/empresas">
-        <i class="material-icons">
-          business
-        </i>
-        Empresas
-      </a>
-      <a mat-list-item routerLink="/products">
-        <i class="material-icons">
-          account_circle
-        </i>
-        Usuários
-      </a>
-      <a mat-list-item routerLink="/perfils">
-        <i class="material-icons">
-          portrait
-        </i>
-        Perfil
-      </a>
-      <a mat-list-item routerLink="/equipamentos">
-        <i class="material-icons">
-          whatshot
-        </i>
-        Equipamentos
-      </a>
-      <a mat-list-item routerLink="/relatorios">
-        <i class="material-icons">
-          bar_chart
-        </i>
-        Relatórios
-      </a>
-    </mat-nav-list>
+    <div fxLayout="column">
+      <div>
+        <mat-nav-list class="nav-list left hide-on-med-and-down">
+          <a
+            mat-list-item
+            *ngFor="let navItem of navItens"
+            routerLink="{{ navItem.link }}"
+          >
+            <i class="material-icons">
+              {{ navItem.icon }}
+            </i>
+            {{ navItem.nameItem }}
+          </a>
+        </mat-nav-list>
+      </div>
+      <div class="container-Logout" [fxShow]="(isHandSet$ | async) === true">
+        <div fxShow.xs="false" fxShow="true" class="container-Logout_">
+          <span class="lblSair">Sair</span>
+          <button
+            mat-icon-button
+            color="primary"
+            aria-label="button para sair"
+            class="btnLogout"
+            (click)="onLogout()"
+          >
+            <i class="material-icons" matTooltip="Sair">
+              exit_to_app
+            </i>
+          </button>
+        </div>
+      </div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<!--sidenav fim-->

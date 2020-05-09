@@ -4,7 +4,7 @@
     <form [formGroup]="formDelete">
       <div fxLayout="row" fxLayout.xs="column">
         <div fxFlex="40">
-          <mat-form-field>
+          <mat-form-field [ngStyle.xs]="{'width': '300px'}">
             <input
               matInput
               type="text"
@@ -55,7 +55,7 @@
               </i>
               <span class="panel-title">Endereços</span>
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description fxShow.xs="false" fxShow="true">
               Contém Informações de endereços da empresa.
             </mat-panel-description>
           </mat-expansion-panel-header>
@@ -152,7 +152,7 @@
               </i>
               <span class="panel-title">Telefones</span>
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description fxShow.xs="false" fxShow="true">
               Contém Informações de telefones da empresa.
             </mat-panel-description>
           </mat-expansion-panel-header>

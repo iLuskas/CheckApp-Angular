@@ -1,7 +1,6 @@
 .header{
     display: flex;
-    align-items: center;
-    
+    align-items: center;    
 }
 
 .header a {
@@ -9,6 +8,7 @@
     align-items: center;
     text-decoration: none;
     color: rgb(124, 122, 122);
+    width: 100%;
 }
 
 .header .logo {
@@ -25,9 +25,14 @@
     margin-left: 5px;
 }
 
-.btnLogout_span {
-    display: inline-block;
-    margin-left: auto;
+.container-Logout_ {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btnLogout {
+    color: #3F51B5;
 }
 
 .lblSair {

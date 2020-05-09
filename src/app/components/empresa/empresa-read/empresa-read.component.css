@@ -23,10 +23,6 @@ table {
     margin-bottom: 10px;
 }
 
-.button-add-empresa {
-    margin-left: auto;
-}
-
 .button-add-empresa > button {
     margin-top: 13px;
 }
@@ -37,13 +33,8 @@ table {
 
 .box-pesquisa:hover > .input-pesquisar-txt{
     width: 240px;
-    padding: 0 6px;
-  }
-
-  .box-pesquisa:focus > .input-pesquisar-txt{
-    width: 240px;
-    padding: 0 6px;
-  }
+    padding: 0;
+}
 
 .box-pesquisa {
     position: absolute;
@@ -51,8 +42,8 @@ table {
     background-color: #ddd;
     margin-top: 50px;
     left: 1%;
-    height: 20px;
-    border-radius: 40px;
+    height:20px;
+    border-radius: 20px;
     padding: 10px;
 }
 
@@ -66,6 +57,7 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .input-pesquisar-txt {

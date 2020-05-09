@@ -29,3 +29,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #e35e6b;
     color: #fff;
 }
+
+.spacer-flex-right-left {
+    flex: 1 1 auto;
+}

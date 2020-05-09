@@ -10,7 +10,6 @@ import { Observable } from "rxjs";
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
-
   constructor(
     private headerService: HeaderService,
     private authService: AuthService
