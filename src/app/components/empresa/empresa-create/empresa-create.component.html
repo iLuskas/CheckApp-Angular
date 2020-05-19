@@ -36,6 +36,9 @@
             <mat-error *ngIf="hasError('cnpj', 'maxlength')">
               O máximo de caracteres é 14
             </mat-error>
+            <mat-error *ngIf="hasError('cnpj', 'pattern')">
+              Somente números
+            </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex>
@@ -52,6 +55,9 @@
             </mat-error>
             <mat-error *ngIf="hasError('inscricao_estadual', 'maxlength')">
               O máximo de caracteres é 14
+            </mat-error>
+            <mat-error *ngIf="hasError('inscricao_estadual', 'pattern')">
+              Somente números
             </mat-error>
           </mat-form-field>
         </div>
@@ -86,7 +92,7 @@
                     matInput
                     type="text"
                     placeholder="País"
-                    name="cidade_end"
+                    name="pais_end"
                     formControlName="pais_end"
                   />
                   <mat-error *ngIf="isFieldArrayEndInvalid(i, 'pais_end')">
@@ -282,6 +288,11 @@
                   <mat-error *ngIf="hasErrorArray(i, 'ddd_tel', 'maxlength', true, false)">
                     O máximo de caracteres é 3
                   </mat-error>
+                  <mat-error
+                  *ngIf="hasErrorArray(i, 'ddd_tel', 'pattern', true, false)"
+                >
+                  Somente números
+                </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="container-input-field">
@@ -300,6 +311,11 @@
                   >
                     O máximo de caracteres é 9
                   </mat-error>
+                  <mat-error
+                  *ngIf="hasErrorArray(i, 'telefone_tel', 'pattern', true, false)"
+                >
+                  Somente números
+                </mat-error>
                 </mat-form-field>
                 <div class="button-remove-container">
                   <button mat-mini-fab color="warn" (click)="removeTelefone(i)">

@@ -1,0 +1,83 @@
+<div class="perfil-form" [ngStyle.xs]="{ width: '100%' }" [ngStyle.sm]="{ width: '100%' }">
+    <mat-card>
+      <mat-card-title>Adicionar Usuário</mat-card-title>
+  
+      <form [formGroup]="formCreate">
+        <div fxLayout="column">
+          <div>
+            <mat-form-field
+              class="input-login"
+            >
+              <input
+                matInput
+                type="text"
+                placeholder="Usuário"
+                name="login"
+                formControlName="login"
+              />
+              <mat-error *ngIf="isFieldInvalid('login')">
+                Por favor, Informe o Login.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field
+              class="input-senha"
+            >
+              <input
+                matInput
+                type="password"
+                placeholder="Senha"
+                name="senha"
+                formControlName="senha"
+              />
+              <mat-error *ngIf="isFieldInvalid('senha')">
+                Por favor, Informe o senha.
+              </mat-error>
+              <mat-error *ngIf="hasError('senha', 'maxlength')">
+                O máximo de caracteres é 30
+              </mat-error>
+              <mat-error *ngIf="hasError('senha', 'minlength')">
+                O mínimo de caracteres é 6
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field
+              class="input-senha"
+            >
+              <input
+                matInput
+                type="password"
+                placeholder="Confirmar Senha"
+                name="confirmSenha"
+                formControlName="confirmSenha"
+              />
+              <mat-error *ngIf="isFieldInvalid('confirmSenha')">
+                Por favor, Informe o senha novamente.
+              </mat-error>
+              <mat-error *ngIf="hasError('confirmSenha', 'maxlength')">
+                O máximo de caracteres é 30
+              </mat-error>
+              <mat-error *ngIf="hasError('confirmSenha', 'minlength')">
+                O mínimo de caracteres é 6
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+      <button
+        mat-raised-button
+        [disabled]="!formCreate.valid"
+        (click)="createUsuario()"
+        color="primary"
+      >
+        Salvar
+      </button>
+  
+      <button mat-raised-button (click)="cancelar()">
+        Cancelar
+      </button>
+    </mat-card>
+  </div>
+  

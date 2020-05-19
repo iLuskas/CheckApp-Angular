@@ -1,0 +1,78 @@
+table {
+    width: 100%;
+}
+
+
+.edit {
+    margin: 0 10px 0 10px;
+}
+
+.read > i{
+    color: #3F51B5;
+}
+
+.edit > i{
+    color: #d9cd36;
+}
+
+.delete > i{
+    color: #e35e6b;
+}
+
+.content {
+    margin-bottom: 10px;
+}
+
+.button-add-perfil > button {
+    margin-top: 13px;
+}
+
+.input-filtrar {
+    font-size: 1em;
+}
+
+.box-pesquisa:hover > .input-pesquisar-txt{
+    width: 240px;
+    padding: 0;
+}
+
+.box-pesquisa {
+    position: absolute;
+    transform: translate(0%, -100%);
+    background-color: #ddd;
+    margin-top: 50px;
+    left: 1%;
+    height:20px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.btnPesquisar {
+    color: black;
+    float: right;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .input-pesquisar-txt {
+    border: none;
+    background: none;
+    outline:  none;
+    float: left;
+    padding: 0;
+    color: black;
+    font-size: 1em;
+    transition: 0.4s;
+    line-height: 20px;
+    width: 0px;
+  }
+
+
+
+

@@ -16,7 +16,6 @@ export class EmpresaDeleteComponent implements OnInit {
   empresa: EmpresaClienteDTO;
   telefones: FormArray;
   enderecos: FormArray;
-  private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
     return (<FormArray>this.formDelete.get("enderecoDTOs")).controls;

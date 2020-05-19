@@ -17,7 +17,8 @@ export class EmpresaReadComponent implements OnInit {
   displayedColumns = ['id', 'razaoSocial', 'cnpj', 'inscricao_estadual', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
-  constructor(private empresaService: EmpresaClienteService,
+  constructor(
+    private empresaService: EmpresaClienteService,
     private router: Router) { }
 
   get filtroLista() {

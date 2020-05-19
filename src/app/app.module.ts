@@ -7,20 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/template/header/header.component';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { NavComponent } from './components/template/nav/nav.component';
-import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { HttpClientModule } from  '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ProductReadComponent } from './components/product/product-read/product-read.component';
-
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from  '@angular/common';
 
-import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
-import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
 import { HomeComponent } from './view/home/home.component';
-import { ProductCrudComponent } from './view/product-crud/product-crud.component';
 import { LoginComponent } from './view/login/login.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -38,6 +32,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { PerfilCrudComponent } from './view/perfil-crud/perfil-crud.component';
+import { PerfilReadComponent } from './components/perfil/perfil-read/perfil-read.component';
+import { PerfilCreateComponent } from './components/perfil/perfil-create/perfil-create.component';
+import { PerfilUpdateComponent } from './components/perfil/perfil-update/perfil-update.component';
+import { PerfilDeleteComponent } from './components/perfil/perfil-delete/perfil-delete.component';
+import { FuncionarioCrudComponent } from './view/funcionario-crud/funcionario-crud.component';
+import { FuncionarioReadComponent } from './components/funcionario/funcionario-read/funcionario-read.component';
+import { FuncionarioCreateComponent } from './components/funcionario/funcionario-create/funcionario-create.component';
+import { FuncionarioUpdateComponent } from './components/funcionario/funcionario-update/funcionario-update.component';
+import { FuncionarioDeleteComponent } from './components/funcionario/funcionario-delete/funcionario-delete.component';
+import { PerfilReadLayoutComponent } from './layouts/perfil-read-layout/perfil-read-layout.component';
+import { FuncionarioReadLayoutComponent } from './layouts/funcionario-read-layout/funcionario-read-layout.component';
+import { UsuarioCrudComponent } from './view/usuario-crud/usuario-crud.component';
+import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-read.component';
+import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
+import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
+import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
+import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuario-read-layout.component';
 
 registerLocaleData(localePt);
 
@@ -48,11 +60,6 @@ registerLocaleData(localePt);
     FooterComponent,
     NavComponent,
     HomeComponent,
-    ProductCrudComponent,
-    ProductCreateComponent,
-    ProductReadComponent,    
-    ProductUpdateComponent,
-    ProductDeleteComponent,
     LoginComponent,
     LoginLayoutComponent,
     HomeLayoutComponent,
@@ -62,6 +69,24 @@ registerLocaleData(localePt);
     EmpresaCreateComponent,
     EmpresaDeleteComponent,
     EmpresaReadLayoutComponent,
+    PerfilCrudComponent,
+    PerfilReadComponent,
+    PerfilCreateComponent,
+    PerfilUpdateComponent,
+    PerfilDeleteComponent,
+    FuncionarioCrudComponent,
+    FuncionarioReadComponent,
+    FuncionarioCreateComponent,
+    FuncionarioUpdateComponent,
+    FuncionarioDeleteComponent,
+    PerfilReadLayoutComponent,
+    FuncionarioReadLayoutComponent,
+    UsuarioCrudComponent,
+    UsuarioReadComponent,
+    UsuarioCreateComponent,
+    UsuarioUpdateComponent,
+    UsuarioDeleteComponent,
+    UsuarioReadLayoutComponent,
   ],
   imports: [
     BrowserModule,

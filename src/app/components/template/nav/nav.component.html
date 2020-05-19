@@ -62,16 +62,15 @@
     <div fxLayout="column">
       <div>
         <mat-nav-list class="nav-list left hide-on-med-and-down">
-          <a
-            mat-list-item
-            *ngFor="let navItem of navItens"
-            routerLink="{{ navItem.link }}"
-          >
-            <i class="material-icons">
-              {{ navItem.icon }}
-            </i>
-            {{ navItem.nameItem }}
-          </a>
+          <div *ngFor="let navItem of navItens">
+            <a mat-list-item 
+            routerLink="{{ navItem.link }}">
+              <i class="material-icons">
+                {{ navItem.icon }}
+              </i>
+              {{ navItem.nameMenu }}
+            </a>
+          </div>
         </mat-nav-list>
       </div>
       <div class="container-Logout" [fxShow]="(isHandSet$ | async) === true">
@@ -91,6 +90,7 @@
         </div>
       </div>
     </div>
+    
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <router-outlet></router-outlet>

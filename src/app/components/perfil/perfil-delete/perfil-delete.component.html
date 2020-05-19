@@ -1,0 +1,35 @@
+<div class="perfil-form" [ngStyle.xs]="{ width: '100%' }" [ngStyle.sm]="{ width: '100%' }">
+    <mat-card>
+      <mat-card-title>Editar Perfil</mat-card-title>
+  
+      <form [formGroup]="formDelete">
+        <div fxLayout="row" fxLayout.xs="column">
+          <div fxFlex="40">
+            <mat-form-field
+              class="input-funcao"
+            >
+              <input
+                matInput
+                type="text"
+                placeholder="Perfil"
+                name="perfil"
+                formControlName="funcao_perfil"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+      <button
+        mat-raised-button
+        [disabled]="!formDelete.valid"
+        (click)="deletePerfil()"
+        color="warn"
+      >
+        Excluir
+      </button>
+  
+      <button mat-raised-button (click)="cancelar()">
+        Cancelar
+      </button>
+    </mat-card>
+  </div>

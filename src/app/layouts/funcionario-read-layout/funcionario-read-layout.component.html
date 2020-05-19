@@ -1,0 +1,273 @@
+<div class="empresa-form">
+    <mat-card>
+      <mat-card-title>Editar Funcionário(a)</mat-card-title>
+  
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step
+          [stepControl]="formRead"
+          errorMessage="Informações incompletas."
+        >
+          <form [formGroup]="formRead">
+            <ng-template matStepLabel>Info. do Funcionário(a)</ng-template>
+  
+            <div fxLayout="row" fxLayout.sm="column">
+              <div fxFlex="40">
+                <mat-form-field
+                  class="input-nome"
+                  [ngStyle.xs]="{ width: '300px' }"
+                >
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Nome"
+                    name="nome"
+                    formControlName="nome"
+                  />
+                </mat-form-field>
+              </div>
+              <div fxFlex="30">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="CPF"
+                    name="cpf"
+                    formControlName="cpf"
+                  />
+                </mat-form-field>
+              </div>
+              <div fxFlex>
+                <mat-form-field class="input-email">
+                  <input
+                    matInput
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    formControlName="email"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+  
+            <!-- Inicío Accordion -->
+            <mat-accordion>
+              <mat-expansion-panel
+                (opened)="panelEndOpenState = true"
+                (closed)="panelEndOpenState = false"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <i
+                      class="material-icons v-middle visibility_icon"
+                      matTooltip="Editar"
+                    >
+                      {{ panelEndOpenState ? "visibility_off" : "visibility" }}
+                    </i>
+                    <span class="panel-title">Endereços</span>
+                  </mat-panel-title>
+                  <mat-panel-description fxShow.xs="false" fxShow="true">
+                    Contém Informações de endereços do funcionário.
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+  
+                <div formArrayName="enderecoDTOs" fxLayout="row wrap">
+                  <div *ngFor="let endereco of enderecoDTOsArray; let i = index">
+                    <div
+                      [formGroupName]="i"
+                      class="arrayForm-end"
+                      fxLayoutGap="2%"
+                    >
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="País"
+                          name="pais_end"
+                          formControlName="pais_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Cidade"
+                          name="cidade_end"
+                          formControlName="cidade_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Estado"
+                          name="estado_end"
+                          formControlName="estado_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Bairro"
+                          name="bairro_end"
+                          formControlName="bairro_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Rua"
+                          name="rua_end"
+                          formControlName="rua_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Número"
+                          name="numero_end"
+                          formControlName="numero_end"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field>
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="CEP"
+                          name="cep_end"
+                          formControlName="cep_end"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+  
+              <mat-expansion-panel
+                class="panel-telefone"
+                (opened)="panelTelOpenState = true"
+                (closed)="panelTelOpenState = false"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <i
+                      class="material-icons v-middle visibility_icon"
+                      matTooltip="Editar"
+                    >
+                      {{ panelTelOpenState ? "visibility_off" : "visibility" }}
+                    </i>
+                    <span class="panel-title">Telefones</span>
+                  </mat-panel-title>
+                  <mat-panel-description fxShow.xs="false" fxShow="true">
+                    Contém Informações de telefones do funcionário.
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div formArrayName="telefoneDTOs" fxLayout="row wrap">
+                  <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
+                    <div [formGroupName]="i" fxLayoutGap="2%">
+                      <mat-form-field fxFlex="20" class="container-input-field">
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="DDD"
+                          name="ddd_tel"
+                          formControlName="ddd_tel"
+                        />
+                      </mat-form-field>
+  
+                      <mat-form-field class="container-input-field">
+                        <input
+                          matInput
+                          type="text"
+                          placeholder="Telefone"
+                          name="telefone_tel"
+                          formControlName="telefone_tel"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <!-- Fim Accordion -->
+          </form>
+          <div>
+            <button mat-raised-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step
+          [stepControl]="formGroupReadPerfil"
+          errorMessage="Perfil e obrigatório."
+        >
+          <ng-template matStepLabel>Perfil do Funcionário(a)</ng-template>
+          <div fxLayout="column">
+            <div>
+              <h4>Perfil:</h4>
+              <mat-form-field>
+                <mat-label>Selecione o Perfil</mat-label>
+                <mat-select
+                  name="perfil"
+                  [formControl]="formGroupReadPerfil"
+                  (selectionChange)="perfilSelecionado($event.value)"
+                  [value]="perfil"
+                  [disabled]="true"
+                >
+                  <mat-option *ngFor="let perfil of perfils" [value]="perfil">
+                    {{ perfil.funcao_perfil }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div></div>
+          </div>
+          <div>
+            <button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-raised-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="formGroupReadUsuario" optional>
+          <ng-template matStepLabel>Usuário do Func.</ng-template>
+          <div fxLayout="column">
+            <div>
+              <h4>Usuário:</h4>
+              <mat-form-field>
+                <mat-label>Selecione o Usuário</mat-label>
+                <mat-select
+                  name="perfil"
+                  [formControl]="formGroupReadUsuario"
+                  (selectionChange)="usuarioSelecionado($event.value)"
+                  [value]="usuario"
+                  [disabled]="true"
+                >
+                  <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
+                    {{ usuario.login }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+  
+          <div fxLayout="row">
+            <div>
+              <button mat-raised-button matStepperPrevious>Back</button>
+              <button mat-raised-button (click)="stepper.reset()">Reset</button>
+            </div>
+            <span class="spacer-flex-right-left"></span>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+
+      <button mat-raised-button (click)="cancelar()">
+        Cancelar
+      </button>
+    </mat-card>
+  </div>
+  

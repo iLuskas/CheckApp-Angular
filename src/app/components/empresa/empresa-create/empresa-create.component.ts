@@ -56,8 +56,8 @@ export class EmpresaCreateComponent implements OnInit {
   criaFormGroupTelefone(): FormGroup {
     return this.fb.group({
       id: [null],
-      ddd_tel: [null, Validators.compose([Validators.required, Validators.maxLength(3)])],
-      telefone_tel: [null, Validators.compose([Validators.required,Validators.maxLength(9)])],
+      ddd_tel: [null, Validators.compose([Validators.required, Validators.maxLength(3), Validators.pattern("^[0-9]*$")])],
+      telefone_tel: [null, Validators.compose([Validators.required,Validators.maxLength(9), Validators.pattern("^[0-9]*$")])],
     });
   }
 
@@ -65,8 +65,8 @@ export class EmpresaCreateComponent implements OnInit {
     this.formCreate = this.fb.group({
       id: [null],
       razaoSocial: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
-      cnpj: ["", Validators.compose([Validators.required, Validators.maxLength(14)])],
-      inscricao_estadual: ["", Validators.compose([Validators.required, Validators.maxLength(14)])],
+      cnpj: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
+      inscricao_estadual: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
       enderecoDTOs: this.fb.array([this.criaFormGroupEndereco()]),
       telefoneDTOs: this.fb.array([this.criaFormGroupTelefone()]),
     });

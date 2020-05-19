@@ -10,8 +10,7 @@ import { Router } from "@angular/router";
 export class EmpresaCrudComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
-    private cdref: ChangeDetectorRef,
-    private router: Router
+    private cdref: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

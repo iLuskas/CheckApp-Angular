@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
 import { Usuario } from '../models/Usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class UsuarioService {
   baseURL = 'https://www.safetyplan.net.br/checkapp/api/Usuario';
-
+  //baseURL = 'https://localhost:5001/api/Usuario';
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -19,7 +19,7 @@ export class UsuarioService {
       duration: 3000,
       horizontalPosition: "right",
       verticalPosition: "top",
-      panelClass: isError ? ["msg-error"] : ["msg-sucess"],
+      panelClass: isError ? ["msg-error"] : ["msg-success"],
     });
   }
 
@@ -28,7 +28,7 @@ export class UsuarioService {
     return EMPTY;
   }
 
-  getAllUsuario(token: string): Observable<Usuario[]>{
+  getAllUsuario(token: string = null): Observable<Usuario[]>{
     // const options = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export class UsuarioService {
     );
   }
 
-  getUsuarioById(id: number, token: string): Observable<Usuario[]> {
+  getUsuarioById(id: string, token: string = null): Observable<Usuario> {
     // const options = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json',
@@ -64,49 +64,48 @@ export class UsuarioService {
   }
 
 
-  postUsuario(usuario: Usuario, token: string) {
-    // const options = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + token
-    //   })
-    // };
-    return this.http.post(this.baseURL, usuario).pipe(
+  postUsuario(usuario: Usuario, token: string = null) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+      responseType: "text",
+    };
+    return this.http.post(this.baseURL, usuario, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
     );
   }
 
-  putUsuario(usuario: Usuario, token: string) {
-    // const options = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + token
-    //   })
-    // };
+  putUsuario(usuario: Usuario, token: string = null) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+      responseType: "text",
+    };
 
-    return this.http.put(this.baseURL, usuario).pipe(
+    return this.http.put(this.baseURL, usuario, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
     );
   }
 
-  deleteUsuario(usuario: Usuario, token: string) {
-    // const options = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + token
-    //   }),
-    //   body: {
-    //     id: sensor.id,
-    //     pais: sensor.pais,
-    //     regiao: sensor.regiao,
-    //     estado: sensor.estado,
-    //     valor: sensor.valor,
-    //     timeSpan: sensor.timeSpan
-    //   }
-    // };
-    return this.http.delete(`${this.baseURL}/${usuario.id}`).pipe(
+  deleteUsuario(usuario: Usuario, token: string = null) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+
+      body: {
+        id: usuario.id,
+        login: usuario.login,
+        senha: usuario.senha,
+      },
+      responseType: "text",
+    };
+      
+    return this.http.delete(this.baseURL, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
     );

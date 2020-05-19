@@ -1,0 +1,10 @@
+.container-perfil {
+    display: flex;
+    flex-wrap: row wrap;
+}
+
+button {
+    margin-left: auto;
+    margin-bottom: 20px;
+    align-items: center;
+}
