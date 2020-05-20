@@ -163,6 +163,15 @@ export class FuncionarioCreateComponent implements OnInit {
     });
   }
 
+  deleteFuncionario(): void {
+    this.funcionario = this.formCreate.value;
+    console.log(this.funcionario);
+    this.funcionarioService.deleteFuncionario(this.funcionario).subscribe(() => {
+      this.funcionarioService.showMessage("Funcionário removido com sucesso!");
+      this.router.navigate(["/funcionarios"]);
+    });
+  }
+
   getAllPerfils() {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;

@@ -490,6 +490,14 @@
             >
               Salvar
             </button>
+            <button
+            mat-raised-button
+            [disabled]="!formGroupCreatePerfil.valid"
+            (click)="deleteFuncionario()"
+            color="warn"
+          >
+            Excluir
+          </button>
           </div>
         </div>
       </mat-step>
