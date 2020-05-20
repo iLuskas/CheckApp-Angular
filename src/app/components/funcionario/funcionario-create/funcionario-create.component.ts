@@ -8,6 +8,8 @@ import { PerfilService } from "src/app/services/Perfil.service";
 import { Usuario } from "src/app/models/Usuario";
 import { UsuarioService } from "src/app/services/Usuario.service";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: "app-funcionario-create",
@@ -19,12 +21,17 @@ export class FuncionarioCreateComponent implements OnInit {
   panelTelOpenState = false;
   formCreate: FormGroup;
   funcionario: FuncionarioDTO;
+  funcionarios: FuncionarioDTO[];
   perfils: PerfilDTO[];
   usuarios: Usuario[];
+  perfil: PerfilDTO;
+  usuario: Usuario;
   formGroupCreatePerfil: FormGroup;
   formGroupcreateUsuario: FormGroup;
   telefones: FormArray;
   enderecos: FormArray;
+  UpdateOrDelete: boolean = false;
+  filteredOptions: Observable<FuncionarioDTO[]>;
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -33,6 +40,14 @@ export class FuncionarioCreateComponent implements OnInit {
 
   get telefoneDTOsArray() {
     return (<FormArray>this.formCreate.get("telefoneDTOs")).controls;
+  }
+
+  private _filter(value: string): FuncionarioDTO[] {
+    if(!value)
+      return;
+
+    const filterValue = value.toLowerCase();
+    return this.funcionarios.filter(func => func.nome.toLowerCase().indexOf(filterValue) !== -1);
   }
 
   constructor(
@@ -47,10 +62,18 @@ export class FuncionarioCreateComponent implements OnInit {
     this.criaformCreate();
     this.criaFormGroupPerfil();
     this.criaFormGroupUsuario();
+    this.getAllFuncionarios();
     this.getAllPerfils();
     this.getAllUsuarios();
     this.enderecos = <FormArray>this.formCreate.get("enderecoDTOs");
     this.telefones = <FormArray>this.formCreate.get("telefoneDTOs");
+  }
+
+  autoCompleteFuncionario(): void {
+    this.filteredOptions = this.formCreate.get('nome')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   criaFormGroupEndereco(): FormGroup {
@@ -154,30 +177,41 @@ export class FuncionarioCreateComponent implements OnInit {
     });
   }
 
-  createFuncionario(): void {
+  getAllFuncionarios(): void {
+    this.funcionarioService
+      .getAllInfoFuncionario()
+      .subscribe(
+        (funcionarios: FuncionarioDTO[]) => {
+          this.funcionarios = funcionarios;
+          this.autoCompleteFuncionario();
+          console.log('FUNCIONARIOS',this.funcionarios);
+      });
+  }
+
+  createFuncionario(stepper: any): void {
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.postFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário criada com sucesso!");
-      this.router.navigate(["/funcionarios"]);
+      this.limparForm(stepper);
     });
   }
 
-  updateFuncionario(): void {
+  updateFuncionario(stepper: any): void {
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.putFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário alterado com sucesso!");
-      this.router.navigate(["/funcionarios"]);
+      this.limparForm(stepper);
     });
   }
 
-  deleteFuncionario(): void {
+  deleteFuncionario(stepper: any): void {
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.deleteFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário removido com sucesso!");
-      this.router.navigate(["/funcionarios"]);
+      this.limparForm(stepper);
     });
   }
 
@@ -185,6 +219,12 @@ export class FuncionarioCreateComponent implements OnInit {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;
     });
+  }
+
+  getPerfilById(id: number) {
+    this.perfil = this.perfils.find(perfil => perfil.id === id);
+    this.formGroupCreatePerfil.patchValue(this.perfil);
+    console.log('PERFILID',this.perfil)
   }
 
   perfilSelecionado(perfil: PerfilDTO): void {
@@ -200,14 +240,39 @@ export class FuncionarioCreateComponent implements OnInit {
     });
   }
 
+  getUsuarioById(id: number) {
+    this.usuario = this.usuarios.find(usuario => usuario.id === id);
+    this.formGroupcreateUsuario.patchValue(this.usuario);
+    console.log('USUARIOID',this.usuario)
+  }
+
   usuarioSelecionado(usuario: Usuario): void {
     this.formGroupcreateUsuario.patchValue(usuario);
     this.formCreate.controls["usuarioid"].patchValue(usuario.id);
     console.log(this.formCreate.value);
   }
 
-  cancelar(): void {
-    this.router.navigate(["/funcionarios"]);
+  updateForm(modeloFuncionario: FuncionarioDTO): void {
+    this.UpdateOrDelete = true;
+    console.log(modeloFuncionario);
+    this.formCreate.patchValue(modeloFuncionario);
+    this.getPerfilById(modeloFuncionario.perfilId);
+
+    if(modeloFuncionario.usuarioId)
+      this.getUsuarioById(modeloFuncionario.usuarioId);
+  }
+
+  limparForm(stepper:any = null): void {
+    if(stepper)
+      stepper.reset();
+
+    this.formCreate.reset();
+    this.formGroupCreatePerfil.reset();
+    this.perfil = null;
+    this.formGroupcreateUsuario.reset();
+    this.usuario = null;
+    this.getAllFuncionarios();
+    this.UpdateOrDelete = false;
   }
 
   addNovoEndereco() {

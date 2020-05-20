@@ -14,7 +14,6 @@ import { startWith, map } from 'rxjs/operators';
 export class EmpresaCreateComponent implements OnInit {
   panelEndOpenState = false;
   panelTelOpenState = false;
-  myControl = new FormControl();
   filteredOptions: Observable<EmpresaClienteDTO[]>;
   formCreate: FormGroup;
   empresa: EmpresaClienteDTO;
@@ -127,7 +126,7 @@ export class EmpresaCreateComponent implements OnInit {
     this.empresa = this.formCreate.value;
     console.log(JSON.stringify(this.empresa));
     this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
-      this.empresaService.showMessage("Produto atualizado com sucesso!");
+      this.empresaService.showMessage("Empresa atualizado com sucesso!");
       this.limparForm();
     });
   }

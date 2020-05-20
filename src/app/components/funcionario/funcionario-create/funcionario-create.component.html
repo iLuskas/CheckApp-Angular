@@ -22,7 +22,13 @@
                   placeholder="Nome"
                   name="nome"
                   formControlName="nome"
+                  [matAutocomplete]="auto"
                 />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option (onSelectionChange)="updateForm(option)" *ngFor="let option of filteredOptions | async" [value]="option.nome">
+                    {{option.nome}}
+                  </mat-option>
+                </mat-autocomplete>
                 <mat-error *ngIf="isFieldInvalid('nome')">
                   Por favor, Informe a Nome.
                 </mat-error>
@@ -420,7 +426,7 @@
           <!-- Fim Accordion -->
         </form>
         <div>
-          <button mat-raised-button matStepperNext>Next</button>
+          <button mat-raised-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="formGroupCreatePerfil" errorMessage="Perfil e obrigatório.">
@@ -433,13 +439,15 @@
                   <mat-select
                     name="perfil"
                     [formControl]="formGroupCreatePerfil"
-                    (selectionChange)="perfilSelecionado($event.value)"
+                    (selectionChange)=" perfil ? perfilSelecionado(perfil) : perfilSelecionado($event.value)"
+                    [value]="perfil"
                     required
                   >
                     <mat-option *ngFor="let perfil of perfils" [value]="perfil">
                       {{ perfil.funcao_perfil }}
                     </mat-option>
                   </mat-select>
+                  <mat-hint *ngIf="perfil">Perfil Atual: {{perfil.funcao_perfil}}</mat-hint>
                 </mat-form-field>
             </div>
             <div>
@@ -447,8 +455,8 @@
             </div>
         </div>
         <div>
-          <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button matStepperNext>Next</button>
+          <button mat-raised-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="formGroupcreateUsuario" optional>
@@ -461,13 +469,15 @@
                   <mat-select
                     name="perfil"
                     [formControl]="formGroupcreateUsuario"
-                    (selectionChange)="usuarioSelecionado($event.value)"
+                    (selectionChange)="usuario ? usuarioSelecionado(usuario) : usuarioSelecionado($event.value)"
+                    [value]="usuario"
                     required
                   >
                     <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
                       {{ usuario.login }}
                     </mat-option>
                   </mat-select>
+                  <mat-hint *ngIf="usuario">Usuário Atual: {{usuario.login}}</mat-hint> 
                 </mat-form-field>
             </div>
             <div>
@@ -477,41 +487,38 @@
         
         <div fxLayout="row">
           <div>
-            <button mat-raised-button matStepperPrevious>Back</button>
-            <button mat-raised-button (click)="stepper.reset()">Reset</button>
+            <button mat-raised-button matStepperPrevious>Voltar</button>            
           </div>
           <span class="spacer-flex-right-left"></span>
-          <div>
-            <button
-              mat-raised-button
-              [disabled]="!formGroupCreatePerfil.valid"
-              (click)="createFuncionario()"
-              color="primary"
-            >
-              Salvar
-            </button>
-            <button
-            mat-raised-button
-            [disabled]="!formGroupCreatePerfil.valid"
-            (click)="updateFuncionario()"
-            color="primary"
-          >
-            Editar
-          </button>
-            <button
-            mat-raised-button
-            [disabled]="!formGroupCreatePerfil.valid"
-            (click)="deleteFuncionario()"
-            color="warn"
-          >
-            Excluir
-          </button>
-          </div>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
-    <button mat-raised-button (click)="cancelar()">
-      Cancelar
+    <div>
+      <button
+        mat-raised-button
+        [disabled]="!formGroupCreatePerfil.valid || UpdateOrDelete"
+        (click)="createFuncionario(stepper)"
+        color="primary"
+      >
+        Salvar
+      </button>
+      <button
+      mat-raised-button
+      [disabled]="!formGroupCreatePerfil.valid || !UpdateOrDelete"
+      (click)="updateFuncionario(stepper)"
+      color="primary"
+    >
+      Editar
     </button>
+      <button
+      mat-raised-button
+      [disabled]="!formGroupCreatePerfil.valid || !UpdateOrDelete"
+      (click)="deleteFuncionario(stepper)"
+      color="warn"
+    >
+      Excluir
+    </button>
+    <button mat-raised-button (click)="limparForm(stepper)">Limpar</button>
+    </div>
   </mat-card>
 </div>
