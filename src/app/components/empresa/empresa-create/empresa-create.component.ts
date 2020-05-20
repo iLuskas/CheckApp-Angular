@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { EmpresaClienteDTO } from "src/app/models/EmpresaClienteDTO";
 import { EmpresaClienteService } from "src/app/services/EmpresaCliente.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: "app-empresa-create",
@@ -12,10 +14,15 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class EmpresaCreateComponent implements OnInit {
   panelEndOpenState = false;
   panelTelOpenState = false;
+  myControl = new FormControl();
+  filteredOptions: Observable<EmpresaClienteDTO[]>;
   formCreate: FormGroup;
   empresa: EmpresaClienteDTO;
+  empresas: EmpresaClienteDTO[];
   telefones: FormArray;
   enderecos: FormArray;
+  UpdateOrDelete: boolean = false;
+  Create: boolean = true;
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -24,6 +31,14 @@ export class EmpresaCreateComponent implements OnInit {
 
   get telefoneDTOsArray() {
     return (<FormArray>this.formCreate.get("telefoneDTOs")).controls;
+  }
+
+  private _filter(value: string): EmpresaClienteDTO[] {
+    if(!value)
+      return;
+
+    const filterValue = value.toLowerCase();
+    return this.empresas.filter(empresa => empresa.razaoSocial.toLowerCase().indexOf(filterValue) !== -1);
   }
 
   constructor(
@@ -35,9 +50,17 @@ export class EmpresaCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.criaformCreate();
-
+    this.getAllEmpresas();
     this.enderecos = <FormArray>this.formCreate.get("enderecoDTOs");
     this.telefones = <FormArray>this.formCreate.get("telefoneDTOs");
+    console.log('udpareordelete', this.UpdateOrDelete);
+  }
+
+  autoCompleteEmpresa(): void {
+    this.filteredOptions = this.formCreate.get('razaoSocial')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   criaFormGroupEndereco(): FormGroup {
@@ -72,17 +95,51 @@ export class EmpresaCreateComponent implements OnInit {
     });
   }
 
+  getAllEmpresas()
+  {
+    this.empresaService.getAllInfoEmpresaCliente().subscribe(
+      (empresas: EmpresaClienteDTO[]) => {
+        this.empresas = empresas;
+        this.autoCompleteEmpresa();
+        console.log(this.empresas);
+      }
+    );
+  }
+
   createEmpresa(): void {
     this.empresa = this.formCreate.value;
     this.empresaService.postEmpresaCliente(this.empresa).subscribe(
       () => {
         this.empresaService.showMessage("Empresa criada com sucesso!");
-        this.router.navigate(["/empresas"]);
     });
   }
 
-  cancelar(): void {
-    this.router.navigate(["/empresas"]);
+  deleteEmpresa(): void {
+    this.empresa = this.formCreate.value;
+    this.empresaService.deleteEmpresaCliente(this.empresa).subscribe(() => {
+      this.empresaService.showMessage("Empresa deletada com sucesso!");
+    });
+  }
+
+  updateEmpresa(): void {
+    this.empresa = this.formCreate.value;
+    console.log(JSON.stringify(this.empresa));
+    this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
+      this.empresaService.showMessage("Produto atualizado com sucesso!");
+      this.router.navigate(["/empresas"]);
+    });
+  }
+
+  updateForm(modeloEmpresa: EmpresaClienteDTO): void {
+    this.UpdateOrDelete = true;
+    console.log(modeloEmpresa);
+    this.formCreate.patchValue(modeloEmpresa);
+  }
+
+  limparForm(): void {
+    this.formCreate.reset();
+    this.autoCompleteEmpresa();
+    this.UpdateOrDelete = false;
   }
 
   addNovoEndereco() {

@@ -19,6 +19,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +40,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatGridListModule,
     MatIconModule,
     MatMenuModule,
-    MatStepperModule
+    MatStepperModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -59,7 +61,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatGridListModule,
     MatIconModule,
     MatMenuModule,
-    MatStepperModule
+    MatStepperModule,
+    MatAutocompleteModule
   ],
   providers: [],
 })

@@ -5,14 +5,23 @@
     <form [formGroup]="formCreate">
       <div fxLayout="row" fxLayout.xs="column">
         <div fxFlex="40">
-          <mat-form-field class="input-razaoSocial" [ngStyle.xs]="{'width': '300px'}">
+          <mat-form-field
+            class="input-razaoSocial"
+            [ngStyle.xs]="{ width: '300px' }"
+          >
             <input
               matInput
               type="text"
               placeholder="Nome"
               name="nome"
-              formControlName="razaoSocial"            
+              formControlName="razaoSocial"
+              [matAutocomplete]="auto"
             />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option (onSelectionChange)="updateForm(option)" *ngFor="let option of filteredOptions | async" [value]="option.razaoSocial">
+                {{option.razaoSocial}}
+              </mat-option>
+            </mat-autocomplete>
             <mat-error *ngIf="isFieldInvalid('razaoSocial')">
               Por favor, Informe a razão social.
             </mat-error>
@@ -226,12 +235,8 @@
                     O máximo de caracteres é 8
                   </mat-error>
                 </mat-form-field>
-                <div  class="button-remove-container">
-                  <button
-                    mat-mini-fab
-                    color="warn"               
-                    (click)="removeEndereco(i)"
-                  >
+                <div class="button-remove-container">
+                  <button mat-mini-fab color="warn" (click)="removeEndereco(i)">
                     <i class="material-icons" matTooltip="Remover">
                       remove
                     </i>
@@ -274,7 +279,7 @@
           <div formArrayName="telefoneDTOs" fxLayout="row wrap">
             <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
               <div [formGroupName]="i" fxLayoutGap="2%">
-                <mat-form-field  fxFlex="20" class="container-input-field">
+                <mat-form-field fxFlex="20" class="container-input-field">
                   <input
                     matInput
                     type="text"
@@ -285,14 +290,18 @@
                   <mat-error *ngIf="isFieldArrayTelInvalid(i, 'ddd_tel')">
                     Por favor, Informe o DDD.
                   </mat-error>
-                  <mat-error *ngIf="hasErrorArray(i, 'ddd_tel', 'maxlength', true, false)">
+                  <mat-error
+                    *ngIf="
+                      hasErrorArray(i, 'ddd_tel', 'maxlength', true, false)
+                    "
+                  >
                     O máximo de caracteres é 3
                   </mat-error>
                   <mat-error
-                  *ngIf="hasErrorArray(i, 'ddd_tel', 'pattern', true, false)"
-                >
-                  Somente números
-                </mat-error>
+                    *ngIf="hasErrorArray(i, 'ddd_tel', 'pattern', true, false)"
+                  >
+                    Somente números
+                  </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="container-input-field">
@@ -307,15 +316,19 @@
                     Por favor, Informe o Telefone.
                   </mat-error>
                   <mat-error
-                    *ngIf="hasErrorArray(i, 'telefone_tel', 'maxlength', true, false)"
+                    *ngIf="
+                      hasErrorArray(i, 'telefone_tel', 'maxlength', true, false)
+                    "
                   >
                     O máximo de caracteres é 9
                   </mat-error>
                   <mat-error
-                  *ngIf="hasErrorArray(i, 'telefone_tel', 'pattern', true, false)"
-                >
-                  Somente números
-                </mat-error>
+                    *ngIf="
+                      hasErrorArray(i, 'telefone_tel', 'pattern', true, false)
+                    "
+                  >
+                    Somente números
+                  </mat-error>
                 </mat-form-field>
                 <div class="button-remove-container">
                   <button mat-mini-fab color="warn" (click)="removeTelefone(i)">
@@ -345,15 +358,32 @@
 
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid"
+      [disabled]="!formCreate.valid || UpdateOrDelete"
       (click)="createEmpresa()"
       color="primary"
     >
       Salvar
     </button>
+    <button
+      mat-raised-button
+      [disabled]="!formCreate.valid || !UpdateOrDelete"
+      (click)="updateEmpresa()"
+      color="primary"
+    >
+      Editar
+    </button>
 
-    <button mat-raised-button (click)="cancelar()">
-      Cancelar
+    <button
+      mat-raised-button
+      (click)="deleteEmpresa()"
+      [disabled]="!formCreate.valid || !UpdateOrDelete"
+      color="warn"
+    >
+      Excluir
+    </button>
+
+    <button mat-raised-button (click)="limparForm()">
+      Limpar
     </button>
   </mat-card>
 </div>
