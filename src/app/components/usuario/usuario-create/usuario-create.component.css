@@ -9,6 +9,13 @@ button {
 }
 
 .perfil-form {
-    width: 50%;
+    width: 100%;
 }
 
+.input-login {
+    width: 300px;
+}
+
+.input-senha {
+    width: 300px;
+}

@@ -33,3 +33,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .spacer-flex-right-left {
     flex: 1 1 auto;
 }
+
+.btn-editar {
+    color: #000;
+    background-color: #f6fa0f;
+}
