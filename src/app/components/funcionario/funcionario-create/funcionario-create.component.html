@@ -493,6 +493,14 @@
             <button
             mat-raised-button
             [disabled]="!formGroupCreatePerfil.valid"
+            (click)="updateFuncionario()"
+            color="primary"
+          >
+            Editar
+          </button>
+            <button
+            mat-raised-button
+            [disabled]="!formGroupCreatePerfil.valid"
             (click)="deleteFuncionario()"
             color="warn"
           >

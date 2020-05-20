@@ -111,6 +111,7 @@ export class EmpresaCreateComponent implements OnInit {
     this.empresaService.postEmpresaCliente(this.empresa).subscribe(
       () => {
         this.empresaService.showMessage("Empresa criada com sucesso!");
+        this.limparForm();
     });
   }
 
@@ -118,6 +119,7 @@ export class EmpresaCreateComponent implements OnInit {
     this.empresa = this.formCreate.value;
     this.empresaService.deleteEmpresaCliente(this.empresa).subscribe(() => {
       this.empresaService.showMessage("Empresa deletada com sucesso!");
+      this.limparForm();
     });
   }
 
@@ -126,7 +128,7 @@ export class EmpresaCreateComponent implements OnInit {
     console.log(JSON.stringify(this.empresa));
     this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
       this.empresaService.showMessage("Produto atualizado com sucesso!");
-      this.router.navigate(["/empresas"]);
+      this.limparForm();
     });
   }
 
@@ -138,7 +140,7 @@ export class EmpresaCreateComponent implements OnInit {
 
   limparForm(): void {
     this.formCreate.reset();
-    this.autoCompleteEmpresa();
+    this.getAllEmpresas();
     this.UpdateOrDelete = false;
   }
 

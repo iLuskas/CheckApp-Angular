@@ -163,6 +163,15 @@ export class FuncionarioCreateComponent implements OnInit {
     });
   }
 
+  updateFuncionario(): void {
+    this.funcionario = this.formCreate.value;
+    console.log(this.funcionario);
+    this.funcionarioService.putFuncionario(this.funcionario).subscribe(() => {
+      this.funcionarioService.showMessage("Funcionário alterado com sucesso!");
+      this.router.navigate(["/funcionarios"]);
+    });
+  }
+
   deleteFuncionario(): void {
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
