@@ -274,7 +274,7 @@
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div fxFlex class="div-form-fields">
+                  <div fxFlex class="div-form-fields" *ngIf="display">
                     <mat-form-field
                       class="input-dataCricao"
                       [ngStyle.xs]="{ width: '200px' }"

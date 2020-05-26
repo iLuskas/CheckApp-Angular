@@ -299,6 +299,8 @@ export class EquipamentoCreateComponent implements OnInit {
     if (stepper) stepper.reset();
 
     this.formCreate.reset();
+    this.formCreate.controls['dataCriacao_equipamento'].patchValue(this.date.value);
+    this.formCreate.controls['qrcode_data_geracao'].patchValue(this.date.value);
     this.formCreateEmpresa.reset();
     this.empresa = null;
     this.formCreateTipoEquipamento.reset();
