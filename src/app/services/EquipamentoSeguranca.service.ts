@@ -9,8 +9,8 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EquipamentoSegurancaService {
-  //baseURL = "https://www.safetyplan.net.br/checkapp/api/Equipamento_Seguranca";
-  baseURL = "https://localhost:5001/api/Equipamento_Seguranca";
+  baseURL = "https://www.safetyplan.net.br/checkapp/api/Equipamento_Seguranca";
+  //baseURL = "https://localhost:5001/api/Equipamento_Seguranca";
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   showMessage(msg: string, isError: boolean = false): void {
