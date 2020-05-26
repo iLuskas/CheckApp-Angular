@@ -1,0 +1,50 @@
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+button {
+    margin: 20px 10px 0px 0px;
+}
+
+.rigth-container-form {
+    width: 500px;
+}
+
+.container-qrCode {
+    padding: 10px;
+    border: 1px dashed black;
+    width: 256px;
+    height: 256px;
+}
+
+.btnDownload-qrCode{
+    padding-top: 5px;
+    margin:0 0 10px 0;
+}
+
+.btnDownload-qrCode > button {
+    margin: 0;
+}
+
+.btnDownload-qrCode > .btnGerar-qrCode {
+    margin-right: 5px;
+}
+
+.localizacao-field {
+    width: 760px;
+    margin-bottom: 0;
+}
+
+.localizacao-field-error {
+    margin-top: 0;
+}
+
+.container-fields-extintor{
+    height: 200px;
+}
+
+.div-form-fields {
+    height: 50px;
+}

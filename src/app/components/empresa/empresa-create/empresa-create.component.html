@@ -18,8 +18,12 @@
               [matAutocomplete]="auto"
             />
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option (onSelectionChange)="updateForm(option)" *ngFor="let option of filteredOptions | async" [value]="option.razaoSocial">
-                {{option.razaoSocial}}
+              <mat-option
+                (onSelectionChange)="updateForm(option)"
+                *ngFor="let option of filteredOptions | async"
+                [value]="option.razaoSocial"
+              >
+                {{ option.razaoSocial }}
               </mat-option>
             </mat-autocomplete>
             <mat-error *ngIf="isFieldInvalid('razaoSocial')">
@@ -277,9 +281,12 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div formArrayName="telefoneDTOs" fxLayout="row wrap">
-            <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
+            <div
+              *ngFor="let telefone of telefoneDTOsArray; let i = index"
+              fxLayout="row wrap"
+            >
               <div [formGroupName]="i" fxLayoutGap="2%">
-                <mat-form-field fxFlex="20" class="container-input-field">
+                <mat-form-field class="input-ddd_tel-field">
                   <input
                     matInput
                     type="text"
@@ -304,7 +311,7 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="container-input-field">
+                <mat-form-field class="input-telefone_tel-field">
                   <input
                     matInput
                     type="text"
@@ -330,13 +337,11 @@
                     Somente números
                   </mat-error>
                 </mat-form-field>
-                <div class="button-remove-container">
-                  <button mat-mini-fab color="warn" (click)="removeTelefone(i)">
-                    <i class="material-icons" matTooltip="Remover">
-                      remove
-                    </i>
-                  </button>
-                </div>
+                <button mat-mini-fab color="warn" (click)="removeTelefone(i)">
+                  <i class="material-icons" matTooltip="Remover">
+                    remove
+                  </i>
+                </button>
               </div>
             </div>
           </div>

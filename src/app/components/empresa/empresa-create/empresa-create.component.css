@@ -19,7 +19,8 @@ button {
 }
 
 .button-remove-container {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
 }
 .button-add-panel {
     margin: 0 auto;
@@ -39,6 +40,10 @@ mat-accordion {
     width: 400px;
 }
 
-.container-input-field {
+.input-ddd_tel-field {
+    margin-top: 10px;
+    width: 40px;
+}
+.input-telefone_tel-field{
     margin-top: 10px;
 }

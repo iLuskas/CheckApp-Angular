@@ -1,5 +1,6 @@
 import { TelefoneDTO } from './TelefoneDTO';
 import { EnderecoDTO } from './EnderecoDTO';
+import { EquipamentoSegurancaDTO } from './EquipamentoSeguranca';
 
 export interface EmpresaClienteDTO {
     razaoSocial: string;
@@ -7,5 +8,6 @@ export interface EmpresaClienteDTO {
     inscricao_estadual: string;
     enderecoDTOs: EnderecoDTO[];
     telefoneDTOs: TelefoneDTO[];
+    equipamentoDTOs?: EquipamentoSegurancaDTO[];
     id?: number;
 }

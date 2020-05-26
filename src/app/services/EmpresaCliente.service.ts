@@ -27,7 +27,7 @@ export class EmpresaClienteService {
     return EMPTY;
   }
 
-  getAllEmpresaCliente(token: string): Observable<EmpresaClienteDTO[]> {
+  getAllEmpresaCliente(token: string = null): Observable<EmpresaClienteDTO[]> {
     // const options = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json',

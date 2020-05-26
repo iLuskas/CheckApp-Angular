@@ -27,6 +27,7 @@ import { UsuarioCreateComponent } from './components/usuario/usuario-create/usua
 import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuario-read-layout.component';
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
+import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
 
 
 const routes: Routes = [
@@ -43,82 +44,22 @@ const routes: Routes = [
       {
         path: "empresas",
         component: EmpresaCrudComponent
-      },
-      {
-        path: "empresas/create",
-        component: EmpresaCreateComponent
-      },
-      {
-        path: "empresas/read/:id",
-        component: EmpresaReadLayoutComponent
-      },
-      {
-        path: "empresas/update/:id",
-        component: EmpresaUpdateComponent
-      },
-      {
-        path: "empresas/delete/:id",
-        component: EmpresaDeleteComponent
-      },
+      },      
       {
         path: "perfils",
         component: PerfilCrudComponent
-      },
-      {
-        path: "perfils/create",
-        component: PerfilCreateComponent
-      },
-      {
-        path: "perfils/read/:id",
-        component: PerfilReadLayoutComponent
-      },
-      {
-        path: "perfils/update/:id",
-        component: PerfilUpdateComponent
-      },
-      {
-        path: "perfils/delete/:id",
-        component: PerfilDeleteComponent
       },
       {
         path: "funcionarios",
         component: FuncionarioCrudComponent
       },
       {
-        path: "funcionarios/create",
-        component: FuncionarioCreateComponent
-      },
-      {
-        path: "funcionarios/read/:id",
-        component: FuncionarioReadLayoutComponent
-      },
-      {
-        path: "funcionarios/update/:id",
-        component: FuncionarioUpdateComponent
-      },
-      {
-        path: "funcionarios/delete/:id",
-        component: FuncionarioDeleteComponent
-      },
-      {
         path: "usuarios",
         component: UsuarioCrudComponent
       },
       {
-        path: "usuarios/create",
-        component: UsuarioCreateComponent
-      },
-      {
-        path: "usuarios/read/:id",
-        component: UsuarioReadLayoutComponent
-      },
-      {
-        path: "usuarios/update/:id",
-        component: UsuarioUpdateComponent
-      },
-      {
-        path: "usuarios/delete/:id",
-        component: UsuarioDeleteComponent
+        path: "equipamentos",
+        component: EquipamentoCrudComponent
       },
     ]
   },

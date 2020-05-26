@@ -12,7 +12,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from  '@angular/common';
+import { registerLocaleData, DatePipe } from  '@angular/common';
 
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './view/login/login.component';
@@ -27,11 +27,6 @@ import { EmpresaCreateComponent } from './components/empresa/empresa-create/empr
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { PerfilCrudComponent } from './view/perfil-crud/perfil-crud.component';
 import { PerfilReadComponent } from './components/perfil/perfil-read/perfil-read.component';
 import { PerfilCreateComponent } from './components/perfil/perfil-create/perfil-create.component';
@@ -50,7 +45,9 @@ import { UsuarioCreateComponent } from './components/usuario/usuario-create/usua
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuario-read-layout.component';
-
+import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
+import { EquipamentoCreateComponent } from './components/equipamento/equipamento-create/equipamento-create.component';
+import { QRCodeModule } from 'angularx-qrcode';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -87,6 +84,8 @@ registerLocaleData(localePt);
     UsuarioUpdateComponent,
     UsuarioDeleteComponent,
     UsuarioReadLayoutComponent,
+    EquipamentoCrudComponent,
+    EquipamentoCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,16 +97,12 @@ registerLocaleData(localePt);
     FlexLayoutModule,
     ReactiveFormsModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule  
+    QRCodeModule 
   ],
   providers: [{
     provide: LOCALE_ID,
     useValue: 'pt-BR'
-  }],
+  }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

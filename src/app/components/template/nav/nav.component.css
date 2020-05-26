@@ -1,7 +1,13 @@
 
 /*header*/
+mat-toolbar {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  }
+
 .header{
-    display: flex;
     align-items: center;    
 }
 
@@ -29,7 +35,6 @@
 
 .container-Logout_ {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
@@ -41,6 +46,8 @@
     font-size: 0.8em;
     opacity: 0.5;
 }
+
+
 /*header*/
 
 /*sidenav*/
@@ -64,7 +71,7 @@
 
 .container-Logout_ {
     display: flex;
-    flex-direction: row;
+
     align-items: center;
 }
 
@@ -94,3 +101,4 @@
     cursor: pointer;
 }
 /*sidenav*/
+
