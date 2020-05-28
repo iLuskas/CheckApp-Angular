@@ -3,7 +3,7 @@
     <mat-card-title>Adicionar Equipamento</mat-card-title>
 
     <mat-horizontal-stepper linear #stepper>
-      <mat-step [stepControl]="" errorMessage="Informações incompletas.">
+      <mat-step [stepControl]="formCreateEmpresa" errorMessage="Informações incompletas.">
         <form [formGroup]="formCreateEmpresa">
           <ng-template matStepLabel>Selecione a Empresa</ng-template>
           <div fxLayout="column">
@@ -38,7 +38,7 @@
           <button mat-raised-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
-      <mat-step [stepControl]="" errorMessage="Tipo é obrigatório.">
+      <mat-step [stepControl]="formCreateTipoEquipamento" errorMessage="Tipo é obrigatório.">
         <div fxLayout="row" fxLayout.xs="column">
           <div fxFlex>
             <form [formGroup]="formCreateTipoEquipamento">
@@ -68,29 +68,6 @@
                 </div>
               </div>
             </form>
-          </div>
-          <div fxFlex>
-            <mat-card class="mat-elevation-z1">
-              <mat-card-subtitle class="title">Novo Tipo de Equipamento</mat-card-subtitle>
-              <form>
-                <mat-form-field>
-                  <input
-                  matInput
-                  type="text"
-                  placeholder="Novo Tipo"
-                  name="add-tipo"
-                  #inputTipo
-                  />
-                </mat-form-field>
-              </form>
-              <button
-              mat-raised-button
-              (click)="createTipoEquipamento(inputTipo.value)"
-              color="primary"
-            >
-              Salvar
-            </button>
-            </mat-card>
           </div>
         </div>
         <div>
@@ -158,6 +135,9 @@
                     >
                       Informe o Selo.
                     </mat-error>
+                    <mat-error *ngIf="hasErrorFieldExtintor('seloInmetro_ext', 'maxlength')">
+                      Somente 14 digitos
+                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div fxFlex class="div-form-fields">
@@ -174,6 +154,9 @@
                     />
                     <mat-error *ngIf="isFieldExtintorInvalid('fabricante_ext')">
                       Informe o Fabricante.
+                    </mat-error>
+                    <mat-error *ngIf="hasErrorFieldExtintor('fabricante_ext', 'maxlength')">
+                      Somente 50 digitos
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -192,22 +175,8 @@
                     <mat-error *ngIf="isFieldExtintorInvalid('tipo_ext')">
                       Informe o Tipo.
                     </mat-error>
-                  </mat-form-field>
-                </div>
-                <div fxFlex class="div-form-fields">
-                  <mat-form-field
-                    class="input-numExt"
-                    [ngStyle.xs]="{ width: '200px' }"
-                  >
-                    <input
-                      matInput
-                      type="number"
-                      placeholder="Peso em KG"
-                      name="peso_ext"
-                      formControlName="peso_ext"
-                    />
-                    <mat-error *ngIf="isFieldExtintorInvalid('peso_ext')">
-                      Informe o Peso.
+                    <mat-error *ngIf="hasErrorFieldExtintor('tipo_ext', 'maxlength')">
+                      Somente 100 digitos
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -242,14 +211,17 @@
                       matInput
                       type="text"
                       placeholder="Ano de Fabricação"
-                      name="ano_fabricacao"
-                      formControlName="ano_fabricacao"
-                      [matDatepicker]="picker1"
+                      name="anoFabricacao_ext"
+                      formControlName="anoFabricacao_ext"
                     />
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker1></mat-datepicker>
-                    <mat-error *ngIf="isFieldExtintorInvalid('ano_fabricacao')">
-                      Informe a Data de Fabricação.
+                    <mat-icon matSuffix class="iconAnoFabricao-size">
+                      today
+                      </mat-icon>
+                    <mat-error *ngIf="isFieldExtintorInvalid('anoFabricacao_ext')">
+                      Informe o Ano de Fabricação.
+                    </mat-error>
+                    <mat-error *ngIf="hasErrorFieldExtintor('anoFabricacao_ext', 'maxlength')">
+                      Somente 4 digitos
                     </mat-error>
                   </mat-form-field>
                 </div>

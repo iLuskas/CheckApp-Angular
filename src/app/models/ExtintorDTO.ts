@@ -5,7 +5,6 @@ export interface ExtintorDTO {
     seloInmetro_ext : string;
     fabricante_ext : string;
     tipo_ext : string;
-    peso_ext : number; 
     capacidade_ext : number;
-    ano_fabricacao : Date; 
+    anoFabricacao_ext : string; 
 }

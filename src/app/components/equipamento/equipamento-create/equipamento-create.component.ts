@@ -144,12 +144,11 @@ export class EquipamentoCreateComponent implements OnInit {
       id: [null],
       equipamentoId: [null],
       num_ext: [null, Validators.compose([Validators.required, Validators.pattern("^[0-9]*$")])],
-      seloInmetro_ext: ['', Validators.compose([Validators.required])],
-      fabricante_ext: ['', Validators.compose([Validators.required])],
-      tipo_ext: ['', Validators.compose([Validators.required])],
-      peso_ext: [null, Validators.compose([Validators.required, Validators.pattern("^[0-9]*$")])],
+      seloInmetro_ext: ['', Validators.compose([Validators.required, Validators.maxLength(14)])],
+      fabricante_ext: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      tipo_ext: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       capacidade_ext: [null, Validators.compose([Validators.required, Validators.pattern("^[0-9]*$")])],
-      ano_fabricacao: [null, Validators.compose([Validators.required])],
+      anoFabricacao_ext: ['', Validators.compose([Validators.required, Validators.maxLength(4)])],
     });
   }
 
@@ -325,6 +324,10 @@ export class EquipamentoCreateComponent implements OnInit {
     const formGroup = this.formCreate.get("extintorDTO") as FormGroup;
     return formGroup.controls[field].hasError(error);
   }
+
+  public hasError = (field: string, errorName: string) => {
+    return this.formCreate.controls[field].hasError(errorName);
+  };
 
   isFieldInvalid(field: string) {
     return (
