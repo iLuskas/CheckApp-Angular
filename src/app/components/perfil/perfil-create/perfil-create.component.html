@@ -17,6 +17,7 @@
               name="perfil"
               formControlName="funcao_perfil"
               [matAutocomplete]="auto"
+              (input)="onSearchChange($event.target.value)"
             />
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option
@@ -39,31 +40,30 @@
     </form>
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || UpdateOrDelete"
+      [disabled]="!formCreate.valid || UpdateOrDelete || isLoading"
       (click)="createPerfil()"
       color="primary"
     >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Salvar
     </button>
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || !UpdateOrDelete"
+      [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
       (click)="updatePerfil()"
       class="btn-editar"
     >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Editar
     </button>
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || !UpdateOrDelete"
+      [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
       (click)="deletePerfil()"
       color="warn"
     >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Excluir
-    </button>
-
-    <button mat-raised-button (click)="limparForm()">
-      Limpar
     </button>
   </mat-card>
 </div>

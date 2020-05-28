@@ -26,9 +26,9 @@ export class NavComponent implements OnInit {
     {link: '/usuarios', icon: 'account_circle', nameMenu: 'Usuários'/*, subMenus: [
       {subMenulink:'/funcionarios', subMenuicon: 'supervised_user_circle', subMenuName: 'Funcionários'},
       {subMenulink:'/usuarios', subMenuicon: 'account_circle', subMenuName: 'Usuários'},
-      {subMenulink: '/perfils', subMenuicon: 'portrait', subMenuName: 'Perfils'}
+      {subMenulink: '/perfils', subMenuicon: 'portrait', subMenuName: 'Perfil'}
     ]*/},
-    {link: '/perfils', icon: 'portrait', nameMenu: 'Perfils'},
+    {link: '/perfil', icon: 'portrait', nameMenu: 'Perfil'},
     {link: '/equipamentos', icon: 'whatshot', nameMenu: 'Equipamentos'},
     {link: '/relatorios', icon: 'bar_chart', nameMenu: 'Relatórios'}
   ];

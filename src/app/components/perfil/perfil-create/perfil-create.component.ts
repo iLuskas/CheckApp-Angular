@@ -18,7 +18,7 @@ export class PerfilCreateComponent implements OnInit {
   private formSubmitAttempt: boolean;
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<PerfilDTO[]>;
-
+  isLoading: boolean;
   private _filter(value: string): PerfilDTO[] {
     if (!value) return;
 
@@ -67,27 +67,38 @@ export class PerfilCreateComponent implements OnInit {
   }
 
   createPerfil(): void {
+    this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
     console.log(this.perfil);
     this.perfilService.postPerfil(this.perfil).subscribe(() => {
       this.perfilService.showMessage("Perfil criado com sucesso!");
+      this.isLoading = !this.isLoading;
+      this.limparForm();
+      this.getAllPerfils();
     });
   }
 
   updatePerfil(): void {
+    this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
     console.log(this.perfil);
     this.perfilService.putPerfil(this.perfil).subscribe(() => {
       this.perfilService.showMessage("Perfil editado com sucesso!");
-      this.router.navigate(["/perfils"]);
+      this.isLoading = !this.isLoading;
+      this.limparForm();
+      this.getAllPerfils();
     });
   }
 
   deletePerfil(): void {
+    this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
     console.log(this.perfil);
     this.perfilService.deletePerfil(this.perfil).subscribe(() => {
       this.perfilService.showMessage("Perfil removido com sucesso!");
+      this.isLoading = !this.isLoading;
+      this.limparForm();
+      this.getAllPerfils();
     });
   }
 
@@ -102,6 +113,11 @@ export class PerfilCreateComponent implements OnInit {
     this.formCreate.reset();
     this.perfil = null;
     this.UpdateOrDelete = false;
+  }
+
+  onSearchChange(searchValue: string): void { 
+    if(!searchValue) 
+      this.limparForm();
   }
 
   isFieldInvalid(field: string) {

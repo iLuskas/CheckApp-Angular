@@ -1,28 +1,45 @@
 <div class="login-wrapper body" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title> CheckApp</mat-card-title>
-        <span class="subtitle-card">Log in</span>
-      </mat-card-header>
-  
-      <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <input matInput type="text" placeholder="Usuário" formControlName="login">
-            <mat-error *ngIf="isFieldInvalid('login')">
-                Por favor, Informe o usuário.
-              </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field class="example-full-width">
-            <input matInput type="password" placeholder="Senha" formControlName="senha">
-            <mat-error *ngIf="isFieldInvalid('senha')">
-                Por favor, Informe a senha.
-              </mat-error>
-          </mat-form-field>
-        </mat-card-content>
-        <button mat-stroked-button color="accent" class="btn-block">Logar</button>
-      </form>
-    </mat-card>
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title> CheckApp</mat-card-title>
+      <span class="subtitle-card">Log in</span>
+    </mat-card-header>
 
- </div>
+    <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            type="text"
+            placeholder="Usuário"
+            formControlName="login"
+          />
+          <mat-error *ngIf="isFieldInvalid('login')">
+            Por favor, Informe o usuário.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            type="password"
+            placeholder="Senha"
+            formControlName="senha"
+          />
+          <mat-error *ngIf="isFieldInvalid('senha')">
+            Por favor, Informe a senha.
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <button
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+        [disabled]="isLoading"
+      >
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        Logar
+      </button>
+    </form>
+  </mat-card>
+</div>

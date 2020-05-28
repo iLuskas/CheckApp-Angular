@@ -39,6 +39,7 @@ export class EquipamentoCreateComponent implements OnInit {
   hrefQrCode : string;
   display: boolean = false;
   elementType: 'url' | 'canvas' | 'img' = 'url';
+  isLoading: boolean;
   private formSubmitAttempt: boolean;
   @ViewChild("autosize") autosize: CdkTextareaAutosize;
 
@@ -160,7 +161,7 @@ export class EquipamentoCreateComponent implements OnInit {
       empresaClienteId: [null],
       localizacao_equipamento: ['', Validators.compose([Validators.required])],
       qrCode: [''],
-      qrcode_data_geracao: [this.date.value], 
+      qrcode_data_geracao: [null], 
       dataCriacao_equipamento: [this.date.value, Validators.compose([Validators.required])],
       extintorDTO: this.criaFormCreateExtintor(),
     });
@@ -197,6 +198,7 @@ export class EquipamentoCreateComponent implements OnInit {
   }
 
   createEquipamento(stepper: any) {
+    this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
     this.equipamentoSeguranca.qrCode = this.qrData;
     console.log(JSON.stringify(this.equipamentoSeguranca));
@@ -204,11 +206,13 @@ export class EquipamentoCreateComponent implements OnInit {
       () =>{
         this.equipamentoService.showMessage("Equipamento criado com sucesso!");
         this.limparForm(stepper);
+        this.isLoading = !this.isLoading;
       }
     );
   }
 
   updateEquipamento(stepper: any) {
+    this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
     this.equipamentoSeguranca.qrCode = this.qrData;
     console.log(this.equipamentoSeguranca);
@@ -217,10 +221,12 @@ export class EquipamentoCreateComponent implements OnInit {
       .subscribe(() => {
         this.equipamentoService.showMessage("Equipamento editado com sucesso!");
         this.limparForm(stepper);
+        this.isLoading = !this.isLoading;
       });
   }
 
   deleteEquipamento(stepper: any) {
+    this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
     console.log(this.equipamentoSeguranca);
     this.equipamentoService
@@ -228,6 +234,7 @@ export class EquipamentoCreateComponent implements OnInit {
       .subscribe(() => {
         this.equipamentoService.showMessage("Equipamento removido com sucesso!");
         this.limparForm(stepper);
+        this.isLoading = !this.isLoading;
       });
   }
 
@@ -280,7 +287,7 @@ export class EquipamentoCreateComponent implements OnInit {
 
   GerarQrCode() {
     if(!this.formCreate.valid) return;
-
+    this.formCreate.controls['qrcode_data_geracao'].patchValue(this.date.value);
     this.qrData = JSON.stringify(this.formCreate.value);
     this.display = true;
   }
@@ -299,7 +306,6 @@ export class EquipamentoCreateComponent implements OnInit {
 
     this.formCreate.reset();
     this.formCreate.controls['dataCriacao_equipamento'].patchValue(this.date.value);
-    this.formCreate.controls['qrcode_data_geracao'].patchValue(this.date.value);
     this.formCreateEmpresa.reset();
     this.empresa = null;
     this.formCreateTipoEquipamento.reset();
@@ -310,6 +316,17 @@ export class EquipamentoCreateComponent implements OnInit {
     this.UpdateOrDelete = false;
     this.qrData = "";
     this.display = false;
+  }
+
+  onSearchChange(searchValue: string): void { 
+    if(!searchValue){
+      const formGroup = this.formCreate.get("extintorDTO") as FormGroup;
+      formGroup.reset();
+      this.UpdateOrDelete = false;
+      this.qrData = "";
+      this.display = false;
+      this.formCreate.controls['localizacao_equipamento'].patchValue("");
+    }      
   }
 
   isFieldExtintorInvalid(field: string) {

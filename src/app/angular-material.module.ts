@@ -21,6 +21,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +44,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatMenuModule,
     MatStepperModule,
     MatAutocompleteModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatProgressBarModule
   ],
   exports: [
     MatButtonModule,
@@ -65,7 +67,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatMenuModule,
     MatStepperModule,
     MatAutocompleteModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatProgressBarModule
   ],
   providers: [],
 })

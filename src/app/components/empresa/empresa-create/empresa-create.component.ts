@@ -22,6 +22,7 @@ export class EmpresaCreateComponent implements OnInit {
   enderecos: FormArray;
   UpdateOrDelete: boolean = false;
   Create: boolean = true;
+  isLoading:  boolean;
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -106,28 +107,34 @@ export class EmpresaCreateComponent implements OnInit {
   }
 
   createEmpresa(): void {
+    this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
     this.empresaService.postEmpresaCliente(this.empresa).subscribe(
       () => {
         this.empresaService.showMessage("Empresa criada com sucesso!");
         this.limparForm();
+        this.isLoading = !this.isLoading;
     });
   }
 
   deleteEmpresa(): void {
+    this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
     this.empresaService.deleteEmpresaCliente(this.empresa).subscribe(() => {
       this.empresaService.showMessage("Empresa deletada com sucesso!");
       this.limparForm();
+      this.isLoading = !this.isLoading;
     });
   }
 
   updateEmpresa(): void {
+    this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
     console.log(JSON.stringify(this.empresa));
     this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
       this.empresaService.showMessage("Empresa atualizado com sucesso!");
       this.limparForm();
+      this.isLoading = !this.isLoading;
     });
   }
 

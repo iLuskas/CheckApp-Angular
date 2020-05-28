@@ -32,6 +32,7 @@ export class FuncionarioCreateComponent implements OnInit {
   enderecos: FormArray;
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<FuncionarioDTO[]>;
+  isLoading: boolean;
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -189,48 +190,55 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
   createFuncionario(stepper: any): void {
+    this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.postFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário criada com sucesso!");
       this.limparForm(stepper);
+      this.isLoading = !this.isLoading;
     });
   }
 
   updateFuncionario(stepper: any): void {
+    this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.putFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário alterado com sucesso!");
       this.limparForm(stepper);
+      this.isLoading = !this.isLoading;
     });
   }
 
   deleteFuncionario(stepper: any): void {
+    this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
     this.funcionarioService.deleteFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário removido com sucesso!");
       this.limparForm(stepper);
+      this.isLoading = !this.isLoading;
     });
   }
 
   getAllPerfils() {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;
+      console.log('PERFILS', this.perfils)
     });
   }
 
   getPerfilById(id: number) {
     this.perfil = this.perfils.find(perfil => perfil.id === id);
-    this.formGroupCreatePerfil.patchValue(this.perfil);
-    console.log('PERFILID',this.perfil)
+    this.perfilSelecionado(this.perfil);
+    console.log('PERFILBYID',this.perfil)
   }
 
   perfilSelecionado(perfil: PerfilDTO): void {
     this.formGroupCreatePerfil.patchValue(perfil);
     this.formCreate.controls["perfilid"].patchValue(perfil.id);
-    console.log(this.formCreate.value);
+    console.log('formcreateAfterperfil',this.formCreate.value);
   }
 
   getAllUsuarios(): void {
@@ -242,14 +250,13 @@ export class FuncionarioCreateComponent implements OnInit {
 
   getUsuarioById(id: number) {
     this.usuario = this.usuarios.find(usuario => usuario.id === id);
-    this.formGroupcreateUsuario.patchValue(this.usuario);
-    console.log('USUARIOID',this.usuario)
+    this.usuarioSelecionado(this.usuario);
   }
 
   usuarioSelecionado(usuario: Usuario): void {
     this.formGroupcreateUsuario.patchValue(usuario);
     this.formCreate.controls["usuarioid"].patchValue(usuario.id);
-    console.log(this.formCreate.value);
+    console.log('formcreateAfterusuario',this.formCreate.value);
   }
 
   updateForm(modeloFuncionario: FuncionarioDTO): void {

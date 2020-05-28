@@ -14,7 +14,7 @@ import { UsuarioService } from "src/app/services/Usuario.service";
 export class LoginComponent implements OnInit {
   formLogin: FormGroup; // {1}
   private formSubmitAttempt: boolean; // {2}
-
+  isLoading: boolean;
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = !this.isLoading;
+
     const usuario = new Usuario();
 
     usuario.login = this.formLogin.controls.login.value;
@@ -47,6 +49,7 @@ export class LoginComponent implements OnInit {
           if (userAuth) {
             localStorage.setItem("cacheUsuario", JSON.stringify(userAuth));
             this.authService.login(userAuth);
+            this.isLoading = !this.isLoading;
           } else {
             this.usuarioService.showMessage("Usuário não foi encontrato. Favor verifique suas credencias.", true);
           }

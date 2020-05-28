@@ -7,26 +7,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout.component';
 import { EmpresaCrudComponent } from './view/empresa-crud/empresa-crud.component';
-import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
-import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
-import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
-import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
 import { PerfilCrudComponent } from './view/perfil-crud/perfil-crud.component';
-import { PerfilCreateComponent } from './components/perfil/perfil-create/perfil-create.component';
-import { PerfilReadComponent } from './components/perfil/perfil-read/perfil-read.component';
-import { PerfilUpdateComponent } from './components/perfil/perfil-update/perfil-update.component';
-import { PerfilDeleteComponent } from './components/perfil/perfil-delete/perfil-delete.component';
-import { PerfilReadLayoutComponent } from './layouts/perfil-read-layout/perfil-read-layout.component';
 import { FuncionarioCrudComponent } from './view/funcionario-crud/funcionario-crud.component';
-import { FuncionarioCreateComponent } from './components/funcionario/funcionario-create/funcionario-create.component';
-import { FuncionarioUpdateComponent } from './components/funcionario/funcionario-update/funcionario-update.component';
-import { FuncionarioDeleteComponent } from './components/funcionario/funcionario-delete/funcionario-delete.component';
-import { FuncionarioReadLayoutComponent } from './layouts/funcionario-read-layout/funcionario-read-layout.component';
 import { UsuarioCrudComponent } from './view/usuario-crud/usuario-crud.component';
-import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
-import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuario-read-layout.component';
-import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
-import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
 
 
@@ -46,7 +29,7 @@ const routes: Routes = [
         component: EmpresaCrudComponent
       },      
       {
-        path: "perfils",
+        path: "perfil",
         component: PerfilCrudComponent
       },
       {

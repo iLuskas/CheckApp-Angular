@@ -100,6 +100,7 @@
                       name="num_ext"
                       formControlName="num_ext"
                       [matAutocomplete]="autoExtintor"
+                      (input)="onSearchChange($event.target.value)"
                     />
                     <mat-autocomplete
                       autoActiveFirstOption
@@ -337,26 +338,29 @@
     <div>
       <button
         mat-raised-button
-        [disabled]="!formCreate.valid || UpdateOrDelete"
+        [disabled]="!formCreate.valid || UpdateOrDelete || isLoading"
         (click)="createEquipamento(stepper)"
         color="primary"
       >
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
         Salvar
       </button>
       <button
         mat-raised-button
-        [disabled]="!formCreate.valid || !UpdateOrDelete"
+        [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
         (click)="updateEquipamento(stepper)"
         class="btn-editar"
       >
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
         Editar
       </button>
       <button
         mat-raised-button
-        [disabled]="!formCreate.valid || !UpdateOrDelete"
+        [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
         (click)="deleteEquipamento(stepper)"
         color="warn"
       >
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
         Excluir
       </button>
       <button mat-raised-button (click)="limparForm(stepper)">Limpar</button>
