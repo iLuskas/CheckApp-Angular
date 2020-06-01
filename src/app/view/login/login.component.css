@@ -5,7 +5,7 @@
 }
 .body {
     background-image: url(
-        '../../../assets/img/extintor.jpg'
+        '../../../assets/img/fundoChk.jpg'
     );
   background-position: center;
   background-size: cover;
@@ -13,6 +13,11 @@
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
 }
+
+.logo {
+  height: 70px;
+}
+
 .title-card {
   margin-bottom: 10px;
 }
@@ -72,8 +77,9 @@
   max-width: 300px;
   width: 100%;
 }
+
 .login-wrapper .example-full-width,
-.login-wrapper .btn-block {
+.login-wrapper .btn-login {
   width: 100%;
 }
 .login-wrapper mat-card-header {
