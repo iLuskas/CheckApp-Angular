@@ -22,6 +22,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDividerModule} from '@angular/material/divider';
 @NgModule({
   imports: [
     CommonModule,
@@ -45,7 +48,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatStepperModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -68,7 +74,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatStepperModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatDividerModule
   ],
   providers: [],
 })

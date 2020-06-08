@@ -48,6 +48,8 @@ import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuari
 import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
 import { EquipamentoCreateComponent } from './components/equipamento/equipamento-create/equipamento-create.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { RelatorioComponent } from './view/relatorio/relatorio.component';
+import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -86,6 +88,8 @@ registerLocaleData(localePt);
     UsuarioReadLayoutComponent,
     EquipamentoCrudComponent,
     EquipamentoCreateComponent,
+    RelatorioComponent,
+    EquipamentoReadComponent,
   ],
   imports: [
     BrowserModule,

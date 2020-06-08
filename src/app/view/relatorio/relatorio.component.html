@@ -1,0 +1,39 @@
+<div>
+  <mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">business</mat-icon>
+          Empresas
+        </ng-template>
+        <app-empresa-read></app-empresa-read>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">supervised_user_circle</mat-icon>
+          Funcionários
+        </ng-template>
+        <app-funcionario-read></app-funcionario-read>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">account_circle</mat-icon>
+          Usuários
+        </ng-template>
+        <app-usuario-read></app-usuario-read>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">portrait</mat-icon>
+          Perfil
+        </ng-template>
+        <app-perfil-read></app-perfil-read>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">whatshot</mat-icon>
+          Equipamentos
+        </ng-template>
+        <app-equipamento-read></app-equipamento-read>
+    </mat-tab>
+  </mat-tab-group>
+</div> 

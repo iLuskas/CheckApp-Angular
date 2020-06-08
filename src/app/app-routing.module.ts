@@ -11,6 +11,9 @@ import { PerfilCrudComponent } from './view/perfil-crud/perfil-crud.component';
 import { FuncionarioCrudComponent } from './view/funcionario-crud/funcionario-crud.component';
 import { UsuarioCrudComponent } from './view/usuario-crud/usuario-crud.component';
 import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
+import { RelatorioComponent } from './view/relatorio/relatorio.component';
+import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
+import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
 
 
 const routes: Routes = [
@@ -43,6 +46,10 @@ const routes: Routes = [
       {
         path: "equipamentos",
         component: EquipamentoCrudComponent
+      },
+      {
+        path: "relatorios",
+        component: RelatorioComponent,
       },
     ]
   },

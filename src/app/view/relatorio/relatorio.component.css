@@ -1,0 +1,9 @@
+.tab-icon {
+    margin-right: 8px;
+}
+
+div > mat-tab-group{
+    height: 80vh;
+}
+
+ 

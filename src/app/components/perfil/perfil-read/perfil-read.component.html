@@ -1,37 +1,24 @@
-<div class="content" fxLayout="row" fxFlexFill>
-    <div class="box-pesquisa mat-elevation-z2" fxFlex.xs="60"  [ngStyle.xs]="{'height': '40px'}">           
-          <input
-            matInput
-            type="text"
-            placeholder="Pesquisar Função"
-            class="input-filtrar"
-            name="nome"
-            class="input-pesquisar-txt"
-            [(ngModel)]="filtrarLista"    
-          />
-          <a class="btnPesquisar">
-            <i class="material-icons">
-              search
-            </i>
-          </a>
-    </div>
-    <span class="spacer-flex-right-left "></span>
-    <div class="button-add-perfil">
-      <button
-        mat-mini-fab
-        color="primary"
-        matTooltip="Novo Perfil"
-        (click)="navigateToCreate()"
-      >
-        <i class="material-icons v-middle">
-          add
-        </i>
-      </button>
-    </div>
-  </div>
-  
+<div class="content" fxLayout="column">
   <div class="mat-elevation-z4">
-    <table mat-table [dataSource]="dataSource">
+    <div fxLayout="row">
+      <span class="spacer-flex-right-left"></span>
+      <div fxLayoutAlign="center center">
+        <h2>PERFIL</h2>
+      </div>
+      <span class="spacer-flex-right-left"></span>
+      <div class="btnExportar-container">
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Botão de exportar tabela"
+          matTooltip="Exportar em Excel"
+          (click)="ExportExcel()"
+        >
+          <mat-icon>description</mat-icon>
+        </button>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" id="table-perfil">
       <!-- Id Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -71,4 +58,5 @@
     </table>
     <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
+</div>
   

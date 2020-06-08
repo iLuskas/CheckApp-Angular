@@ -6,6 +6,10 @@ th {
     text-align: left;
   }
 
+  h3 {
+    font-weight: 570;
+  }
+
 .edit {
     margin: 0 10px 0 10px;
 }
@@ -76,6 +80,32 @@ th {
     width: 0px;
   }
 
-
+  .form-container {
+    margin-top: 30px;
+  }
+  
+  .check-margin {
+    margin: 0 10px;
+  }
+  
+  .configuration-container{
+     margin-top: 10px;
+  }
+  
+  .h3-pesquisa {
+    margin-right: 10px;
+  }
+  
+  .form-field {
+      width: 400px;
+  }
+  
+  .btnExportar-container{
+      margin: 10px;
+  }
+  
+  .table-telefone-container {
+    margin-top: 20px;
+  }
 
 

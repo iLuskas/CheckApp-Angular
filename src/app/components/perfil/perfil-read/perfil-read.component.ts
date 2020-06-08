@@ -4,8 +4,8 @@ import { PerfilDTO } from 'src/app/models/PerfilDTO';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+import * as XLSX from "xlsx";
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-perfil-read',
   templateUrl: './perfil-read.component.html',
@@ -15,13 +15,12 @@ export class PerfilReadComponent implements OnInit {
   private _filtroLista: string;
   perfils: PerfilDTO[];
   dataSource = new MatTableDataSource<PerfilDTO>(this.perfils);
-  displayedColumns = ['id', 'funcao_perfil', 'action'];
+  displayedColumns = ['id', 'funcao_perfil'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(
     private perfilService: PerfilService,
-    private router: Router
-    ) { }
+    private datePipe: DatePipe) { }
 
   get filtrarLista() {
     return this._filtroLista;
@@ -55,7 +54,21 @@ export class PerfilReadComponent implements OnInit {
     );
   }
 
-  navigateToCreate() {
-    this.router.navigate(['/perfils/create']);
+  ExportExcel() {
+    let element = document.getElementById("table-perfil");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, "PERFIL");
+
+    XLSX.writeFile(
+      wb,
+      `CHKAPP_PERFIL${this.transformDate(new Date())}.xlsx`
+    );
+  }
+
+  transformDate(date): string {
+    return this.datePipe.transform(date, "yyyyMMddHHmm");
   }
 }
