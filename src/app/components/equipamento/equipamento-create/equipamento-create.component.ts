@@ -40,6 +40,7 @@ export class EquipamentoCreateComponent implements OnInit {
   display: boolean = false;
   elementType: 'url' | 'canvas' | 'img' = 'url';
   isLoading: boolean;
+  metodoApi: string = 'postEquipamento';
   private formSubmitAttempt: boolean;
   @ViewChild("autosize") autosize: CdkTextareaAutosize;
 
@@ -197,14 +198,18 @@ export class EquipamentoCreateComponent implements OnInit {
       });
   }
 
-  createEquipamento(stepper: any) {
+  salvarEquipamento(stepper: any) {
     this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
     this.equipamentoSeguranca.qrCode = this.qrData;
     console.log(JSON.stringify(this.equipamentoSeguranca));
-    this.equipamentoService.postEquipamento(this.equipamentoSeguranca).subscribe(
+    this.equipamentoService[this.metodoApi](this.equipamentoSeguranca).subscribe(
       () =>{
-        this.equipamentoService.showMessage("Equipamento criado com sucesso!");
+        this.equipamentoService.showMessage(
+          !this.UpdateOrDelete ?
+          "Equipamento criado com sucesso!" :
+          "Equipamento alterado com sucesso!"
+          );
         this.limparForm(stepper);
         this.isLoading = !this.isLoading;
       }
@@ -282,6 +287,7 @@ export class EquipamentoCreateComponent implements OnInit {
     this.qrData = this.formCreate.controls['qrCode'].value;
     this.display = this.qrData ? true : false;
     this.UpdateOrDelete = true;
+    this.metodoApi = "putEquipamento";
     console.log('selectExtintor', extintor);
   }
 
@@ -316,6 +322,7 @@ export class EquipamentoCreateComponent implements OnInit {
     this.UpdateOrDelete = false;
     this.qrData = "";
     this.display = false;
+    this.metodoApi = 'postEquipamento';
   }
 
   onSearchChange(searchValue: string): void { 

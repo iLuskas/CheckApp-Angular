@@ -72,31 +72,21 @@
     </form>
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || UpdateOrDelete"
+      [disabled]="!formCreate.valid || isLoading"
       (click)="createUsuario()"
       color="primary"
     >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Salvar
     </button>
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || !UpdateOrDelete"
-      (click)="updateUsuario()"
-      color="primary"
-    >
-      Editar
-    </button>
-    <button
-      mat-raised-button
-      [disabled]="!formCreate.valid || !UpdateOrDelete"
+      [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
       (click)="deleteUsuario()"
       color="warn"
     >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Excluir
-    </button>
-
-    <button mat-raised-button (click)="limparForm()">
-      Cancelar
     </button>
   </mat-card>
 </div>

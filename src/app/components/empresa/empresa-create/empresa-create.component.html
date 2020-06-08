@@ -363,23 +363,13 @@
 
     <button
       mat-raised-button
-      [disabled]="!formCreate.valid || UpdateOrDelete || isLoading"
-      (click)="createEmpresa()"
+      [disabled]="!formCreate.valid || isLoading"
+      (click)="salvarEmpresa()"
       color="primary"
     >
     <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
       Salvar
     </button>
-    <button
-      mat-raised-button
-      [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
-      (click)="updateEmpresa()"
-      class="btn-editar"
-    >
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-      Editar
-    </button>
-
     <button
       mat-raised-button
       (click)="deleteEmpresa()"

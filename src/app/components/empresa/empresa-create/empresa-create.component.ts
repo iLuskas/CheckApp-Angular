@@ -23,6 +23,7 @@ export class EmpresaCreateComponent implements OnInit {
   UpdateOrDelete: boolean = false;
   Create: boolean = true;
   isLoading:  boolean;
+  metodoApi: string = 'postEmpresaCliente';
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -106,12 +107,16 @@ export class EmpresaCreateComponent implements OnInit {
     );
   }
 
-  createEmpresa(): void {
+  salvarEmpresa(): void {
     this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
-    this.empresaService.postEmpresaCliente(this.empresa).subscribe(
+    this.empresaService[this.metodoApi](this.empresa).subscribe(
       () => {
-        this.empresaService.showMessage("Empresa criada com sucesso!");
+        this.empresaService.showMessage(
+          !this.UpdateOrDelete ?
+          "Empresa criada com sucesso!" :
+          "Empresa atualizada com sucesso!"
+          );
         this.limparForm();
         this.isLoading = !this.isLoading;
     });
@@ -140,6 +145,7 @@ export class EmpresaCreateComponent implements OnInit {
 
   updateForm(modeloEmpresa: EmpresaClienteDTO): void {
     this.UpdateOrDelete = true;
+    this.metodoApi = 'putEmpresaCliente';
     console.log(modeloEmpresa);
     this.formCreate.patchValue(modeloEmpresa);
   }
@@ -148,6 +154,7 @@ export class EmpresaCreateComponent implements OnInit {
     this.formCreate.reset();
     this.getAllEmpresas();
     this.UpdateOrDelete = false;
+    this.metodoApi = 'postEmpresaCliente';
   }
 
   addNovoEndereco() {

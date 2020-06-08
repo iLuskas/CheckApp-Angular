@@ -494,22 +494,13 @@
     <div>
       <button
         mat-raised-button
-        [disabled]="!formGroupCreatePerfil.valid || UpdateOrDelete || isLoading"
-        (click)="createFuncionario(stepper)"
+        [disabled]="!formGroupCreatePerfil.valid || isLoading"
+        (click)="salvarFuncionario(stepper)"
         color="primary"
       >
       <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
         Salvar
       </button>
-      <button
-      mat-raised-button
-      [disabled]="!formGroupCreatePerfil.valid || !UpdateOrDelete || isLoading"
-      (click)="updateFuncionario(stepper)"
-      class="btn-editar"
-    >
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-      Editar
-    </button>
       <button
       mat-raised-button
       [disabled]="!formGroupCreatePerfil.valid || !UpdateOrDelete || isLoading"

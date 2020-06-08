@@ -33,6 +33,7 @@ export class FuncionarioCreateComponent implements OnInit {
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<FuncionarioDTO[]>;
   isLoading: boolean;
+  metodoApi: string = 'postFuncionario';
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -189,12 +190,16 @@ export class FuncionarioCreateComponent implements OnInit {
       });
   }
 
-  createFuncionario(stepper: any): void {
+  salvarFuncionario(stepper: any): void {
     this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
     console.log(this.funcionario);
-    this.funcionarioService.postFuncionario(this.funcionario).subscribe(() => {
-      this.funcionarioService.showMessage("Funcionário criada com sucesso!");
+    this.funcionarioService[this.metodoApi](this.funcionario).subscribe(() => {
+      this.funcionarioService.showMessage(
+        !this.UpdateOrDelete ?
+        "Funcionário criado com sucesso!" :
+        "Funcionário alterado com sucesso"
+        );
       this.limparForm(stepper);
       this.isLoading = !this.isLoading;
     });
@@ -203,7 +208,6 @@ export class FuncionarioCreateComponent implements OnInit {
   updateFuncionario(stepper: any): void {
     this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
-    console.log(this.funcionario);
     this.funcionarioService.putFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário alterado com sucesso!");
       this.limparForm(stepper);
@@ -261,6 +265,7 @@ export class FuncionarioCreateComponent implements OnInit {
 
   updateForm(modeloFuncionario: FuncionarioDTO): void {
     this.UpdateOrDelete = true;
+    this.metodoApi = 'putFuncionario';
     console.log(modeloFuncionario);
     this.formCreate.patchValue(modeloFuncionario);
     this.getPerfilById(modeloFuncionario.perfilId);
@@ -279,7 +284,10 @@ export class FuncionarioCreateComponent implements OnInit {
     this.formGroupcreateUsuario.reset();
     this.usuario = null;
     this.getAllFuncionarios();
+    this.getAllPerfils();
+    this.getAllUsuarios();
     this.UpdateOrDelete = false;
+    this.metodoApi = 'postFuncionario';
   }
 
   addNovoEndereco() {

@@ -338,21 +338,12 @@
     <div>
       <button
         mat-raised-button
-        [disabled]="!formCreate.valid || UpdateOrDelete || isLoading"
-        (click)="createEquipamento(stepper)"
+        [disabled]="!formCreate.valid || isLoading"
+        (click)="salvarEquipamento(stepper)"
         color="primary"
       >
       <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
         Salvar
-      </button>
-      <button
-        mat-raised-button
-        [disabled]="!formCreate.valid || !UpdateOrDelete || isLoading"
-        (click)="updateEquipamento(stepper)"
-        class="btn-editar"
-      >
-      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-        Editar
       </button>
       <button
         mat-raised-button

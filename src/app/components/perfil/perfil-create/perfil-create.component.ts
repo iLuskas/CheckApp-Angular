@@ -19,6 +19,7 @@ export class PerfilCreateComponent implements OnInit {
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<PerfilDTO[]>;
   isLoading: boolean;
+  metodoApi: string = 'postPerfil';
   private _filter(value: string): PerfilDTO[] {
     if (!value) return;
 
@@ -30,8 +31,7 @@ export class PerfilCreateComponent implements OnInit {
 
   constructor(
     private perfilService: PerfilService,
-    private fb: FormBuilder,
-    private router: Router
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -70,8 +70,12 @@ export class PerfilCreateComponent implements OnInit {
     this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
     console.log(this.perfil);
-    this.perfilService.postPerfil(this.perfil).subscribe(() => {
-      this.perfilService.showMessage("Perfil criado com sucesso!");
+    this.perfilService[this.metodoApi](this.perfil).subscribe(() => {
+      this.perfilService.showMessage(
+        !this.UpdateOrDelete ?
+        "Perfil criado com sucesso!" :
+        "Perfil alterado com sucesso!"
+        );
       this.isLoading = !this.isLoading;
       this.limparForm();
       this.getAllPerfils();
@@ -104,6 +108,7 @@ export class PerfilCreateComponent implements OnInit {
 
   updateForm(modeloPerfil: PerfilDTO): void {
     this.UpdateOrDelete = true;
+    this.metodoApi = 'putPerfil'
     console.log(modeloPerfil);
     this.formCreate.patchValue(modeloPerfil);
   }
@@ -113,6 +118,7 @@ export class PerfilCreateComponent implements OnInit {
     this.formCreate.reset();
     this.perfil = null;
     this.UpdateOrDelete = false;
+    this.metodoApi = 'postPerfil';
   }
 
   onSearchChange(searchValue: string): void { 

@@ -20,7 +20,8 @@ export class UsuarioCreateComponent implements OnInit {
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<Usuario[]>;
   lblSenha : string = "Senha";
-  
+  isLoading: boolean;
+  metodoApi: string = 'postUsuario';
   private _filter(value: string): Usuario[] {
     if(!value)
       return;
@@ -70,21 +71,29 @@ export class UsuarioCreateComponent implements OnInit {
 
   createUsuario(): void {
     this.usuario = this.formCreate.value;
+    this.isLoading = !this.isLoading;
     console.log('USUARIO',this.usuario);
-    this.usuarioService.postUsuario(this.usuario).subscribe(
+    this.usuarioService[this.metodoApi](this.usuario).subscribe(
       () => {
-        this.usuarioService.showMessage("Usuário criado com sucesso!");
+        this.usuarioService.showMessage(
+          !this.UpdateOrDelete ?
+          "Usuário criado com sucesso!" :
+          "Usuário alterado com sucesso!"
+          );       
         this.limparForm();
+        this.isLoading = !this.isLoading;
       });
   }
 
   deleteUsuario(): void {
     this.usuario = this.formCreate.value;
+    this.isLoading = !this.isLoading;
     console.log(this.usuario);
     this.usuarioService.deleteUsuario(this.usuario).subscribe(
       () => {
         this.usuarioService.showMessage("Usuário removido com sucesso!");
         this.limparForm();
+        this.isLoading = !this.isLoading;
       });
   }
 
@@ -99,7 +108,8 @@ export class UsuarioCreateComponent implements OnInit {
   }
 
   updateForm(modeloUsuario: Usuario): void {
-    this.lblSenha = "Senha Atual"; 
+    this.lblSenha = "Senha Atual";
+    this.metodoApi = 'putUsuario';
     this.UpdateOrDelete = true;
     console.log(modeloUsuario);
     this.formCreate.patchValue(modeloUsuario);
@@ -111,6 +121,7 @@ export class UsuarioCreateComponent implements OnInit {
     this.usuario = null;
     this.UpdateOrDelete = false;
     this.lblSenha = "Senha"; 
+    this.metodoApi = 'postUsuario';
   }
 
   confirmSenhas(controlName: string, matchingControlName: string) {
