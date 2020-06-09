@@ -69,17 +69,12 @@ mat-toolbar {
     background-color: white;
 }
 
-.container-Logout_ {
-    display: flex;
 
-    align-items: center;
-}
-
-.btnLogout {
+.btnLogout-mobile {
     color: white;
 }
 
-.lblSair {
+.lblSair-mobile {
     font-size: 0.8em;
     opacity: 0.5;
     color: white;

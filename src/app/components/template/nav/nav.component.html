@@ -24,7 +24,7 @@
     </a>
   </span>
   <span class="spacer-flex-right-left"></span>
-  <div fxShow.gt-xs="false" fxShow="true" class="container-Logout_">
+  <div fxShow.xs="false" fxShow="true" class="container-Logout_">
     <span class="lblSair">Sair</span>
     <button
       mat-icon-button
@@ -74,13 +74,13 @@
         </mat-nav-list>
       </div>
       <div class="container-Logout" [fxShow]="(isHandSet$ | async) === true">
-        <div fxShow.xs="false" fxShow="true" class="container-Logout_">
-          <span class="lblSair">Sair</span>
+        <div class="container-Logout_">
+          <span class="lblSair-mobile">Sair</span>
           <button
             mat-icon-button
             color="primary"
             aria-label="button para sair"
-            class="btnLogout"
+            class="btnLogout-mobile"
             (click)="onLogout()"
           >
             <i class="material-icons" matTooltip="Sair">
