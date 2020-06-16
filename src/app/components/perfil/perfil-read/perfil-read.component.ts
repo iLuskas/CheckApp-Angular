@@ -49,7 +49,6 @@ export class PerfilReadComponent implements OnInit {
       (perfils: PerfilDTO[]) => {
         this.perfils = perfils;
         this.dataSource.data = perfils;
-        console.log(this.perfils);
       }
     );
   }

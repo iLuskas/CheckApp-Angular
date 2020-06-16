@@ -1,0 +1,136 @@
+<div class="login-wrapper body" fxLayout="column" fxLayoutAlign="center center">
+  <div>
+    <img class="logo" src="../../../assets/img/checkapp_logo_02.png" alt="logo" />
+  </div>
+  <mat-card class="box mat-elevation-z6">
+    <mat-card-header>
+      <mat-card-title
+        ><span>{{ titulo }}</span></mat-card-title
+      >
+    </mat-card-header>
+    <div class="alterouSenha" *ngIf="alterouSenha">
+      <mat-card-content>
+        <p class="alterouSenha-txt">Sua senha foi alterado com sucesso!</p>
+        <span>Para logar-se, </span>
+        <a routerLink="/login" routerLinkActive class="alterouSenha-link"
+          >Clique aqui</a
+        >
+      </mat-card-content>
+    </div>
+    <form
+      [formGroup]="formRecuperaSenha"
+      class="example-form"
+      (ngSubmit)="onSubmit()"
+      *ngIf="!token"
+    >
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Ex: contoso@gmail.com"
+            type="email"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="isFieldInvalid('email')">
+          Informe o E-mail.
+        </mat-error>
+      </mat-card-content>
+      <button
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+        [disabled]="!formRecuperaSenha.valid || isLoading || EmailEnviado"
+      >
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
+        {{ !EmailEnviado ? "Enviar" : "Enviado!" }}
+      </button>
+    </form>
+
+    <form
+      class="example-form"
+      [formGroup]="formAlteraSenha"
+      (ngSubmit)="onSubmitFormAlterarSenha()"
+      *ngIf="token && !alterouSenha"
+    >
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Ex: contoso@gmail.com"
+            type="email"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="isFieldInvalid('email')">
+          Informe o E-mail.
+        </mat-error>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Nova Senha</mat-label>
+          <input
+            matInput
+            formControlName="senha"
+            placeholder="Nova Senha"
+            type="password"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="isFieldInvalid('senha', true)">
+          Informe o senha.
+        </mat-error>
+        <mat-error *ngIf="hasError('senha', 'maxlength', true)">
+          O máximo de caracteres é 30
+        </mat-error>
+        <mat-error *ngIf="hasError('senha', 'minlength', true)">
+          O mínimo de caracteres é 6
+        </mat-error>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Confirmar Nova Senha</mat-label>
+          <input
+            matInput
+            formControlName="confirmSenha"
+            placeholder="Confirmar Nova Senha"
+            type="password"
+          />
+        </mat-form-field>
+        <mat-error *ngIf="isFieldInvalid('confirmSenha', true)">
+          Informe o senha novamente.
+        </mat-error>
+        <mat-error *ngIf="hasError('confirmSenha', 'maxlength', true)">
+          O máximo de caracteres é 30
+        </mat-error>
+        <mat-error *ngIf="hasError('confirmSenha', 'minlength', true)">
+          O mínimo de caracteres é 6
+        </mat-error>
+      </mat-card-content>
+      <button
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+        [disabled]="!formAlteraSenha.valid || isLoading || alterouSenha"
+      >
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
+        Salvar
+      </button>
+    </form>
+
+    <div class="container-link-voltar">
+      <a
+        routerLink="/login"
+        routerLinkActive
+        class="link-voltar"
+        *ngIf="!alterouSenha && !token"
+        >Voltar</a
+      >
+    </div>
+  </mat-card>
+</div>

@@ -14,6 +14,7 @@ import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-cr
 import { RelatorioComponent } from './view/relatorio/relatorio.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
 import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
+import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
 
 
 const routes: Routes = [
@@ -60,6 +61,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'recuperarSenha',
+        component: RecuperarSenhaComponent
       }
     ]
   },

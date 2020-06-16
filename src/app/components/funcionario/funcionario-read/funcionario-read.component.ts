@@ -128,7 +128,6 @@ export class FuncionarioReadComponent implements OnInit, AfterViewInit {
 
     if (this.PesquisaPorPerfil) {
       if (this.perfil) {
-        console.log('perfil', this.perfil)
         return this.funcionarios.filter(
           (funcionarios) =>
             funcionarios.perfilId
@@ -157,7 +156,6 @@ export class FuncionarioReadComponent implements OnInit, AfterViewInit {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;
       this.autoCompletePerfil();
-      console.log(this.perfils);
     });
   }
 

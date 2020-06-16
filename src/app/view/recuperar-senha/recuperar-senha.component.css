@@ -4,22 +4,12 @@
   padding: 0;
 }
 .body {
-    background-image: url(
-        '../../../assets/img/fundoChk.jpg'
-    );
+  background-image: url('../../../assets/img/fundoChk.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
-}
-
-.logo {
-  height: 70px;
-}
-
-.title-card {
-  margin-bottom: 10px;
 }
 .app-header {
   justify-content: space-between;
@@ -34,7 +24,10 @@
 .login-wrapper {
   height: 100%;
 }
-
+.positronx {
+  text-decoration: none;
+  color: #ffffff;
+}
 .box {
   position: relative;
   top: 0;
@@ -76,10 +69,10 @@
   min-width: 100%;
   max-width: 300px;
   width: 100%;
+  margin-top: 20px;
 }
-
 .login-wrapper .example-full-width,
-.login-wrapper .btn-login {
+.login-wrapper .btn-block {
   width: 100%;
 }
 .login-wrapper mat-card-header {
@@ -104,13 +97,36 @@
   padding: 0.8375em 0;
 }
 
-.link-recuperaSenha {
-  text-decoration: none;
-  color: #000;
-  font-weight: 500;
+mat-card-title > span {
+  font-size: 25px;
+}
+.container-link-voltar {
   margin-top: 10px;
 }
 
-.link-recuperaSenha:hover {
+.link-voltar {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+
+.link-voltar:hover {
   color: rgb(66, 65, 65);
+}
+.alterouSenha {
+  margin-top: 20px;
+}
+
+.alterouSenha-txt {
+  text-align: justify;
+  font-size: 16px;
+}
+
+.alterouSenha-link {
+  text-align: justify;
+  font-size: 16px;
+}
+
+.logo {
+  height: 70px;
 }

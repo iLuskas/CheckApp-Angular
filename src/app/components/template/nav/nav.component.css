@@ -25,7 +25,6 @@ mat-toolbar {
 
 .header .title-group {
     display: flex;
-    padding-left: 10px;
 }
 
 .header .title-group i {

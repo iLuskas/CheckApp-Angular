@@ -50,6 +50,8 @@ import { EquipamentoCreateComponent } from './components/equipamento/equipamento
 import { QRCodeModule } from 'angularx-qrcode';
 import { RelatorioComponent } from './view/relatorio/relatorio.component';
 import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
+import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
+import { AgendamentoComponent } from './components/agendamento/agendamento.component';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -90,6 +92,8 @@ registerLocaleData(localePt);
     EquipamentoCreateComponent,
     RelatorioComponent,
     EquipamentoReadComponent,
+    RecuperarSenhaComponent,
+    AgendamentoComponent,
   ],
   imports: [
     BrowserModule,

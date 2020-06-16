@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
 import { Usuario } from '../models/Usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/internal/operators/map';
 import { catchError } from 'rxjs/operators';
+import { AlterarSenhaUsuario } from '../models/modelsHelper/AlterarSenhaUsuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
   baseURL = 'https://www.safetyplan.net.br/checkapp/api/Usuario';
-  //baseURL = 'https://localhost:5001/api/Usuario';
+  //baseURL = 'https://localhost:44363/api/Usuario';
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -23,8 +24,14 @@ export class UsuarioService {
     });
   }
 
-  erroHandler(e: any): Observable<any> {
-    this.showMessage("Ocorreu um erro!", true);
+  erroHandler(e: HttpErrorResponse): Observable<any> {
+    console.log(e);
+    let mensagem = 'Ocorreu um erro!';
+    if(e.status === 401){
+      mensagem = "Sessão expirada!"
+    }
+
+    this.showMessage(mensagem, true);
     return EMPTY;
   }
 
@@ -53,6 +60,33 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(`${this.baseURL}/${id}`).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
+    );
+  }
+
+  RecuperarSenhaUsuario(email:string) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+      responseType: "text"
+    };
+
+    return this.http.post(`${this.baseURL}/recuperarSenha?email=${email}`, options).pipe(
+      map((obj) => obj)
+    );
+  }
+
+  AlterarSenha(modelo: AlterarSenhaUsuario, token: string) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + token
+      }),
+      responseType: "text"
+    };
+
+    return this.http.post(`${this.baseURL}/alterarSenha`, modelo ,options).pipe(
+      map((obj) => obj)
     );
   }
 

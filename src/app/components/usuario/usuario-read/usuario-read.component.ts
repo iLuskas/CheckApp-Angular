@@ -82,7 +82,6 @@ export class UsuarioReadComponent implements OnInit, AfterViewInit {
 
   incluirFuncionario(usuarios: Usuario[]) {
     this.usuarioHelper = [];
-    usuarios.forEach( usuario => console.log('USUARIOS',usuario))
     usuarios.forEach((usuario) =>
     {
       this.usuarioHelper.push(
