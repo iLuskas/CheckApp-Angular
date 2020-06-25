@@ -25,7 +25,6 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
-import { EmpresaReadLayoutComponent } from './layouts/empresa-read-layout/empresa-read-layout.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PerfilCrudComponent } from './view/perfil-crud/perfil-crud.component';
 import { PerfilReadComponent } from './components/perfil/perfil-read/perfil-read.component';
@@ -37,14 +36,11 @@ import { FuncionarioReadComponent } from './components/funcionario/funcionario-r
 import { FuncionarioCreateComponent } from './components/funcionario/funcionario-create/funcionario-create.component';
 import { FuncionarioUpdateComponent } from './components/funcionario/funcionario-update/funcionario-update.component';
 import { FuncionarioDeleteComponent } from './components/funcionario/funcionario-delete/funcionario-delete.component';
-import { PerfilReadLayoutComponent } from './layouts/perfil-read-layout/perfil-read-layout.component';
-import { FuncionarioReadLayoutComponent } from './layouts/funcionario-read-layout/funcionario-read-layout.component';
 import { UsuarioCrudComponent } from './view/usuario-crud/usuario-crud.component';
 import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-read.component';
 import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
-import { UsuarioReadLayoutComponent } from './layouts/usuario-read-layout/usuario-read-layout.component';
 import { EquipamentoCrudComponent } from './view/equipamento-crud/equipamento-crud.component';
 import { EquipamentoCreateComponent } from './components/equipamento/equipamento-create/equipamento-create.component';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -52,6 +48,7 @@ import { RelatorioComponent } from './view/relatorio/relatorio.component';
 import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
 import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
 import { AgendamentoComponent } from './components/agendamento/agendamento.component';
+import { HomeDashboardLayoutComponent } from './layouts/home-dashboard-layout/home-dashboard-layout.component';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -69,7 +66,6 @@ registerLocaleData(localePt);
     EmpresaUpdateComponent,
     EmpresaCreateComponent,
     EmpresaDeleteComponent,
-    EmpresaReadLayoutComponent,
     PerfilCrudComponent,
     PerfilReadComponent,
     PerfilCreateComponent,
@@ -80,20 +76,18 @@ registerLocaleData(localePt);
     FuncionarioCreateComponent,
     FuncionarioUpdateComponent,
     FuncionarioDeleteComponent,
-    PerfilReadLayoutComponent,
-    FuncionarioReadLayoutComponent,
     UsuarioCrudComponent,
     UsuarioReadComponent,
     UsuarioCreateComponent,
     UsuarioUpdateComponent,
     UsuarioDeleteComponent,
-    UsuarioReadLayoutComponent,
     EquipamentoCrudComponent,
     EquipamentoCreateComponent,
     RelatorioComponent,
     EquipamentoReadComponent,
     RecuperarSenhaComponent,
     AgendamentoComponent,
+    HomeDashboardLayoutComponent,
   ],
   imports: [
     BrowserModule,

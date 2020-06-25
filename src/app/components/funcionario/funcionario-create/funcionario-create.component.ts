@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FuncionarioDTO } from "src/app/models/FuncionarioDTO";
-import { FormGroup, FormArray, Validators, FormBuilder } from "@angular/forms";
+import { FormGroup, FormArray, Validators, FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { FuncionarioService } from "src/app/services/Funcionario.service";
 import { PerfilDTO } from "src/app/models/PerfilDTO";
@@ -144,7 +144,7 @@ export class FuncionarioCreateComponent implements OnInit {
   criaFormGroupUsuario(): void {
     this.formGroupcreateUsuario = this.fb.group({
       id: [null],
-      login: [""],
+      login: new FormControl(""),
       senha: [""],
     });
   }
@@ -258,7 +258,7 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
   usuarioSelecionado(usuario: Usuario): void {
-    this.formGroupcreateUsuario.patchValue(usuario);
+    this.formGroupcreateUsuario.patchValue(usuario)
     this.formCreate.controls["usuarioid"].patchValue(usuario.id);
     console.log('formcreateAfterusuario',this.formCreate.value);
   }

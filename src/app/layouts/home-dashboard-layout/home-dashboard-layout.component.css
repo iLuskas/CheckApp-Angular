@@ -1,0 +1,191 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  th,
+  td {
+    overflow: hidden;
+  }
+  
+  mat-card {
+    padding: 16px 0 0 0;
+  }
+  
+  .cards {
+    margin: 0 10px 10px 10px;
+  }
+  
+  .home {
+    text-align: center;
+  }
+  
+  .home .title {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.2;
+  }
+  
+  .home .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .container-agendamentos {
+    flex-wrap: wrap;
+  }
+  
+  .agendamento-wrap-sm {
+    margin-top: 20px;
+  }
+  
+  .container-agendaQtd {
+    height: 15vh;
+  }
+  
+  .input-dataInicial {
+    width: 11vw;
+  }
+  
+  .input-dataFinal{
+    width: 11vw;
+  }
+  
+  .container-border-qtd {
+    border-top: solid 1px #000;
+    border-left: solid 1px #000;
+    border-right: solid 1px #000;
+    width: 23vw;
+    height: 5vw;
+    position: relative;
+    left: 10%;
+    top: 10px;
+    bottom: 0px;
+  }
+  
+  .container-border-qtd2 {
+    border-top: solid 1px #000;
+    border-right: solid 1px #000;
+    width: 20vw;
+    height: 5vw;
+    position: relative;
+    left: 10%;
+    top: 10px;
+    bottom: 0px;
+  }
+  
+  .container-border-qtd3 {
+    border-top: solid 1px #000;
+    border-right: solid 1px #000;
+    width: 20vw;
+    height: 5vw;
+    position: relative;
+    left: 10%;
+    top: 10px;
+    bottom: 0px;
+  }
+  
+  .container-qtd {
+    width: 99px;
+    height: 50px;
+    position: relative;
+    left: 20%;
+    top: 30px;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    height: 46px;
+    font: 35px Futura, Arial;
+  }
+  
+  .container-qtd2 {
+    width: 99px;
+    height: 50px;
+    position: relative;
+    left: 49%;
+    top: 30px;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    height: 46px;
+    font: 35px Futura, Arial;
+  }
+  
+  .container-qtd3 {
+    width: 99px;
+    height: 50px;
+    position: relative;
+    left: 64%;
+    top: 30px;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    height: 46px;
+    font: 35px Futura, Arial;
+  }
+  
+  .container-qtd-label {
+    font-size: 2.1rem;
+    margin-top: 15px;
+  }
+  
+  .container-label-qtd {
+    width: calc(100% - 600px - 2em);
+  }
+  .container-label-qtd::after {
+    content: "";
+    clear: both;
+  }
+  
+  .label-qtd {
+    float: right;
+  }
+  
+  .titulos-lists {
+    font-size: 1.1rem;
+  }
+  .mat-column-totalacc {
+    text-align: right;
+  }
+  
+  .mat-column-status {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-empresa {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 60% !important;
+    width: 60% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .container-form-datas {
+    margin-top: 10px;
+  }
+  

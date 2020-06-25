@@ -4,11 +4,12 @@
 
     <form [formGroup]="formCreate">
       <div fxLayout="row" fxLayout.xs="column">
-        <div fxFlex="40">
-          <mat-form-field
+        <div fxFlex>
+          <mat-form-field appearance="outline"
             class="input-razaoSocial"
-            [ngStyle.xs]="{ width: '250px' }"
+            
           >
+            <mat-label>Nome:</mat-label>
             <input
               matInput
               type="text"
@@ -34,8 +35,9 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="20">
-          <mat-form-field>
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>CNPJ:</mat-label>
             <input
               matInput
               type="text"
@@ -55,7 +57,8 @@
           </mat-form-field>
         </div>
         <div fxFlex>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Incrição Estadual:</mat-label>
             <input
               matInput
               type="text"
@@ -86,7 +89,7 @@
             <mat-panel-title>
               <i
                 class="material-icons v-middle visibility_icon"
-                matTooltip="Editar"
+                matTooltip="{{ panelEndOpenState ? 'Fechar' : 'Abrir'}}"
               >
                 {{ panelEndOpenState ? "visibility_off" : "visibility" }}
               </i>
@@ -100,7 +103,8 @@
           <div formArrayName="enderecoDTOs" fxLayout="row wrap">
             <div *ngFor="let endereco of enderecoDTOsArray; let i = index">
               <div [formGroupName]="i" class="arrayForm-end" fxLayoutGap="2%">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>País:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -120,7 +124,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Cidade:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -140,7 +145,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Estado:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -160,7 +166,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Bairro:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -180,7 +187,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Rua:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -200,7 +208,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Número:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -220,7 +229,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>CEP:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -270,7 +280,7 @@
             <mat-panel-title>
               <i
                 class="material-icons v-middle visibility_icon"
-                matTooltip="Editar"
+                matTooltip="{{ panelTelOpenState ? 'Fechar' : 'Abrir'}}"
               >
                 {{ panelTelOpenState ? "visibility_off" : "visibility" }}
               </i>
@@ -286,7 +296,8 @@
               fxLayout="row wrap"
             >
               <div [formGroupName]="i" fxLayoutGap="2%">
-                <mat-form-field class="input-ddd_tel-field">
+                <mat-form-field  appearance="outline" class="input-ddd_tel-field">
+                  <mat-label>DDD:</mat-label>
                   <input
                     matInput
                     type="text"
@@ -311,7 +322,8 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="input-telefone_tel-field">
+                <mat-form-field appearance="outline" class="input-telefone_tel-field">
+                  <mat-label>Telefone:</mat-label>
                   <input
                     matInput
                     type="text"

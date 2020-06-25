@@ -25,6 +25,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   imports: [
     CommonModule,
@@ -51,7 +52,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatProgressBarModule,
     MatTabsModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -77,7 +79,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatProgressBarModule,
     MatTabsModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
 })

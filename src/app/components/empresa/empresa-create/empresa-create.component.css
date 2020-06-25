@@ -37,12 +37,12 @@ mat-accordion {
 }
 
 .input-razaoSocial {
-    width: 400px;
+    width: calc(100% - 20px - 2em);
 }
 
 .input-ddd_tel-field {
     margin-top: 10px;
-    width: 40px;
+    width: calc(100% - 300px - 2em);
 }
 .input-telefone_tel-field{
     margin-top: 10px;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService } from 'src/app/components/template/header/header.service';
 
@@ -7,7 +7,7 @@ import { HeaderService } from 'src/app/components/template/header/header.service
   templateUrl: './relatorio.component.html',
   styleUrls: ['./relatorio.component.css']
 })
-export class RelatorioComponent implements OnInit {
+export class RelatorioComponent implements OnInit, AfterContentInit {
 
   tabs: { icon: string, nameTab: string}[] = [
     {icon: 'business', nameTab: 'Empresas'},
@@ -20,12 +20,16 @@ export class RelatorioComponent implements OnInit {
     private router: Router,
     private headerService: HeaderService) { }
 
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.headerService.HeaderData = {
       title: "Relatórios",
       icone: "bar_chart",
       routeUrl: "/relatorios",
     };
+  }
+
+  ngOnInit(): void {
+
   }
 
 }

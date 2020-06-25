@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { HeaderData } from '../header/header-data.model';
 import { HeaderService } from '../header/header.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -20,7 +20,8 @@ export class NavComponent implements OnInit {
     shareReplay()
   );
   navItens: any[] = [
-    {link: '/home', icon: 'home', nameMenu: 'Início'},
+    {link: '/home', icon: 'home', nameMenu: 'Início'}, 
+    {link: '/agendamentos', icon: 'event_note', nameMenu: 'Agendamentos'},
     {link: '/empresas', icon: 'business', nameMenu: 'Empresas'},
     {link: '/funcionarios', icon: 'supervised_user_circle', nameMenu: 'Funcionários'},
     {link: '/usuarios', icon: 'account_circle', nameMenu: 'Usuários'},

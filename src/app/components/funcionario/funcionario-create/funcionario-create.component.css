@@ -19,7 +19,8 @@ button {
 }
 
 .button-remove-container {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
 }
 .button-add-panel {
     margin: 0 auto;
@@ -29,6 +30,7 @@ button {
 }
 mat-accordion {
     margin-top: 20px;
+    width: 100%;
 }
 
 .arrayForm-end{
@@ -36,13 +38,21 @@ mat-accordion {
 }
 
 .input-nome {
-    width: 300px;
+    width: calc(100% - 20px - 2em);
 }
 
 .input-email {
-    width: 250px;
+    width: calc(100% - 20px - 2em);
 }
 
 .container-input-field {
     margin-top: 10px;
+}
+
+.input-ddd{
+    width: calc(100% - 300px - 2em);
+}
+
+::ng-deep .mat-horizontal-content-container { 
+    padding: 0 0 10px 0 !important;
 }

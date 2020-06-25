@@ -15,19 +15,24 @@ import { RelatorioComponent } from './view/relatorio/relatorio.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
 import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
 import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
+import { AgendamentoComponent } from './components/agendamento/agendamento.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
         component: HomeComponent
       },
+      {
+        path: "agendamentos",
+        component: AgendamentoComponent
+      }, 
       {
         path: "empresas",
         component: EmpresaCrudComponent

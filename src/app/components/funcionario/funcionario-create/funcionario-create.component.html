@@ -11,11 +11,9 @@
           <ng-template matStepLabel>Info. do Funcionário(a)</ng-template>
 
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column">
-            <div fxFlex="40">
-              <mat-form-field
-                class="input-nome"
-                [ngStyle.xs]="{ width: '300px' }"
-              >
+            <div fxFlex>
+              <mat-form-field class="input-nome" appearance="outline">
+                <mat-label>Nome:</mat-label>
                 <input
                   matInput
                   type="text"
@@ -25,8 +23,12 @@
                   [matAutocomplete]="auto"
                 />
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="updateForm(option)" *ngFor="let option of filteredOptions | async" [value]="option.nome">
-                    {{option.nome}}
+                  <mat-option
+                    (onSelectionChange)="updateForm(option)"
+                    *ngFor="let option of filteredOptions | async"
+                    [value]="option.nome"
+                  >
+                    {{ option.nome }}
                   </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="isFieldInvalid('nome')">
@@ -37,8 +39,9 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div fxFlex="30">
-              <mat-form-field>
+            <div fxFlex>
+              <mat-form-field appearance="outline">
+                <mat-label>CPF:</mat-label>
                 <input
                   matInput
                   type="text"
@@ -58,7 +61,8 @@
               </mat-form-field>
             </div>
             <div fxFlex>
-              <mat-form-field class="input-email">
+              <mat-form-field appearance="outline" class="input-email">
+                <mat-label>E-mail:</mat-label>
                 <input
                   matInput
                   type="email"
@@ -77,7 +81,7 @@
           </div>
 
           <!-- Inicío Accordion -->
-          <mat-accordion>
+          <mat-accordion [ngClass.xs]="{width: '279px'}">
             <mat-expansion-panel
               (opened)="panelEndOpenState = true"
               (closed)="panelEndOpenState = false"
@@ -86,7 +90,7 @@
                 <mat-panel-title>
                   <i
                     class="material-icons v-middle visibility_icon"
-                    matTooltip="Editar"
+                    matTooltip="{{ panelEndOpenState ? 'Fechar' : 'Abrir'}}"
                   >
                     {{ panelEndOpenState ? "visibility_off" : "visibility" }}
                   </i>
@@ -104,7 +108,8 @@
                     class="arrayForm-end"
                     fxLayoutGap="2%"
                   >
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>País:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -124,7 +129,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Cidade:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -152,7 +158,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Estado:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -180,7 +187,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Bairro:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -208,7 +216,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Rua:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -228,7 +237,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Número:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -256,7 +266,8 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>CEP:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -313,7 +324,7 @@
                 <mat-panel-title>
                   <i
                     class="material-icons v-middle visibility_icon"
-                    matTooltip="Editar"
+                    matTooltip="{{ panelTelOpenState ? 'Fechar' : 'Abrir'}}"
                   >
                     {{ panelTelOpenState ? "visibility_off" : "visibility" }}
                   </i>
@@ -324,9 +335,16 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <div formArrayName="telefoneDTOs" fxLayout="row wrap">
-                <div *ngFor="let telefone of telefoneDTOsArray; let i = index">
+                <div
+                  *ngFor="let telefone of telefoneDTOsArray; let i = index"
+                  fxLayout="row wrap"
+                >
                   <div [formGroupName]="i" fxLayoutGap="2%">
-                    <mat-form-field fxFlex="20" class="container-input-field">
+                    <mat-form-field
+                      appearance="outline"
+                      class="container-input-field input-ddd"
+                    >
+                      <mat-label>DDD:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -353,7 +371,11 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="container-input-field">
+                    <mat-form-field
+                      appearance="outline"
+                      class="container-input-field"
+                    >
+                      <mat-label>Telefone:</mat-label>
                       <input
                         matInput
                         type="text"
@@ -429,29 +451,34 @@
           <button mat-raised-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
-      <mat-step [stepControl]="formGroupCreatePerfil" errorMessage="Perfil e obrigatório.">
+      <mat-step
+        [stepControl]="formGroupCreatePerfil"
+        errorMessage="Perfil e obrigatório."
+      >
         <ng-template matStepLabel>Perfil do Funcionário(a)</ng-template>
         <div fxLayout="column">
-            <div>
-                <h4>Perfil:</h4>
-                <mat-form-field>
+            <h4>Perfil:</h4>
+            <form [formGroup]="formGroupCreatePerfil">
+              <div>
+                <mat-form-field appearance="outline">
                   <mat-label>Selecione o Perfil</mat-label>
                   <mat-select
                     name="perfil"
                     [formControl]="formGroupCreatePerfil"
                     (selectionChange)="perfilSelecionado($event.value)"
+                    [value]="perfil"
                     required
                   >
                     <mat-option *ngFor="let perfil of perfils" [value]="perfil">
                       {{ perfil.funcao_perfil }}
                     </mat-option>
                   </mat-select>
-                  <mat-hint *ngIf="perfil">Perfil Atual: {{perfil.funcao_perfil}}</mat-hint>
+                  <mat-hint *ngIf="perfil"
+                    >Perfil Atual: {{ perfil.funcao_perfil }}</mat-hint
+                  >
                 </mat-form-field>
-            </div>
-            <div>
-                
-            </div>
+              </div>
+            </form>            
         </div>
         <div>
           <button mat-raised-button matStepperPrevious>Voltar</button>
@@ -461,31 +488,33 @@
       <mat-step [stepControl]="formGroupcreateUsuario" optional>
         <ng-template matStepLabel>Usuário do Func.</ng-template>
         <div fxLayout="column">
-            <div>
-                <h4>Usuário:</h4>
-                <mat-form-field>
+            <h4>Usuário:</h4>
+            <form [formGroup]="formGroupcreateUsuario">
+              <div>
+                <mat-form-field appearance="outline">
                   <mat-label>Selecione o Usuário</mat-label>
                   <mat-select
                     name="perfil"
                     [formControl]="formGroupcreateUsuario"
                     (selectionChange)="usuarioSelecionado($event.value)"
+                    [value]="usuario"
                     required
                   >
                     <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
                       {{ usuario.login }}
                     </mat-option>
                   </mat-select>
-                  <mat-hint *ngIf="usuario">Usuário Atual: {{usuario.login}}</mat-hint> 
+                  <mat-hint *ngIf="usuario"
+                    >Usuário Atual: {{ usuario.login }}</mat-hint
+                  >
                 </mat-form-field>
-            </div>
-            <div>
-                
-            </div>
+              </div>
+            </form>
         </div>
-        
+
         <div fxLayout="row">
           <div>
-            <button mat-raised-button matStepperPrevious>Voltar</button>            
+            <button mat-raised-button matStepperPrevious>Voltar</button>
           </div>
           <span class="spacer-flex-right-left"></span>
         </div>
@@ -498,19 +527,27 @@
         (click)="salvarFuncionario(stepper)"
         color="primary"
       >
-      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
         Salvar
       </button>
       <button
-      mat-raised-button
-      [disabled]="!formGroupCreatePerfil.valid || !UpdateOrDelete || isLoading"
-      (click)="deleteFuncionario(stepper)"
-      color="warn"
-    >
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-      Excluir
-    </button>
-    <button mat-raised-button (click)="limparForm(stepper)">Limpar</button>
+        mat-raised-button
+        [disabled]="
+          !formGroupCreatePerfil.valid || !UpdateOrDelete || isLoading
+        "
+        (click)="deleteFuncionario(stepper)"
+        color="warn"
+      >
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
+        Excluir
+      </button>
+      <button mat-raised-button (click)="limparForm(stepper)">Limpar</button>
     </div>
   </mat-card>
 </div>

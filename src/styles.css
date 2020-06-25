@@ -1,40 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* para fins de testes*/
 .border {
-    border: 1px solid red;;
+  border: 1px solid red;
 }
 /* para fins de testes*/
 
 .green {
-    color: #28a745;
+  color: #28a745;
 }
 
 .red {
-    color: #df4242;
+  color: #df4242;
 }
 
 .v-middle {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .msg-success {
-    background-color: #28a745;
-    color: #fff;
+  background-color: #28a745;
+  color: #fff;
 }
 
 .msg-error {
-    background-color: #e35e6b;
-    color: #fff;
+  background-color: #e35e6b;
+  color: #fff;
 }
 
 .spacer-flex-right-left {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
-.btn-editar {
-    color: #000;
-    background-color: #f6fa0f;
-}

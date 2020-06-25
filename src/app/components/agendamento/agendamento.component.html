@@ -1,1 +1,231 @@
-<p>agendamento works!</p>
+<div fxLayout="column">
+  <div class="agendamento-form">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+        <span class="spacer-flex-right-left"></span>
+        <div>
+          <mat-card-title fxLayoutAlign="center center"
+            >Agendamentos</mat-card-title
+          >
+          <mat-card-subtitle
+            >Agendamento de Inspeções/Manutenções.</mat-card-subtitle
+          >
+        </div>
+        <span class="spacer-flex-right-left"></span>
+        <div>
+          <form [formGroup]="formPesquisa">
+            <div>
+              <mat-form-field appearance="outline" class="input-pesquisar">
+                <mat-label>Número:</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Número do agendamento:"
+                  formControlName="id"
+                  name="agendamento"
+                  [matAutocomplete]="autoAgenda"
+                />
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+              <mat-autocomplete
+                autoActiveFirstOption
+                #autoAgenda="matAutocomplete"
+              >
+                <mat-option
+                  (onSelectionChange)="updateForm(option)"
+                  *ngFor="let option of filteredOptionsAgenda | async"
+                  [value]="option.id"
+                >
+                  {{ option.id }}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="formAgenda">
+          <div fxLayout="column">
+            <div fxLayout="row wrap">
+              <div fxFlex>
+                <mat-form-field appearance="outline" class="input-empresa">
+                  <mat-label>Empresa</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Empresa"
+                    name="empresa"
+                    formControlName="empresa"
+                    [matAutocomplete]="autoEmpresa"
+                    required
+                  />
+                </mat-form-field>
+                <mat-autocomplete
+                  autoActiveFirstOption
+                  #autoEmpresa="matAutocomplete"
+                >
+                  <mat-option
+                    (onSelectionChange)="selectEmpresa(option)"
+                    *ngFor="let option of filteredOptionsEmp | async"
+                    [value]="option.razaoSocial"
+                  >
+                    {{ option.razaoSocial }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="isFieldInvalid('empresa')">
+                  Informe a Empresa.
+                </mat-error>
+              </div>
+              <div fxFlex>
+                <mat-form-field appearance="outline" class="input-funcionario">
+                  <mat-label>Funcionário</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Funcionário"
+                    name="nomeFuncionario"
+                    formControlName="nomeFuncionario"
+                    [matAutocomplete]="autoFuncionario"
+                    required
+                  />
+                </mat-form-field>
+                <mat-autocomplete
+                  autoActiveFirstOption
+                  #autoFuncionario="matAutocomplete"
+                >
+                  <mat-option
+                    (onSelectionChange)="selectFuncionario(option)"
+                    *ngFor="let option of filteredOptionsFunc | async"
+                    [value]="option.nome"
+                  >
+                    {{ option.nome }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="isFieldInvalid('nomeFuncionario')">
+                  Informe o Funcionário.
+                </mat-error>
+              </div>
+            </div>
+
+            <div fxLayout="row wrap">
+              <div fxFlex>
+                <mat-form-field appearance="outline" class="input-dataInicial">
+                  <mat-label>Data Inicial</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Ex: 01/01/1900"
+                    name="dataInicial"
+                    formControlName="dataInicial"
+                    [matDatepicker]="picker1"
+                    required
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-error *ngIf="isFieldInvalid('dataInicial')">
+                  Informe a Data Inicial.
+                </mat-error>
+              </div>
+              <div fxFlex>
+                <mat-form-field
+                  appearance="outline"
+                  class="input-TipoEquipamento"
+                >
+                  <mat-label>Tipo de Equipamento</mat-label>
+                  <mat-select
+                    name="tipoEquipamento"
+                    formControlName="tipoEquipamento"
+                    (selectionChange)="tipoEquipamentoSelecionado($event.value)"
+                    [value]="tipoEquipamento"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let tipo of tiposEquipamentos"
+                      [value]="tipo"
+                    >
+                      {{ tipo.tipo }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="isFieldInvalid('tipoEquipamento')">
+                  Informe o Tipo de Equipamento.
+                </mat-error>
+              </div>
+              <div fxFlex>
+                <mat-form-field
+                  appearance="outline"
+                  class="input-TipoAgendamento"
+                >
+                  <mat-label>Tipo de Agendamento</mat-label>
+                  <mat-select
+                    name="tipoAgendamento"
+                    formControlName="tipoAgendamento"
+                    (selectionChange)="tipoAgendamentoSelecionado($event.value)"
+                    [value]="tipoAgendamento"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let tipo of tiposAgendamentos"
+                      [value]="tipo"
+                    >
+                      {{ tipo.tipoAgenda }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="isFieldInvalid('tipoAgendamento')">
+                  Informe o Tipo de Agendamento.
+                </mat-error>
+              </div>
+              <div fxFlex *ngIf="pesquisouAgenda">
+                <mat-form-field
+                  appearance="outline"
+                  class="input-TipoAgendamento"                 
+                >
+                  <mat-label>Status Agendamento</mat-label>
+                  <mat-select
+                    name="statusInspManut"
+                    formControlName="statusInspManut"
+                    (selectionChange)="statusSelecionado($event.value)"
+                    [value]="tipoStatus"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let status of tiposStatus"
+                      [value]="status"
+                    >
+                      {{ status.statusAgenda }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+      <div fxLayout="row warp">
+        <div fxFlex>
+          <mat-card-actions align="end">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="agendar()"
+              [disabled]="!formAgenda.valid || isLoading"
+            >
+              <mat-progress-bar
+                *ngIf="isLoading"
+                mode="indeterminate"
+              ></mat-progress-bar>
+              {{!pesquisouAgenda ? 'Agendar' : 'Salvar'}} 
+            </button>
+            <button mat-raised-button (click)="limparForm()">Limpar</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div></div>
+</div>
