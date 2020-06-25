@@ -66,6 +66,7 @@ export class HomeDashboardLayoutComponent implements OnInit {
       .subscribe((agendamentos: AgendaInspManutDTO[]) => {
         this.agendamentos = agendamentos;
         this.agendamentosTotal = agendamentos.length;
+        console.log(agendamentos);
         this.organizaDados();
       });
   }
@@ -119,9 +120,9 @@ export class HomeDashboardLayoutComponent implements OnInit {
           this.EquipamentosNotInspQtd = agendamentos;
           agendamentos.forEach(
             (agenda) => (this.totalNotInsp += agenda.totalNaoInpecionados)
-          );
-          this.IsLoading = !this.IsLoading;
+          );         
         }
+        this.IsLoading = !this.IsLoading;
       });
   }
 
