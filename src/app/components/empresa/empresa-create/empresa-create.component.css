@@ -36,13 +36,15 @@ mat-accordion {
     margin-top: 20px;
 }
 
+
 .input-razaoSocial {
-    width: calc(100% - 20px - 2em);
+    width: 42vmax;
+    margin-right: 10px;
 }
 
 .input-ddd_tel-field {
     margin-top: 10px;
-    width: calc(100% - 300px - 2em);
+    width: 10vmax;
 }
 .input-telefone_tel-field{
     margin-top: 10px;

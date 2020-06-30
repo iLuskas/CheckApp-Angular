@@ -92,8 +92,7 @@ export class UsuarioService {
 
   Login(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.baseURL}/Login`, usuario).pipe(
-      map((obj) => obj),
-      catchError((e) => this.erroHandler(e))
+      map((obj) => obj)
     );
   }
 

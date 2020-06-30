@@ -3,15 +3,16 @@
     <mat-card-title>Adicionar Equipamento</mat-card-title>
 
     <mat-horizontal-stepper linear #stepper>
-      <mat-step [stepControl]="formCreateEmpresa" errorMessage="Informações incompletas.">
+      <mat-step
+        [stepControl]="formCreateEmpresa"
+        errorMessage="Informações incompletas."
+      >
         <form [formGroup]="formCreateEmpresa">
           <ng-template matStepLabel>Selecione a Empresa</ng-template>
           <div fxLayout="column">
             <div fxFlex>
-              <mat-form-field
-                class="input-nome"
-                [ngStyle.xs]="{ width: '300px' }"
-              >
+              <mat-form-field class="input-nome" appearance="outline">
+                <mat-label>Razão Social:</mat-label>
                 <input
                   matInput
                   type="text"
@@ -19,6 +20,8 @@
                   name="nomeEmpresa"
                   formControlName="razaoSocial"
                   [matAutocomplete]="auto"
+                  (input)="onSearchEmpChange($event.target.value)"
+
                   required
                 />
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -38,19 +41,24 @@
           <button mat-raised-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
-      <mat-step [stepControl]="formCreateTipoEquipamento" errorMessage="Tipo é obrigatório.">
+      <mat-step
+        [stepControl]="formCreateTipoEquipamento"
+        errorMessage="Tipo é obrigatório."
+      >
         <div fxLayout="row" fxLayout.xs="column">
           <div fxFlex>
             <form [formGroup]="formCreateTipoEquipamento">
               <ng-template matStepLabel>Tipo do Equipamento</ng-template>
               <div fxLayout="column">
                 <div>
-                  <mat-form-field>
+                  <mat-form-field class="input-tipo" appearance="outline">
                     <mat-label>Tipo</mat-label>
                     <mat-select
                       name="tipoEquipamento"
                       [formControl]="formCreateTipoEquipamento"
-                      (selectionChange)="tipoEquipamentoSelecionado($event.value)"
+                      (selectionChange)="
+                        tipoEquipamentoSelecionado($event.value)
+                      "
                       [value]="tipoEquipamento"
                       required
                     >
@@ -63,9 +71,7 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div>
-                  
-                </div>
+                <div></div>
               </div>
             </form>
           </div>
@@ -80,8 +86,45 @@
           <ng-template matStepLabel>{{
             tipoEquipamento ? tipoEquipamento.tipo : "Indefinido"
           }}</ng-template>
-          <div fxLayout="row" fxLayout.xs="column">
-            <div fxLayout="column">
+          <div fxLayout="row wrap" fxLayout.xs="column">
+            <div fxFlex="30" fxLayout="column" class="rigth-container-form">
+              <div fxFlex fxLayoutAlign="center center" >
+                <div class="container-qrCode">
+                  <qrcode
+                    *ngIf="display"
+                    [qrdata]="qrData"
+                    [width]="200"
+                    [errorCorrectionLevel]="'M'"
+                    [elementType]="elementType"
+                  ></qrcode>
+                </div>
+              </div>
+              <div fxFlex class="btnDownload-qrCode">
+                <div fxLayoutAlign="center center">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    class="btnGerar-qrCode"
+                    [disabled]="!formCreate.valid"
+                    (click)="GerarQrCode()"
+                  >
+                    Gerar QrCode
+                  </button>
+                  <a
+                    [href]="hrefQrCode"
+                    mat-mini-fab
+                    aria-label="botão de download qrCode"
+                    matTooltip="Baixar QrCode"
+                    [disabled]="!display"
+                    (click)="downloadImage()"
+                    download="{{ getNomenclaturaQrCode() }}"
+                  >
+                    <mat-icon>cloud_download</mat-icon>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="70" fxLayout="column">
               <div
                 formGroupName="extintorDTO"
                 fxLayoutGap="2%"
@@ -92,6 +135,7 @@
                   <mat-form-field
                     class="input-numExt"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -123,6 +167,7 @@
                   <mat-form-field
                     class="input-seloInmetro"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -136,7 +181,11 @@
                     >
                       Informe o Selo.
                     </mat-error>
-                    <mat-error *ngIf="hasErrorFieldExtintor('seloInmetro_ext', 'maxlength')">
+                    <mat-error
+                      *ngIf="
+                        hasErrorFieldExtintor('seloInmetro_ext', 'maxlength')
+                      "
+                    >
                       Somente 14 digitos
                     </mat-error>
                   </mat-form-field>
@@ -145,6 +194,7 @@
                   <mat-form-field
                     class="input-fabricante"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -156,7 +206,11 @@
                     <mat-error *ngIf="isFieldExtintorInvalid('fabricante_ext')">
                       Informe o Fabricante.
                     </mat-error>
-                    <mat-error *ngIf="hasErrorFieldExtintor('fabricante_ext', 'maxlength')">
+                    <mat-error
+                      *ngIf="
+                        hasErrorFieldExtintor('fabricante_ext', 'maxlength')
+                      "
+                    >
                       Somente 50 digitos
                     </mat-error>
                   </mat-form-field>
@@ -165,6 +219,7 @@
                   <mat-form-field
                     class="input-tipoExt"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -176,7 +231,9 @@
                     <mat-error *ngIf="isFieldExtintorInvalid('tipo_ext')">
                       Informe o Tipo.
                     </mat-error>
-                    <mat-error *ngIf="hasErrorFieldExtintor('tipo_ext', 'maxlength')">
+                    <mat-error
+                      *ngIf="hasErrorFieldExtintor('tipo_ext', 'maxlength')"
+                    >
                       Somente 100 digitos
                     </mat-error>
                   </mat-form-field>
@@ -185,6 +242,7 @@
                   <mat-form-field
                     class="input-numExt"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -207,6 +265,7 @@
                   <mat-form-field
                     class="input-fabricacao"
                     [ngStyle.xs]="{ width: '200px' }"
+                    appearance="outline"
                   >
                     <input
                       matInput
@@ -217,33 +276,44 @@
                     />
                     <mat-icon matSuffix class="iconAnoFabricao-size">
                       today
-                      </mat-icon>
-                    <mat-error *ngIf="isFieldExtintorInvalid('anoFabricacao_ext')">
+                    </mat-icon>
+                    <mat-error
+                      *ngIf="isFieldExtintorInvalid('anoFabricacao_ext')"
+                    >
                       Informe o Ano de Fabricação.
                     </mat-error>
-                    <mat-error *ngIf="hasErrorFieldExtintor('anoFabricacao_ext', 'maxlength')">
+                    <mat-error
+                      *ngIf="
+                        hasErrorFieldExtintor('anoFabricacao_ext', 'maxlength')
+                      "
+                    >
                       Somente 4 digitos
                     </mat-error>
                   </mat-form-field>
                 </div>
               </div>
               <div fxLayout="column">
-                <div fxLayout="row">
+                <div fxFlex fxLayout="row">
                   <div fxFlex class="div-form-fields">
                     <mat-form-field
                       class="input-dataCricao"
                       [ngStyle.xs]="{ width: '200px' }"
+                      appearance="outline"
                     >
+                      <mat-label>Data de Criação:</mat-label>
                       <input
                         matInput
                         type="text"
                         placeholder="Data de criação"
                         name="dataCriacao_equipamento"
                         formControlName="dataCriacao_equipamento"
-                        [matDatepicker]="picker2"             
-                        disabled                        
+                        [matDatepicker]="picker2"
+                        disabled
                       />
-                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
@@ -251,24 +321,32 @@
                     <mat-form-field
                       class="input-dataCricao"
                       [ngStyle.xs]="{ width: '200px' }"
+                      appearance="outline"
                     >
+                      <mat-label>Data de criação do QrCode:</mat-label>
                       <input
                         matInput
                         type="text"
                         placeholder="Data de criação do QrCode"
                         name="dataCriacao_equipamento"
                         formControlName="qrcode_data_geracao"
-                        [matDatepicker]="picker3"             
-                        disabled                        
+                        [matDatepicker]="picker3"
+                        disabled
                       />
-                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </div>
-   
+
                 <div fxFlex>
-                  <mat-form-field class="localizacao-field">
+                  <mat-form-field
+                    class="localizacao-field"
+                    appearance="outline"
+                  >
                     <mat-label>Localização</mat-label>
                     <textarea
                       matInput
@@ -289,44 +367,6 @@
                 </div>
               </div>
             </div>
-            <div
-              fxLayout="column"
-              fxLayoutAlign="center center"
-              class="rigth-container-form"
-              [ngStyle.xs]="{ width: '396px' }"
-            >
-                <div class="container-qrCode">
-                  <qrcode
-                    *ngIf="display"
-                    [qrdata]="qrData"
-                    [width]="256"
-                    [errorCorrectionLevel]="'M'"
-                    [elementType]="elementType"
-                  ></qrcode>
-                </div>
-                <div fxFlex class="btnDownload-qrCode">
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    class="btnGerar-qrCode"
-                    [disabled]="!formCreate.valid"
-                    (click)="GerarQrCode()"
-                  >
-                    Gerar QrCode
-                  </button>
-                  <a
-                    [href]="hrefQrCode"
-                    mat-mini-fab
-                    aria-label="botão de download qrCode"
-                    matTooltip="Baixar QrCode"
-                    [disabled]="!display"
-                    (click)="downloadImage()"
-                    download="{{getNomenclaturaQrCode()}}"
-                  >
-                    <mat-icon>cloud_download</mat-icon>
-                  </a>
-                </div>
-            </div>
           </div>
         </form>
 
@@ -342,7 +382,10 @@
         (click)="salvarEquipamento(stepper)"
         color="primary"
       >
-      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
         Salvar
       </button>
       <button
@@ -351,7 +394,10 @@
         (click)="deleteEquipamento(stepper)"
         color="warn"
       >
-      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
         Excluir
       </button>
       <button mat-raised-button (click)="limparForm(stepper)">Limpar</button>

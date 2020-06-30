@@ -6,6 +6,7 @@ export interface EmpresaClienteDTO {
     razaoSocial: string;
     cnpj: string;
     inscricao_estadual: string;
+    imagemUrl: string;
     enderecoDTOs: EnderecoDTO[];
     telefoneDTOs: TelefoneDTO[];
     equipamentoDTOs?: EquipamentoSegurancaDTO[];

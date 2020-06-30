@@ -49,6 +49,11 @@ import { EquipamentoReadComponent } from './components/equipamento/equipamento-r
 import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
 import { AgendamentoComponent } from './components/agendamento/agendamento.component';
 import { HomeDashboardLayoutComponent } from './layouts/home-dashboard-layout/home-dashboard-layout.component';
+import { HomePainelLayoutComponent } from './layouts/home-painel-layout/home-painel-layout.component';
+import { PerfilFuncionarioComponent } from "./components/funcionario/perfil-funcionario/perfil-funcionario.component";
+import { InspecaoComponent } from './components/inspecao/inspecao.component';
+import { ManutencaoComponent } from './components/manutencao/manutencao.component';
+import { InspecaoDetalheComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe.component';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -88,6 +93,11 @@ registerLocaleData(localePt);
     RecuperarSenhaComponent,
     AgendamentoComponent,
     HomeDashboardLayoutComponent,
+    HomePainelLayoutComponent,
+    PerfilFuncionarioComponent,
+    InspecaoComponent,
+    ManutencaoComponent,
+    InspecaoDetalheComponent,
   ],
   imports: [
     BrowserModule,

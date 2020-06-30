@@ -9,7 +9,8 @@ import { map, catchError } from "rxjs/operators";
   providedIn: "root",
 })
 export class EmpresaClienteService {
-  baseURL = "https://www.safetyplan.net.br/checkapp/api/EmpresaCliente";
+   baseURL = "https://www.safetyplan.net.br/checkapp/api/EmpresaCliente";
+  //baseURL = "https://localhost:44363/api/EmpresaCliente";
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
@@ -95,6 +96,18 @@ export class EmpresaClienteService {
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
     );
+  }
+
+  postUpload(
+    file: File,
+    token: string = null
+  ) {
+    const fileToUplaod = <File>file[0];
+    const formData = new FormData();
+    formData.append('file', fileToUplaod, fileToUplaod.name);
+
+    return this.http.post(`${this.baseURL}/upload`, formData).pipe(
+      map((obj) => obj));
   }
 
   putEmpresaCliente(

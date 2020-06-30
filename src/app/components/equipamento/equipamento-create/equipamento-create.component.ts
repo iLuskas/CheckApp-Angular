@@ -13,6 +13,7 @@ import { startWith, map, take } from "rxjs/operators";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { CdkTextareaAutosize } from "@angular/cdk/text-field";
 import { DatePipe } from '@angular/common';
+import { compileNgModule } from '@angular/compiler';
 
 @Component({
   selector: "app-equipamento-create",
@@ -216,19 +217,6 @@ export class EquipamentoCreateComponent implements OnInit {
     );
   }
 
-  updateEquipamento(stepper: any) {
-    this.isLoading = !this.isLoading;
-    this.equipamentoSeguranca = this.formCreate.value;
-    this.equipamentoSeguranca.qrCode = this.qrData;
-    console.log(this.equipamentoSeguranca);
-    this.equipamentoService
-      .putEquipamento(this.equipamentoSeguranca)
-      .subscribe(() => {
-        this.equipamentoService.showMessage("Equipamento editado com sucesso!");
-        this.limparForm(stepper);
-        this.isLoading = !this.isLoading;
-      });
-  }
 
   deleteEquipamento(stepper: any) {
     this.isLoading = !this.isLoading;
@@ -262,7 +250,6 @@ export class EquipamentoCreateComponent implements OnInit {
   }
 
   tipoEquipamentoSelecionado(tipoEquipamento: TipoEquipamentoDTO): void {
-    console.log("TIPOEQ", tipoEquipamento);
     this.tipoEquipamento = tipoEquipamento;
     this.formCreateTipoEquipamento.patchValue(tipoEquipamento);
     this.formCreate.controls["tipo_equipamentoId"].patchValue(
@@ -278,7 +265,6 @@ export class EquipamentoCreateComponent implements OnInit {
   selectEmpresa(empresa: EmpresaClienteDTO) {
     this.formCreateEmpresa.patchValue(empresa);
     this.formCreate.controls["empresaClienteId"].patchValue(empresa.id);
-    console.log("PATCHEMPRESA", this.formCreateEmpresa.value);
   }
 
   selectExtintor(extintor: ExtintorDTO): void {
@@ -288,13 +274,17 @@ export class EquipamentoCreateComponent implements OnInit {
     this.display = this.qrData ? true : false;
     this.UpdateOrDelete = true;
     this.metodoApi = "putEquipamento";
-    console.log('selectExtintor', extintor);
   }
 
   GerarQrCode() {
     if(!this.formCreate.valid) return;
-    this.formCreate.controls['qrcode_data_geracao'].patchValue(this.date.value);
-    this.qrData = JSON.stringify(this.formCreate.value);
+    this.formCreate.controls['qrcode_data_geracao'].patchValue(this.date.value);  
+
+    let jsongrCode = {
+      num_ext: this.formCreate.controls.extintorDTO.get('num_ext').value
+    };
+
+    this.qrData = JSON.stringify(jsongrCode);
     this.display = true;
   }
 
@@ -307,7 +297,7 @@ export class EquipamentoCreateComponent implements OnInit {
     return `QrCode_${formGroup.controls['num_ext'].value}`
   }
 
-  limparForm(stepper: any) {
+  limparForm(stepper: any = null) {
     if (stepper) stepper.reset();
 
     this.formCreate.reset();
@@ -334,6 +324,12 @@ export class EquipamentoCreateComponent implements OnInit {
       this.display = false;
       this.formCreate.controls['localizacao_equipamento'].patchValue("");
     }      
+  }
+
+  onSearchEmpChange(searchValue: string): void {
+    if(!searchValue){ 
+      this.limparForm();
+    }
   }
 
   isFieldExtintorInvalid(field: string) {

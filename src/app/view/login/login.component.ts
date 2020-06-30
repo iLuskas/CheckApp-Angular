@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     this.formLogin = this.fb.group({
       login: ["", Validators.required],
       senha: ["", Validators.required],
+      perfil: [""]
     });
   }
 
@@ -52,10 +53,12 @@ export class LoginComponent implements OnInit {
             this.isLoading = !this.isLoading;
           } else {
             this.usuarioService.showMessage("Usuário não foi encontrato. Favor verifique suas credencias.", true);
+            this.isLoading = !this.isLoading;
           }
         },
         (error) => {
           console.log(error);
+          this.isLoading = !this.isLoading;
         }
       );
     }

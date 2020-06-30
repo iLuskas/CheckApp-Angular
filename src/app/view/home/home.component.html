@@ -58,6 +58,7 @@
                       <mat-card-title class="titulos-lists"
                         >Empresas</mat-card-title
                       >
+                      <mat-card-subtitle>Agendamentos</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                       <table
@@ -82,9 +83,9 @@
                           <th
                             mat-header-cell
                             *matHeaderCellDef
-                            class="mat-column-totalacc-th"
+                            class="mat-column-totalacc"
                           >
-                            Agendamentos
+                            Total
                           </th>
                           <td
                             mat-cell
@@ -116,8 +117,8 @@
                   <mat-card class="cards mat-elevation-z4">
                     <mat-card-header fxLayoutAlign="center center">
                       <mat-card-title class="titulos-lists"
-                        >Status Agendamento</mat-card-title
-                      >
+                        >Status</mat-card-title>
+                        <mat-card-subtitle>Agendamentos</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                       <table
@@ -178,6 +179,7 @@
                       <mat-card-title class="titulos-lists"
                         >Não Inspecionados</mat-card-title
                       >
+                      <mat-card-subtitle>Equipamentos</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                       <table
@@ -241,6 +243,7 @@
                       <mat-card-title class="titulos-lists"
                         >Inspecionados</mat-card-title
                       >
+                      <mat-card-subtitle>Equipamentos</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                       <table
@@ -297,7 +300,7 @@
             <ng-template mat-tab-label>
               HOJE
             </ng-template>
-            <app-home-dashboard-layout></app-home-dashboard-layout> 
+            <app-home-painel-layout></app-home-painel-layout> 
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>

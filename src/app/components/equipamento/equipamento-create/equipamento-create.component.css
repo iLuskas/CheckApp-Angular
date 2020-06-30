@@ -12,19 +12,27 @@ button {
     width: 500px;
 }
 
+.input-nome {
+    width: 30vmax;
+}
+
+.input-tipo {
+    width: 30vmax;
+}
+
 .container-qrCode {
+    margin: 0 10px;
     padding: 10px;
     border: 1px dashed black;
-    width: 256px;
-    height: 256px;
+    width: 200px;
+    height: 200px;
 }
 
 .btnDownload-qrCode{
     padding-top: 5px;
-    margin:0 0 10px 0;
 }
 
-.btnDownload-qrCode > button {
+.btnDownload-qrCode div > button {
     margin: 0;
 }
 
@@ -33,12 +41,8 @@ button {
 }
 
 .localizacao-field {
-    width: 760px;
-    margin-bottom: 0;
-}
-
-.localizacao-field-error {
-    margin-top: 0;
+    width: 40vmax;
+    margin-top: 10px;
 }
 
 .container-fields-extintor{

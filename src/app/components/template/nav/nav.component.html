@@ -60,9 +60,22 @@
     (closed)="sidebarClose()"
   >
     <div fxLayout="column">
-      <div>
+      <div *ngIf="!(cacheUsuario.perfil === 'Usuário' || cacheUsuario.perfil === 'Inspetor')">
         <mat-nav-list class="nav-list left hide-on-med-and-down">
           <div *ngFor="let navItem of navItens">
+            <a mat-list-item 
+            routerLink="{{ navItem.link }}">
+              <i class="material-icons">
+                {{ navItem.icon }}
+              </i>
+              {{ navItem.nameMenu }}
+            </a>
+          </div>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="cacheUsuario.perfil === 'Usuário' || cacheUsuario.perfil === 'Inspetor'">
+        <mat-nav-list class="nav-list left hide-on-med-and-down">
+          <div *ngFor="let navItem of navItensUser">
             <a mat-list-item 
             routerLink="{{ navItem.link }}">
               <i class="material-icons">

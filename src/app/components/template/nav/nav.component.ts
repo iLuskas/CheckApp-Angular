@@ -14,6 +14,7 @@ import { shareReplay, map } from 'rxjs/operators';
 export class NavComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   isOpened: boolean = false;        
+  cacheUsuario: any;
   isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
@@ -30,12 +31,21 @@ export class NavComponent implements OnInit {
     {link: '/relatorios', icon: 'bar_chart', nameMenu: 'Relatórios'}
   ];
 
+  navItensUser: any[] = [
+    {link: '/home', icon: 'home', nameMenu: 'Início'}, 
+    {link: '/perfilFuncionario', icon: 'assignment_ind', nameMenu: 'Perfil'},
+    {link: '/inspecoes', icon: 'fact_check', nameMenu: 'Inspeções'},
+    {link: '/manutencoes', icon: 'construction', nameMenu: 'Manutenções'},
+    {link: '/equipamentos', icon: 'whatshot', nameMenu: 'Equipamentos'}
+  ];
+
   constructor(private authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private headerService: HeaderService) { }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn; 
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+    this.cacheUsuario = JSON.parse(localStorage.getItem('cacheUsuario'));
   }
 
   get title(): string {

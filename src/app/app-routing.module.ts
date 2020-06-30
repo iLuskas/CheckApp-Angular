@@ -16,6 +16,10 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
 import { EquipamentoReadComponent } from './components/equipamento/equipamento-read/equipamento-read.component';
 import { RecuperarSenhaComponent } from './view/recuperar-senha/recuperar-senha.component';
 import { AgendamentoComponent } from './components/agendamento/agendamento.component';
+import { PerfilFuncionarioComponent } from './components/funcionario/perfil-funcionario/perfil-funcionario.component';
+import { InspecaoComponent } from './components/inspecao/inspecao.component';
+import { ManutencaoComponent } from './components/manutencao/manutencao.component';
+import { InspecaoDetalheComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe.component';
 
 
 const routes: Routes = [
@@ -56,6 +60,22 @@ const routes: Routes = [
       {
         path: "relatorios",
         component: RelatorioComponent,
+      },
+      {
+        path: "inspecoes",
+        component: InspecaoComponent,
+      },
+      {
+        path: "detalhe-inspecao",
+        component: InspecaoDetalheComponent,
+      },
+      {
+        path: "manutencoes",
+        component: ManutencaoComponent,
+      },
+      {
+        path: "perfilFuncionario",
+        component: PerfilFuncionarioComponent,
       },
     ]
   },

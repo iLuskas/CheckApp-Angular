@@ -32,6 +32,7 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     this.router.navigate(['login']);
-    //localStorage.removeItem('cacheUsuario');
+    localStorage.removeItem('cacheUsuario');
+    localStorage.removeItem('AgendaSeleted');
   }
 }

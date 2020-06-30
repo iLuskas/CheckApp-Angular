@@ -1,0 +1,281 @@
+<div fxLayout="column">
+    <div class="container-agendaQtd" fxShow="true" fxHide.lt-md>
+      <div fxLayout="row">
+        <div class="container-qtd" fxLayoutAlign="center center">
+          <h1 class="container-qtd-label" *ngIf="!IsLoading">
+            {{ agendamentosTotal }}
+          </h1>
+          <mat-spinner diameter="40" *ngIf="IsLoading"></mat-spinner>
+        </div>
+        <div class="container-qtd2" fxLayoutAlign="center center">
+          <h1 class="container-qtd-label" *ngIf="!IsLoading">
+            {{ totalNotInsp }}
+          </h1>
+          <mat-spinner diameter="40" *ngIf="IsLoading"></mat-spinner>
+        </div>
+        <div class="container-qtd3" fxLayoutAlign="center center">
+          <h1 class="container-qtd-label" *ngIf="!IsLoading">
+            {{ totalInsp }}
+          </h1>
+          <mat-spinner diameter="40" *ngIf="IsLoading"></mat-spinner>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="container-border-qtd"></div>
+        <div class="container-border-qtd2"></div>
+        <div class="container-border-qtd3"></div>
+      </div>
+    </div>
+    <div
+      class="container-agendamentos"
+      fxLayout="row wrap"
+      fxLayoutGap="2%"
+      ngClass.lt-md="agendamento-wrap-sm"
+    >
+      <div
+        fxFlex="calc(33%-500px)"
+        fxFlex.sm="calc(100%-25px)"
+        fxFlex.xs="calc(100%-25px)"
+      >
+        <mat-card class="cards mat-elevation-z4">
+          <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title class="titulos-lists"
+              >Empresas</mat-card-title
+            >
+            <mat-card-subtitle>Agendamentos</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table
+              mat-table
+              [dataSource]="AgendaAccPorEmpresa"
+              class="mat-elevation-z2"
+            >
+              <!-- Empresa Column -->
+              <ng-container matColumnDef="empresa">
+                <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-empresa"
+                >
+                  {{ element.empresa }}
+                </td>
+              </ng-container>
+
+              <!-- Total Column -->
+              <ng-container matColumnDef="totalAcc">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-column-totalacc"
+                >
+                  total
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-totalacc"
+                >
+                  {{ element.totalAcc }}
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsAccEmp"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumnsAccEmp"
+              ></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div
+        fxFlex="calc(33%-500px)"
+        fxFlex.sm="calc(100%-25px)"
+        fxFlex.xs="calc(100%-25px)"
+        ngClass.lt-md="agendamento-wrap-sm"
+      >
+        <mat-card class="cards mat-elevation-z4">
+          <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title class="titulos-lists"
+              >Status</mat-card-title>
+              <mat-card-subtitle>Agendamentos</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table
+              mat-table
+              [dataSource]="AgendaAccPorStatus"
+              class="mat-elevation-z2"
+            >
+              <!-- Empresa Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-status"
+                >
+                  {{ element.status }}
+                </td>
+              </ng-container>
+
+              <!-- Total Column -->
+              <ng-container matColumnDef="total">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-column-totalacc"
+                >
+                  Total
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-totalacc"
+                >
+                  {{ element.total }}
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsAccstat"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumnsAccstat"
+              ></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div
+        fxFlex="calc(33%-500px)"
+        fxFlex.sm="calc(100%-25px)"
+        fxFlex.xs="calc(100%-25px)"
+        ngClass.lt-md="agendamento-wrap-sm"
+      >
+        <mat-card class="cards mat-elevation-z4">
+          <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title class="titulos-lists"
+              >Não Inspecionados</mat-card-title
+            >
+            <mat-card-subtitle>Equipamentos</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table
+              mat-table
+              [dataSource]="EquipamentosNotInspQtd"
+              class="mat-elevation-z2"
+            >
+              <!-- Empresa Column -->
+              <ng-container matColumnDef="empresa">
+                <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-status"
+                >
+                  {{ element.empresa }}
+                </td>
+              </ng-container>
+
+              <!-- Total Column -->
+              <ng-container matColumnDef="totalNaoInpecionados">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-column-totalacc"
+                >
+                  Total
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-totalacc"
+                >
+                  {{ element.totalNaoInpecionados }}
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsAccNotInsp"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="
+                  let row;
+                  columns: displayedColumnsAccNotInsp
+                "
+              ></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div
+        fxFlex="calc(33%-500px)"
+        fxFlex.sm="calc(100%-25px)"
+        fxFlex.xs="calc(100%-25px)"
+        ngClass.lt-md="agendamento-wrap-sm"
+      >
+        <mat-card class="cards mat-elevation-z4">
+          <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title class="titulos-lists"
+              >Inspecionados</mat-card-title
+            >
+            <mat-card-subtitle>Equipamentos</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table
+              mat-table
+              [dataSource]="EquipamentosInspQtd"
+              class="mat-elevation-z2"
+            >
+              <!-- Empresa Column -->
+              <ng-container matColumnDef="empresa">
+                <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-status"
+                >
+                  {{ element.empresa }}
+                </td>
+              </ng-container>
+
+              <!-- Total Column -->
+              <ng-container matColumnDef="totalInpecionados">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-column-totalacc"
+                >
+                  Total
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-column-totalacc"
+                >
+                  {{ element.totalInpecionados }}
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsAccInsp"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumnsAccInsp"
+              ></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

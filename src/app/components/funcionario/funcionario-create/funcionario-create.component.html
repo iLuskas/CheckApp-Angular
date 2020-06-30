@@ -20,6 +20,7 @@
                   placeholder="Nome"
                   name="nome"
                   formControlName="nome"
+                  (input)="onSearchFuncChange($event.target.value)"
                   [matAutocomplete]="auto"
                 />
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -462,20 +463,24 @@
               <div>
                 <mat-form-field appearance="outline">
                   <mat-label>Selecione o Perfil</mat-label>
-                  <mat-select
+                  <input
+                    matInput
                     name="perfil"
-                    [formControl]="formGroupCreatePerfil"
-                    (selectionChange)="perfilSelecionado($event.value)"
-                    [value]="perfil"
+                    type="text"
+                    formControlName="funcao_perfil"
+                    placeholder="Perfil"            
+                    [matAutocomplete]="autoPerfil"
                     required
-                  >
-                    <mat-option *ngFor="let perfil of perfils" [value]="perfil">
-                      {{ perfil.funcao_perfil }}
+                  />
+                  <mat-autocomplete autoActiveFirstOption #autoPerfil="matAutocomplete">
+                    <mat-option
+                    (onSelectionChange)="perfilSelecionado(option)"
+                      *ngFor="let option of filteredOptionsPerfil | async"
+                      [value]="option.funcao_perfil"
+                    >
+                      {{ option.funcao_perfil }}
                     </mat-option>
-                  </mat-select>
-                  <mat-hint *ngIf="perfil"
-                    >Perfil Atual: {{ perfil.funcao_perfil }}</mat-hint
-                  >
+                  </mat-autocomplete>
                 </mat-form-field>
               </div>
             </form>            

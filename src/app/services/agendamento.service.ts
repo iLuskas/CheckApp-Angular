@@ -52,6 +52,12 @@ export class AgendamentoService {
     );
   }
 
+  getAllAgendamentosByUsuario(user: string, token: string = null): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/getAllAgendamentosByUsuario/?usuario=${user}`).pipe(
+      map((obj) => obj)
+      );
+  }
+
   getAllAgendamentoByDt(dataIni: string, dataFim: string, token: string = null): Observable<AgendaInspManutDTO[]> {
     return this.http.get<AgendaInspManutDTO[]>(`${this.baseURL}/getAllAgendamentoByDt?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
       map((obj) => obj),

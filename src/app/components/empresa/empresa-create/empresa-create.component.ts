@@ -5,6 +5,7 @@ import { EmpresaClienteService } from "src/app/services/EmpresaCliente.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: "app-empresa-create",
@@ -24,6 +25,8 @@ export class EmpresaCreateComponent implements OnInit {
   Create: boolean = true;
   isLoading:  boolean;
   metodoApi: string = 'postEmpresaCliente';
+  file: File;
+  imgPreview: any;
   private formSubmitAttempt: boolean;
 
   get enderecoDTOsArray() {
@@ -46,7 +49,8 @@ export class EmpresaCreateComponent implements OnInit {
     private empresaService: EmpresaClienteService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +58,6 @@ export class EmpresaCreateComponent implements OnInit {
     this.getAllEmpresas();
     this.enderecos = <FormArray>this.formCreate.get("enderecoDTOs");
     this.telefones = <FormArray>this.formCreate.get("telefoneDTOs");
-    console.log('udpareordelete', this.UpdateOrDelete);
   }
 
   autoCompleteEmpresa(): void {
@@ -91,6 +94,7 @@ export class EmpresaCreateComponent implements OnInit {
       razaoSocial: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
       cnpj: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
       inscricao_estadual: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
+      imagemUrl: [""],
       enderecoDTOs: this.fb.array([this.criaFormGroupEndereco()]),
       telefoneDTOs: this.fb.array([this.criaFormGroupTelefone()]),
     });
@@ -107,9 +111,19 @@ export class EmpresaCreateComponent implements OnInit {
     );
   }
 
+  uploadImage() {
+    this.empresaService.postUpload(this.file).subscribe();
+  }
+
+  getImagemFromBase64(any) {
+    this.imgPreview = "data:image/png;base64,"+any;
+  }
+
   salvarEmpresa(): void {
     this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
+    console.log(this.empresa);
+    this.uploadImage();
     this.empresaService[this.metodoApi](this.empresa).subscribe(
       () => {
         this.empresaService.showMessage(
@@ -132,22 +146,16 @@ export class EmpresaCreateComponent implements OnInit {
     });
   }
 
-  updateEmpresa(): void {
-    this.isLoading = !this.isLoading;
-    this.empresa = this.formCreate.value;
-    console.log(JSON.stringify(this.empresa));
-    this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
-      this.empresaService.showMessage("Empresa atualizado com sucesso!");
-      this.limparForm();
-      this.isLoading = !this.isLoading;
-    });
-  }
-
   updateForm(modeloEmpresa: EmpresaClienteDTO): void {
     this.UpdateOrDelete = true;
+    this.imgPreview = '';
     this.metodoApi = 'putEmpresaCliente';
-    console.log(modeloEmpresa);
-    this.formCreate.patchValue(modeloEmpresa);
+    this.empresa = Object.assign(modeloEmpresa);
+
+    if(modeloEmpresa.imagemUrl)
+      this.getImagemFromBase64(modeloEmpresa.imagemUrl);    
+    
+    this.formCreate.patchValue(this.empresa);
   }
 
   limparForm(): void {
@@ -155,6 +163,7 @@ export class EmpresaCreateComponent implements OnInit {
     this.getAllEmpresas();
     this.UpdateOrDelete = false;
     this.metodoApi = 'postEmpresaCliente';
+    this.imgPreview = '';
   }
 
   addNovoEndereco() {
@@ -168,6 +177,28 @@ export class EmpresaCreateComponent implements OnInit {
 
   addNovoTelefone() {
     this.telefones.push(this.criaFormGroupTelefone());
+  }
+
+  onFileChange(event): void {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(event.target.files[0]); 
+    reader.onload = (_event) => { 
+      this.imgPreview = reader.result; 
+    }
+
+    if(event.target.files && event.target.files.length)
+    {
+      this.file = event.target.files;
+      console.log(this.file);
+      this.formCreate.controls.imagemUrl.setValue(this.file[0].name);
+    }
+  }
+
+  onSearchEmpChange(searchValue: string): void {
+    if(!searchValue){
+      this.limparForm();
+    }
   }
 
   removeTelefone(index) {

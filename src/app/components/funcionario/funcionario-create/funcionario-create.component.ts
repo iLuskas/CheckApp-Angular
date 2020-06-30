@@ -10,6 +10,7 @@ import { UsuarioService } from "src/app/services/Usuario.service";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { TipoEquipamentoDTO } from 'src/app/models/TipoEquipamentoDTO';
 
 @Component({
   selector: "app-funcionario-create",
@@ -32,6 +33,7 @@ export class FuncionarioCreateComponent implements OnInit {
   enderecos: FormArray;
   UpdateOrDelete: boolean = false;
   filteredOptions: Observable<FuncionarioDTO[]>;
+  filteredOptionsPerfil: Observable<PerfilDTO[]>;
   isLoading: boolean;
   metodoApi: string = 'postFuncionario';
   private formSubmitAttempt: boolean;
@@ -50,6 +52,14 @@ export class FuncionarioCreateComponent implements OnInit {
 
     const filterValue = value.toLowerCase();
     return this.funcionarios.filter(func => func.nome.toLowerCase().indexOf(filterValue) !== -1);
+  }
+
+  private _filterPerfil(value: string): PerfilDTO[] {
+    if(!value)
+      return;
+
+    const filterValue = value.toLowerCase();
+    return this.perfils.filter(per => per.funcao_perfil.toLowerCase().indexOf(filterValue) !== -1);
   }
 
   constructor(
@@ -77,6 +87,14 @@ export class FuncionarioCreateComponent implements OnInit {
       map(value => this._filter(value))
     );
   }
+
+  autoCompletePerfil(): void {
+    this.filteredOptionsPerfil = this.formGroupCreatePerfil.get('funcao_perfil')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterPerfil(value))
+    );
+  }
+
 
   criaFormGroupEndereco(): FormGroup {
     return this.fb.group({
@@ -136,7 +154,7 @@ export class FuncionarioCreateComponent implements OnInit {
 
   criaFormGroupPerfil(): void {
     this.formGroupCreatePerfil = this.fb.group({
-      id: [null, Validators.compose([Validators.required])],
+      id: [null],
       funcao_perfil: ["", Validators.compose([Validators.required])],
     });
   }
@@ -144,7 +162,7 @@ export class FuncionarioCreateComponent implements OnInit {
   criaFormGroupUsuario(): void {
     this.formGroupcreateUsuario = this.fb.group({
       id: [null],
-      login: new FormControl(""),
+      login: [""],
       senha: [""],
     });
   }
@@ -229,14 +247,13 @@ export class FuncionarioCreateComponent implements OnInit {
   getAllPerfils() {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;
-      console.log('PERFILS', this.perfils)
+      this. autoCompletePerfil();
     });
   }
 
   getPerfilById(id: number) {
     this.perfil = this.perfils.find(perfil => perfil.id === id);
     this.perfilSelecionado(this.perfil);
-    console.log('PERFILBYID',this.perfil)
   }
 
   perfilSelecionado(perfil: PerfilDTO): void {
@@ -266,12 +283,18 @@ export class FuncionarioCreateComponent implements OnInit {
   updateForm(modeloFuncionario: FuncionarioDTO): void {
     this.UpdateOrDelete = true;
     this.metodoApi = 'putFuncionario';
-    console.log(modeloFuncionario);
+    this.addNovoTelefone(true, modeloFuncionario.telefoneDTOs.length);    
     this.formCreate.patchValue(modeloFuncionario);
     this.getPerfilById(modeloFuncionario.perfilId);
 
     if(modeloFuncionario.usuarioId)
       this.getUsuarioById(modeloFuncionario.usuarioId);
+  }
+
+  onSearchFuncChange(searchValue: string) {
+    if(!searchValue){
+      this.limparForm();
+    }
   }
 
   limparForm(stepper:any = null): void {
@@ -299,8 +322,15 @@ export class FuncionarioCreateComponent implements OnInit {
     this.enderecos.removeAt(index);
   }
 
-  addNovoTelefone() {
-    this.telefones.push(this.criaFormGroupTelefone());
+  addNovoTelefone(pushArray: boolean=false, qtd:number=0) {
+    if(pushArray){
+      this.telefones.removeAt(0);
+      for (let index = 0; index <= qtd-1; index++) {
+        this.telefones.push(this.criaFormGroupTelefone());        
+      }
+    }else{
+      this.telefones.push(this.criaFormGroupTelefone());
+    }
   }
 
   removeTelefone(index) {

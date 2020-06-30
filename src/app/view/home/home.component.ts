@@ -79,6 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
       this.EquipamentosInsp = agendamentos;
+      console.log('NOTINSP',agendamentos);
     });
   }
 
@@ -88,6 +89,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
       this.EquipamentosNotInsp = agendamentos;
+      console.log('INSP',agendamentos);
     });  
   }
 

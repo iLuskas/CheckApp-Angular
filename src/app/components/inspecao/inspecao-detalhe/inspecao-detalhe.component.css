@@ -1,0 +1,22 @@
+p {
+    font-size: 1rem;
+}
+
+.cards-agendamentos {
+    margin: 10px 0;
+}
+
+.container-img {
+    margin-right: 10px;
+    align-items: center;
+    width: 150px !important; 
+}
+
+.img-card{
+    width: 22vmin;
+    border: 1px solid #000;
+}
+
+.container-img-mobile {
+    border: none;
+} 
