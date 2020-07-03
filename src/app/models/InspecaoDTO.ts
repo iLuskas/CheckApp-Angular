@@ -1,11 +1,10 @@
-import { EquipamentoSegurancaDTO } from './EquipamentoSeguranca';
-
 export interface InspecaoDTO {
     statusInspManutId: number;
     funcionarioId: number;
     empresaClienteId: number;
     agendaInspManutId: number;
-    utilmaRec_Insp: string;
+    equipamentoSegurancaId: number;
+    ultimaRec_Insp: string;
     proximoRec_Insp: string;
     ultimoReteste_Insp: string;
     proximoReteste_Insp: string;
@@ -15,9 +14,8 @@ export interface InspecaoDTO {
     sinalizacaoPiso_insp: string;
     sinalizacaoAcesso_insp: string;
     obs_Insp: string;
-    dataInicial: Date;
+    dataInicial?: Date;
     dataFinal?: Date;
-    duracao?: string;
-    equipamentoSegurancaDTO: EquipamentoSegurancaDTO;
-    id?: number;
+    duracao: string;
+    id: number;
 }

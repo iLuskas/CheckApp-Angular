@@ -10,7 +10,7 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class EquipamentoSegurancaService {
   baseURL = "https://www.safetyplan.net.br/checkapp/api/Equipamento_Seguranca";
-  //baseURL = "https://localhost:5001/api/Equipamento_Seguranca";
+  //baseURL = "https://localhost:44363/api/Equipamento_Seguranca";
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -96,6 +96,27 @@ export class EquipamentoSegurancaService {
     return this.http
       .get<EquipamentoSegurancaDTO>(
         `${this.baseURL}/getAllEquipamentoByEmpresaIdAndTipo/?id=${id}&tipoId=${tipoId}`
+      )
+      .pipe(
+        map((obj) => obj),
+        catchError((e) => this.erroHandler(e))
+      );
+  }
+
+  getEquipByNumExtintor(
+    numExtintor: string,
+    token: string = null
+  ): Observable<any> {
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token
+    //   })
+    // };
+
+    return this.http
+      .get<any>(
+        `${this.baseURL}/getEquipByNumExtintor/?numExtintor=${numExtintor}`
       )
       .pipe(
         map((obj) => obj),

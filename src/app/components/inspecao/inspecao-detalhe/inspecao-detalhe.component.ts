@@ -1,57 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { AgendamentoService } from 'src/app/services/agendamento.service';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { AgendamentoService } from "src/app/services/agendamento.service";
+import { DatePipe } from "@angular/common";
+import { InspecaoEstadoService } from "../inspecao-estado.service";
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { QrCodeReaderComponent } from '../../qr-code-reader/qr-code-reader.component';
+import { EquipamentoSegurancaService } from 'src/app/services/EquipamentoSeguranca.service';
+import { InspecaoEquipamentoComponent } from './inspecao-equipamento/inspecao-equipamento.component';
 
 @Component({
-  selector: 'app-inspecao-detalhe',
-  templateUrl: './inspecao-detalhe.component.html',
-  styleUrls: ['./inspecao-detalhe.component.css']
+  selector: "app-inspecao-detalhe",
+  templateUrl: "./inspecao-detalhe.component.html",
+  styleUrls: ["./inspecao-detalhe.component.css"],
 })
 export class InspecaoDetalheComponent implements OnInit {
   agendamentoSeleted: any;
+  isFinishInspetion: boolean;
+  isLoading: boolean;
   date = new Date();
-  primeiroDiaMes: Date;
-  ultimoDiaMes: Date;
-  EquipamentosInsp: any[];
-  EquipamentosNotInsp: any[];
+
   constructor(
+    private estadoInspecao: InspecaoEstadoService,
     private agendamentoService: AgendamentoService,
-    private datePipe: DatePipe
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private equipamentoService: EquipamentoSegurancaService) {
 
-  ngOnInit(): void {
-    this.agendamentoSeleted = JSON.parse(localStorage.getItem('AgendaSeleted'));
-    this.primeiroDiaMes = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
-    this.ultimoDiaMes = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
+    this.estadoInspecao.isInspetionDone.subscribe((value) => {
+      if (value)
+        this.agendamentoSeleted = JSON.parse(
+          localStorage.getItem("AgendaSeleted")
+        );
+    });
 
-    this.getAllEquipInspByDtAgendamento();
-    this.getAllEquipNotInspByDtAgendamento();
-  }
-
-  
-  getAllEquipInspByDtAgendamento() : void {
-    this.agendamentoService
-    .getAllEquipInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
-    this.transformDate(this.ultimoDiaMes, true))
-    .subscribe((agendamentos) => {
-      this.EquipamentosInsp = agendamentos;
-      console.log('NOTINSP',agendamentos);
+    this.estadoInspecao.isAllInspetionDone.subscribe((value) => {
+      this.isFinishInspetion = value;
     });
   }
 
-  getAllEquipNotInspByDtAgendamento() : void {
-    this.agendamentoService
-    .getAllEquipNotInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
-    this.transformDate(this.ultimoDiaMes, true))
-    .subscribe((agendamentos) => {
-      this.EquipamentosNotInsp = agendamentos.filter(agenda => agenda.empresa.match(this.agendamentoSeleted.empresa));
-    });  
+  ngOnInit(): void {
+    this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
   }
 
+  finalizarAgendamento() {
+    this.agendamentoService.putAgendamentoStatusById(this.agendamentoSeleted.ageId.toString(), '3').subscribe(
+      () => {
+        localStorage.removeItem("AgendaSeleted");
+        this.router.navigate(["/inspecoes"], { relativeTo: this.route });
+        this.agendamentoService.showMessage('Inspeção finalizada.');
+      }
+    );
+  }
 
-  transformDate(date, usaUltimaHora: boolean = false): string {
-    return !usaUltimaHora ?
-    this.datePipe.transform(date, "yyyy-MM-ddTHH:mm:ss") :
-    this.datePipe.transform(date, "yyyy-MM-ddT23:59:59")
+  openDialog(): void {
+    const dialogRef = this.dialog.open(QrCodeReaderComponent, {
+      autoFocus: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      if(result){
+        var equipamento = JSON.parse(result);
+         this.getEquipByNumExtintor(equipamento);
+      }
+    });
+  }
+
+  getEquipByNumExtintor(equipamento: any) : void {
+    this.equipamentoService.getEquipByNumExtintor(equipamento.num_ext.toString()).subscribe
+    ((extintor) =>{
+      this.openDialogInspecao(extintor);
+    });
+  }
+
+  openDialogInspecao(extintor : any): void {
+    const dialogRef = this.dialog.open(InspecaoEquipamentoComponent, {
+      data: {equip: extintor, dataIncial: this.date},
+      autoFocus: true,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      if(result){
+        this.agendamentoSeleted.qtdInsp++;
+        this.agendamentoSeleted.qtdNotInsp--;
+        localStorage.setItem("AgendaSeleted", JSON.stringify(this.agendamentoSeleted));
+        this.estadoInspecao.isInspetionDone.next(true);
+      }
+    });
   }
 }

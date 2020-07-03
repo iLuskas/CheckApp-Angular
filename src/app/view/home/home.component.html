@@ -65,10 +65,12 @@
                         mat-table
                         [dataSource]="AgendaAccPorEmpresa"
                         class="mat-elevation-z2"
+                        matSort
+                        matTableResponsive
                       >
                         <!-- Empresa Column -->
                         <ng-container matColumnDef="empresa">
-                          <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                          <th mat-header-cell mat-sort-header *matHeaderCellDef>Empresa</th>
                           <td
                             mat-cell
                             *matCellDef="let element"
@@ -81,7 +83,8 @@
                         <!-- Total Column -->
                         <ng-container matColumnDef="totalAcc">
                           <th
-                            mat-header-cell
+                            mat-header-cell 
+                            mat-sort-header
                             *matHeaderCellDef
                             class="mat-column-totalacc"
                           >

@@ -54,6 +54,12 @@ import { PerfilFuncionarioComponent } from "./components/funcionario/perfil-func
 import { InspecaoComponent } from './components/inspecao/inspecao.component';
 import { ManutencaoComponent } from './components/manutencao/manutencao.component';
 import { InspecaoDetalheComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe.component';
+import { InspecaoDetalheInpecionadosComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe-inpecionados/inspecao-detalhe-inpecionados.component';
+import { InspecaoDetalheNaoinpecionadosComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe-naoinpecionados/inspecao-detalhe-naoinpecionados.component';
+import { InspecaoEquipamentoComponent } from './components/inspecao/inspecao-detalhe/inspecao-equipamento/inspecao-equipamento.component';
+import { MatTableResponsiveModule } from './directives/mat-table-responsive/mat-table-responsive.module';
+import { QrCodeReaderComponent } from './components/qr-code-reader/qr-code-reader.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -98,6 +104,10 @@ registerLocaleData(localePt);
     InspecaoComponent,
     ManutencaoComponent,
     InspecaoDetalheComponent,
+    InspecaoDetalheInpecionadosComponent,
+    InspecaoDetalheNaoinpecionadosComponent,
+    InspecaoEquipamentoComponent,
+    QrCodeReaderComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +119,9 @@ registerLocaleData(localePt);
     FlexLayoutModule,
     ReactiveFormsModule,
     LayoutModule,
-    QRCodeModule 
+    QRCodeModule,
+    MatTableResponsiveModule,
+    ZXingScannerModule 
   ],
   providers: [{
     provide: LOCALE_ID,

@@ -8,6 +8,9 @@
     >
     <mat-card-content>
       <div fxLayout="column">
+        <div fxFlex *ngIf="!agendamentos" fxLayoutAlign="center center">
+          <h2>Não há inspeções em seu nome.</h2>
+        </div>
         <div fxFlex>
           <mat-card
             *ngFor="let agenda of agendamentos"
@@ -19,7 +22,7 @@
                   [src]="
                     agenda.imagemUrl
                       ? 'data:image/png;base64,' + agenda.imagemUrl
-                      : 'https://www.freeiconspng.com/uploads/no-image-icon-15.png'
+                      : '../../../assets/img/no-image.png'
                   "
                   class="img-card"
                   ngClass.xs="img-card-mobile"
@@ -44,7 +47,7 @@
                 <button mat-raised-button color="primary" (click)="ContinuarInsp(agenda)" *ngIf="agenda.statusAgenda === 'Em Andamento'">
                   Continuar Inspeção 
                 </button>
-                <button mat-raised-button color="primary" *ngIf="agenda.statusAgenda === 'Pendente'">
+                <button mat-raised-button color="primary" (click)="iniciarInsp(agenda)" *ngIf="agenda.statusAgenda === 'Pendente'">
                   Iniciar Inspeção
                 </button>
               </mat-card-actions>

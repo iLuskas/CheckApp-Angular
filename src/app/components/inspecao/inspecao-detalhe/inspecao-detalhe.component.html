@@ -3,47 +3,91 @@
     <mat-card-content>
       <div fxLayout="column">
         <mat-card class="cards-agendamentos cards mat-elevation-z4">
-          <div fxLayout="row wrap" fxLayout.xs="column">
-            <div
-              fxFlex="16"
-              fxFlex.xs="100"
-              class="container-img"
-              ngClass.xs="container-img-mobile"
+          <mat-card-content>
+            <div fxLayout="row wrap" fxLayout.xs="column">
+              <div
+                fxFlex="16"
+                fxFlex.xs="100"
+                class="container-img"
+                ngClass.xs="container-img-mobile"
+              >
+                <img
+                  [src]="
+                    agendamentoSeleted.imagemUrl
+                      ? 'data:image/png;base64,' + agendamentoSeleted.imagemUrl
+                      : '../../../../assets/img/no-image.png'
+                  "
+                  class="img-card"
+                  ngClass.xs="img-card-mobile"
+                  alt="Imagem Empresa"
+                />
+              </div>
+              <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
+                <div fxFlex="60">
+                  <p>Empresa: {{ agendamentoSeleted.empresa }}</p>
+                  <p>Inspetor: {{ agendamentoSeleted.nomeFunc }}</p>
+                  <p>
+                    Data Início:
+                    {{ agendamentoSeleted.data | date: "dd/MM/yyyy" }}
+                  </p>
+                  <p>Equipamento: {{ agendamentoSeleted.tipoEquip }}</p>
+                </div>
+                <div fxFlex>
+                  <p>Status: {{ agendamentoSeleted.statusAgenda }}</p>
+                  <p>Total Inspecionados: {{ agendamentoSeleted.qtdInsp }}</p>
+                  <p>
+                    Total Não Inspecionados: {{ agendamentoSeleted.qtdNotInsp }}
+                  </p>
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="finalizarAgendamento()"
+                    [disabled]="isLoading"
+                    *ngIf="isFinishInspetion"
+                  >
+                    <mat-progress-bar
+                      *ngIf="isLoading"
+                      mode="indeterminate"
+                    ></mat-progress-bar>
+                    Finalizar Inspeção
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions *ngIf="false">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="finalizarAgendamento()"
+              [disabled]="isLoading"
             >
-              <img
-                [src]="
-                  agendamentoSeleted.imagemUrl
-                    ? 'data:image/png;base64,' + agendamentoSeleted.imagemUrl
-                    : 'https://www.freeiconspng.com/uploads/no-image-icon-15.png'
-                "
-                class="img-card"
-                ngClass.xs="img-card-mobile"
-                alt="Imagem Empresa"
-              />
-            </div>
-            <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
-              <div fxFlex="60">
-                <p>Empresa: {{ agendamentoSeleted.empresa }}</p>
-                <p>Inspetor: {{ agendamentoSeleted.nomeFunc }}</p>
-                <p>
-                  Data Início:
-                  {{ agendamentoSeleted.data | date: "dd/MM/yyyy" }}
-                </p>
-                <p>Equipamento: {{ agendamentoSeleted.tipoEquip }}</p>
-              </div>
-              <div fxFlex>
-                <p>Status: {{ agendamentoSeleted.statusAgenda }}</p>
-                <p>Total Inspecionados: {{ agendamentoSeleted.qtdInsp }}</p>
-                <p>
-                  Total Não Inspecionados: {{ agendamentoSeleted.qtdNotInsp }}
-                </p>
-              </div>
-            </div>
-          </div>
+              <mat-progress-bar
+                *ngIf="isLoading"
+                mode="indeterminate"
+              ></mat-progress-bar>
+              Finalizar Inspeção
+            </button>
+          </mat-card-actions>
         </mat-card>
         <div fxLayout="column">
-          <div fxFlex fxLayoutAlign="center center">
-            <h2>Equipamentos</h2>
+          <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
+            <span class="spacer-flex-right-left"></span>
+            <div fxFlex fxLayoutAlign="center center">
+              <h2>Equipamentos</h2>
+            </div>
+            
+            <div fxFlex dir="rtl"> 
+              <button
+              mat-raised-button
+              color="primary"
+              (click)="openDialog()"
+              matTooltip="QrCode Scanner"
+            >              
+              QrCode
+              <mat-icon>qr_code_scanner</mat-icon>
+            </button>
+            </div>            
           </div>
           <div fxFlex>
             <mat-tab-group>
@@ -51,13 +95,15 @@
                 <ng-template mat-tab-label>
                   INSPECIONADOS
                 </ng-template>
-                teste1
+                <app-inspecao-detalhe-inpecionados
+                ></app-inspecao-detalhe-inpecionados>
               </mat-tab>
               <mat-tab>
                 <ng-template mat-tab-label>
                   NÃO INSPECIONADOS
                 </ng-template>
-                teste2
+                <app-inspecao-detalhe-naoinpecionados
+                ></app-inspecao-detalhe-naoinpecionados>
               </mat-tab>
             </mat-tab-group>
           </div>

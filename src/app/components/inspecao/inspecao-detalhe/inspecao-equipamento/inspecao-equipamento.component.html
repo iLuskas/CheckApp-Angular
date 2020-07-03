@@ -1,0 +1,269 @@
+<h1 mat-dialog-title>INSPEÇÃO EQUIPAMENTO - {{ data.equip.numeroExtintor }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formInspecao">
+    <div fxLayout="row wrap">
+      <div fxFlex="20" fxLayout="column">
+        <img
+          [src]="'../../../../../assets/img/no-image.png'"
+          width="150"
+          alt="Imagem local equipamento"
+        />
+      </div>
+      <div fxFlex fxLayout="column">
+        <div fxLayout="row wrap">
+          <!-- Último Recarga -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-ultimaRec_Insp">
+              <mat-label>Ultima Recarga</mat-label>
+              <mat-select
+                name="ultimaRec_Insp"
+                formControlName="ultimaRec_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
+                  {{ date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('ultimaRec_Insp')">
+              Informe a Ultima recarga.
+            </mat-error>
+          </div>
+          <!-- Último Recarga -->
+
+          <!-- Próxima Recarga -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-proximoRec_Insp">
+              <mat-label>Próxima Recarga</mat-label>
+              <mat-select
+                name="proximoRec_Insp"
+                formControlName="proximoRec_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
+                  {{ date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('proximoRec_Insp')">
+              Informe a Próxima recarga.
+            </mat-error>
+          </div>
+          <!-- Próxima Recarga -->
+
+          <!-- Último Reteste -->
+          <div fxFlex>
+            <mat-form-field
+              appearance="outline"
+              class="input-ultimoReteste_Insp"
+            >
+              <mat-label>Último Reteste</mat-label>
+              <mat-select
+                name="ultimoReteste_Insp"
+                formControlName="ultimoReteste_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
+                  {{ date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('ultimoReteste_Insp')">
+              Informe a Último Reteste.
+            </mat-error>
+          </div>
+          <!-- Último Reteste -->
+
+          <!-- Próximo Reteste -->
+          <div fxFlex>
+            <mat-form-field
+              appearance="outline"
+              class="input-proximoReteste_Insp"
+            >
+              <mat-label>Próximo Recarga</mat-label>
+              <mat-select
+                name="proximoReteste_Insp"
+                formControlName="proximoReteste_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
+                  {{ date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('proximoReteste_Insp')">
+              Informe a Próximo Reteste.
+            </mat-error>
+          </div>
+          <!-- Próximo Reteste -->
+
+          <!-- Cilíndro -->
+          <div fxFlex>
+            <mat-form-field
+              appearance="outline"
+              class="input-estadoCilindro_Insp"
+            >
+              <mat-label>Cilíndro</mat-label>
+              <mat-select
+                name="estadoCilindro_Insp"
+                formControlName="estadoCilindro_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option
+                  *ngFor="let opcao of opcoesInspecao"
+                  [value]="opcao.value"
+                >
+                  {{ opcao.opcao }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('estadoCilindro_Insp')">
+              Informe o Estado do Cilindro.
+            </mat-error>
+          </div>
+          <!-- Cilíndro -->
+
+          <!-- Estado Local -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-estadoLocal_Insp">
+              <mat-label>Local</mat-label>
+              <mat-select
+                name="estadoLocal_Insp"
+                formControlName="estadoLocal_Insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option
+                  *ngFor="let opcao of opcoesInspecao"
+                  [value]="opcao.value"
+                >
+                  {{ opcao.opcao }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('estadoLocal_Insp')">
+              Informe o Estado do Local.
+            </mat-error>
+          </div>
+          <!-- Estado Local -->
+
+          <!-- Estado Selo -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-seloLacre_insp">
+              <mat-label> Estado do Selo</mat-label>
+              <mat-select
+                name="seloLacre_insp"
+                formControlName="seloLacre_insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option
+                  *ngFor="let opcao of opcoesInspecao"
+                  [value]="opcao.value"
+                >
+                  {{ opcao.opcao }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('seloLacre_insp')">
+              Informe o Estado do Selo.
+            </mat-error>
+          </div>
+          <!-- Estado Selo -->
+
+          <!-- Piso de Sinalização -->
+          <div fxFlex>
+            <mat-form-field
+              appearance="outline"
+              class="input-sinalizacaoPiso_insp"
+            >
+              <mat-label> Piso de Sinalização</mat-label>
+              <mat-select
+                name="sinalizacaoPiso_insp"
+                formControlName="sinalizacaoPiso_insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option
+                  *ngFor="let opcao of opcoesInspecao"
+                  [value]="opcao.value"
+                >
+                  {{ opcao.opcao }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('sinalizacaoPiso_insp')">
+              Informe o Estado do Piso.
+            </mat-error>
+          </div>
+          <!-- Piso de Sinalização -->
+
+          <!-- Piso de Sinalização -->
+          <div fxFlex>
+            <mat-form-field
+              appearance="outline"
+              class="input-sinalizacaoAcesso_insp"
+            >
+              <mat-label> Sinalização de Acesso</mat-label>
+              <mat-select
+                name="sinalizacaoAcesso_insp"
+                formControlName="sinalizacaoAcesso_insp"
+                (selectionChange)="selectionChange($event.value)"
+                required
+              >
+                <mat-option
+                  *ngFor="let opcao of opcoesInspecao"
+                  [value]="opcao.value"
+                >
+                  {{ opcao.opcao }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('sinalizacaoAcesso_insp')">
+              Informe o Estado da Sinalização.
+            </mat-error>
+          </div>
+          <!-- Piso de Sinalização -->
+        </div>
+        <div fxFlex>
+          <!-- Observação -->
+          <div fxFlex>
+            <mat-form-field class="input-obs_Insp" appearance="outline">
+              <mat-label>Observação</mat-label>
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                name="obs_Insp"
+                formControlName="obs_Insp"
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="5"
+                cdkAutosizeMaxRows="50"
+              ></textarea></mat-form-field
+            >|
+            <mat-error *ngIf="isFieldInvalid('obs_Insp')">
+              Informe a Localização
+            </mat-error>
+          </div>
+          <!-- Observação -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Voltar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="salvarInspecao()"
+    [disabled]="!formInspecao.valid || isLoading"
+  >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    Salvar
+  </button>
+</div>

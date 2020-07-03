@@ -1,0 +1,49 @@
+<div class="scanner-shell" [hidden]="!hasDevices">
+  
+    <header>
+      <mat-form-field appearance="fill">
+        <select matNativeControl matInput (change)="onDeviceSelectChange($event.target.value)">
+          <option value="" [selected]="!currentDevice">No Device Selected</option>
+          <option *ngFor="let device of availableDevices" [value]="device.deviceId"
+            [selected]="currentDevice && device.deviceId === currentDevice.deviceId">{{device.label}}</option>
+        </select>
+      </mat-form-field>
+    </header>
+  
+    <zxing-scanner [torch]="torchEnabled" [(device)]="currentDevice" (scanSuccess)="onCodeResult($event)"
+      [formats]="formatsEnabled" [tryHarder]="tryHarder" (permissionResponse)="onHasPermission($event)"
+      (camerasFound)="onCamerasFound($event)" (torchCompatible)="onTorchCompatible($event)"></zxing-scanner>
+  
+  <h2 *ngIf="!this.selectedDevice && !availableDevices">Nenhuma câmera foi encontrada.</h2>
+
+  <p>
+    Resultado:
+    <strong>{{ qrResultString }}</strong>
+  </p>
+</div>
+
+<div *ngIf="hasCameras && hasPermission === true">
+  <h1>
+    Parece que o seu dispositivo atual não contém câmeras, ou não foram
+    encontradas.
+  </h1>
+</div>
+
+<div *ngIf="hasPermission === undefined">
+  <h1>Aguardando permissão...</h1>
+
+  <blockquote>
+    <h2>
+      Caso o seu dispositivo não tenha câmeras, nenhuma permissão será
+      solicitada.
+    </h2>
+  </blockquote>
+</div>
+
+<div *ngIf="hasPermission === false">
+  <h1>
+    Você negou as permissões da câmera, não podemos digitalizar nada sem ela. 😪
+  </h1>
+</div>
+
+<p>Angular version: {{ ngVersion }}</p>

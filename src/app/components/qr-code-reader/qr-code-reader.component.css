@@ -1,0 +1,9 @@
+.small-video {
+    max-height: 70vh;
+    width: 100vw;
+    object-fit: contain;
+}
+
+zxing-scanner {
+    max-width: 100%;
+}

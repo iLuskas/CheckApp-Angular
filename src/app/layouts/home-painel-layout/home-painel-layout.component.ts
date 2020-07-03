@@ -29,6 +29,8 @@ export class HomePainelLayoutComponent implements OnInit {
   displayedColumnsAccInsp: string[] = ["empresa", "totalInpecionados"];
   displayedColumnsAccNotInsp: string[] = ["empresa", "totalNaoInpecionados"];
   date = new Date();
+  primeiroDiaMes: Date;
+  ultimoDiaMes: Date;
   totalNotInsp: number = 0;
   totalInsp: number = 0;
   agendamentosTotal: number = 0;
@@ -50,12 +52,13 @@ export class HomePainelLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.date);
+    this.primeiroDiaMes = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+    this.ultimoDiaMes = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
 
     this.getAllAgendamentos();
-    this.getAllEquipInspByDtAgendamento();
+    this.getAllEquipInspByDtHoje();
     this.getAllEquipNotInspByDtAgendamento();
-    this.getAllQtdEquipInspByDtAgendamento();
+    this.getAllQtdEquipInspByDtHoje();
     this.getAllQtdEquipNotInspByDtAgendamento();
   }
 
@@ -66,14 +69,13 @@ export class HomePainelLayoutComponent implements OnInit {
       .subscribe((agendamentos: AgendaInspManutDTO[]) => {
         this.agendamentos = agendamentos;
         this.agendamentosTotal = agendamentos.length;
-        console.log(agendamentos);
         this.organizaDados();
       });
   }
 
-  getAllEquipInspByDtAgendamento(): void {
+  getAllEquipInspByDtHoje(): void {
     this.agendamentoService
-      .getAllEquipInspByDtAgendamento(
+      .getAllEquipInspByDtHoje(
         this.transformDate(this.date),
         this.transformDate(this.date, true)
       )
@@ -85,21 +87,23 @@ export class HomePainelLayoutComponent implements OnInit {
   getAllEquipNotInspByDtAgendamento(): void {
     this.agendamentoService
       .getAllEquipNotInspByDtAgendamento(
-        this.transformDate(this.date),
-        this.transformDate(this.date, true)
+        this.transformDate(this.primeiroDiaMes), 
+        this.transformDate(this.ultimoDiaMes, true)
       )
       .subscribe((agendamentos) => {
+        console.log('notobjinsp',agendamentos);
         this.EquipamentosNotInsp = agendamentos;
       });
   }
 
-  getAllQtdEquipInspByDtAgendamento(): void {
+  getAllQtdEquipInspByDtHoje(): void {
     this.agendamentoService
-      .getAllQtdEquipInspByDtAgendamento(
+      .getAllQtdEquipInspByDtHoje(
         this.transformDate(this.date),
         this.transformDate(this.date, true)
       )
       .subscribe((agendamentos) => {
+        console.log('insp',agendamentos);
         if (agendamentos) {
           this.EquipamentosInspQtd = agendamentos;
           agendamentos.forEach(
@@ -109,21 +113,19 @@ export class HomePainelLayoutComponent implements OnInit {
       });
   }
 
-  getAllQtdEquipNotInspByDtAgendamento(): void {
+  getAllQtdEquipNotInspByDtAgendamento() : void {
     this.agendamentoService
-      .getAllQtdEquipNotInspByDtAgendamento(
-        this.transformDate(this.date),
-        this.transformDate(this.date, true)
-      )
-      .subscribe((agendamentos) => {
-        if (agendamentos) {
-          this.EquipamentosNotInspQtd = agendamentos;
-          agendamentos.forEach(
-            (agenda) => (this.totalNotInsp += agenda.totalNaoInpecionados)
-          );         
-        }
-        this.IsLoading = !this.IsLoading;
-      });
+    .getAllQtdEquipNotInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
+    this.transformDate(this.ultimoDiaMes, true))
+    .subscribe((agendamentos) => {
+      console.log('not insp',agendamentos);
+      if(agendamentos) {
+        console.log('not insp',agendamentos);
+        this.EquipamentosNotInspQtd = agendamentos;
+        agendamentos.forEach(agenda => this.totalNotInsp += agenda.totalNaoInpecionados);        
+      }
+      this.IsLoading = !this.IsLoading;
+    }); 
   }
 
   organizaDados(): void {

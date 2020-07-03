@@ -44,10 +44,20 @@ export class InspecaoComponent implements OnInit, AfterViewInit {
   }
 
   ContinuarInsp(agendamento: any) {
-    console.log(agendamento);
     localStorage.setItem("AgendaSeleted", JSON.stringify(agendamento));
     this.router.navigate(["/detalhe-inspecao"], { relativeTo: this.route });
   }
+
+  iniciarInsp(agendamento: any) : void {
+    this.agendamentoService.putAgendamentoStatusById(agendamento.ageId.toString(), '2').subscribe(
+      () => {
+        agendamento.statusAgenda = "Em Andamento";
+        localStorage.setItem("AgendaSeleted", JSON.stringify(agendamento));
+        this.router.navigate(["/detalhe-inspecao"], { relativeTo: this.route });
+        this.agendamentoService.showMessage('Inspeção Em Andamento.');
+      }
+    );
+  } 
 
   transformDate(date, usaUltimaHora: boolean = false): string {
     return !usaUltimaHora

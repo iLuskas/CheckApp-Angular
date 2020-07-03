@@ -77,6 +77,13 @@ export class AgendamentoService {
     );
   }
 
+  getAllEquipInspByDtHoje(dataIni: string, dataFim: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllEquipInspByDtHoje?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
+
   getAllQtdEquipInspByDtAgendamento(dataIni: string, dataFim: string, token: string = null): Observable<any[]> {
     return this.http.get<string[]>(`${this.baseURL}/getAllQtdEquipInspByDtAgendamento?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
       map((obj) => obj)
@@ -85,6 +92,12 @@ export class AgendamentoService {
 
   getAllQtdEquipNotInspByDtAgendamento(dataIni: string, dataFim: string, token: string = null): Observable<any[]> {
     return this.http.get<string[]>(`${this.baseURL}/getAllQtdEquipNotInspByDtAgendamento?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
+  getAllQtdEquipInspByDtHoje(dataIni: string, dataFim: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllQtdEquipInspByDtHoje?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
       map((obj) => obj)
     );
   }
@@ -111,6 +124,13 @@ export class AgendamentoService {
     };
 
     return this.http.put(this.baseURL, agendamento, options).pipe(
+      map((obj) => obj)
+    );
+  }
+
+  putAgendamentoStatusById(ageId:String, StatusId:String, token: string = null) {
+
+    return this.http.put(`${this.baseURL}/alteraStatusAgendamentoById?ageId=${ageId}&statusId=${StatusId}`, { responseType: 'text' }).pipe(
       map((obj) => obj)
     );
   }

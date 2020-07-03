@@ -8,7 +8,7 @@
     <form [formGroup]="formCreate">
       <div fxLayout="row wrap" fxLayout.xs="column">
         <div fxFlex="20" fxLayout="column" fxLayoutAlign="center center">
-          <img [src]="imgPreview ? imgPreview :'https://www.freeiconspng.com/uploads/no-image-icon-15.png'" width="150" alt="Imagem Empresa" />
+          <img [src]="imgPreview ? imgPreview :'../../../../assets/img/no-image.png'" width="150" alt="Imagem Empresa" />
           <input type="file" #file (change)="onFileChange($event)" accept="image/png,image/jpg,image/jpeg" style="display: none;"/>
           <input type="hidden" #file formControlName="imagemUrl"/>
           <div class="container-btnAddImage">

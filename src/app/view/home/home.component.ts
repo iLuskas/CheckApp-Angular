@@ -4,11 +4,13 @@ import {
   ChangeDetectorRef,
   HostListener,
   AfterViewInit,
+  ViewChild,
 } from "@angular/core";
 import { HeaderService } from "src/app/components/template/header/header.service";
 import { AgendaInspManutDTO } from "src/app/models/AgendaInspManutDTO";
 import { AgendamentoService } from "src/app/services/agendamento.service";
 import { DatePipe } from '@angular/common';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: "app-home",
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   totalNotInsp: number = 0;
   totalInsp: number = 0;
   agendamentosTotal: number = 0;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
   constructor(
     private headerService: HeaderService,
     private cdref: ChangeDetectorRef,
@@ -79,7 +83,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
       this.EquipamentosInsp = agendamentos;
-      console.log('NOTINSP',agendamentos);
     });
   }
 
@@ -89,7 +92,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
       this.EquipamentosNotInsp = agendamentos;
-      console.log('INSP',agendamentos);
     });  
   }
 
@@ -98,8 +100,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     .getAllQtdEquipInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
-      this.EquipamentosInspQtd = agendamentos
-      agendamentos.forEach(agenda => this.totalInsp += agenda.totalInpecionados);
+      if(agendamentos){
+        this.EquipamentosInspQtd = agendamentos
+        agendamentos.forEach(agenda => this.totalInsp += agenda.totalInpecionados);
+      }
     }); 
   }
 
@@ -108,8 +112,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     .getAllQtdEquipNotInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
-      this.EquipamentosNotInspQtd = agendamentos;
-      agendamentos.forEach(agenda => this.totalNotInsp += agenda.totalNaoInpecionados);
+      if(agendamentos) {
+        this.EquipamentosNotInspQtd = agendamentos;
+        agendamentos.forEach(agenda => this.totalNotInsp += agenda.totalNaoInpecionados);        
+      }
       this.IsLoading = !this.IsLoading;
     }); 
   }
