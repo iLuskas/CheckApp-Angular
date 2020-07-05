@@ -32,12 +32,12 @@ export class InspecaoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.cacheUsuario = JSON.parse(localStorage.getItem("cacheUsuario"));
-    this.getAllAgendamentoByUser();
+    this.getAllAgendaByUserAndTipo();
   }
 
-  getAllAgendamentoByUser(): void {
+  getAllAgendaByUserAndTipo(): void {
     this.agendamentoService
-      .getAllAgendamentosByUsuario(this.cacheUsuario.login)
+      .getAllAgendaByUserAndTipo(this.cacheUsuario.login, '1')
       .subscribe((agendamentos) => {
         this.agendamentos = agendamentos;
       });

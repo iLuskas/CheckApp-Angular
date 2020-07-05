@@ -64,7 +64,8 @@
         <mat-nav-list class="nav-list left hide-on-med-and-down">
           <div *ngFor="let navItem of navItens">
             <a mat-list-item 
-            routerLink="{{ navItem.link }}">
+            routerLink="{{ navItem.link }}"
+            (click)="OnChoseMenu(drawer)">
               <i class="material-icons">
                 {{ navItem.icon }}
               </i>
@@ -77,7 +78,8 @@
         <mat-nav-list class="nav-list left hide-on-med-and-down">
           <div *ngFor="let navItem of navItensUser">
             <a mat-list-item 
-            routerLink="{{ navItem.link }}">
+            routerLink="{{ navItem.link }}"
+            (click)="OnChoseMenu(drawer)">
               <i class="material-icons">
                 {{ navItem.icon }}
               </i>

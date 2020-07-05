@@ -175,7 +175,6 @@ export class EquipamentoCreateComponent implements OnInit {
       .subscribe((equipamentos: EquipamentoSegurancaDTO[]) => {
         this.equipamentosSegurancas = equipamentos;
         this.equipamentosSegurancas.forEach(eq => this.extintores.push(eq.extintorDTO));
-        console.log("EQUIPAMENTOS", this.equipamentosSegurancas);
         this.autoCompleteExtintor();
       });
   }
@@ -185,7 +184,6 @@ export class EquipamentoCreateComponent implements OnInit {
       .getAllTipoEquipamento()
       .subscribe((tipoEquipamento: TipoEquipamentoDTO[]) => {
         this.tiposEquipamentos = tipoEquipamento;
-        console.log("TIPOSEQUIPAMENTOS", this.tiposEquipamentos);
       });
   }
 
@@ -195,7 +193,6 @@ export class EquipamentoCreateComponent implements OnInit {
       .subscribe((empresas: EmpresaClienteDTO[]) => {
         this.empresas = empresas;
         this.autoCompleteEmpresa();
-        console.log("EMPRESAS", this.empresas);
       });
   }
 
@@ -203,7 +200,6 @@ export class EquipamentoCreateComponent implements OnInit {
     this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
     this.equipamentoSeguranca.qrCode = this.qrData;
-    console.log(JSON.stringify(this.equipamentoSeguranca));
     this.equipamentoService[this.metodoApi](this.equipamentoSeguranca).subscribe(
       () =>{
         this.equipamentoService.showMessage(
@@ -221,7 +217,6 @@ export class EquipamentoCreateComponent implements OnInit {
   deleteEquipamento(stepper: any) {
     this.isLoading = !this.isLoading;
     this.equipamentoSeguranca = this.formCreate.value;
-    console.log(this.equipamentoSeguranca);
     this.equipamentoService
       .deleteEquipamento(this.equipamentoSeguranca)
       .subscribe(() => {
@@ -240,7 +235,6 @@ export class EquipamentoCreateComponent implements OnInit {
 
     this.formCreateTipoEquipamento.controls['tipo'].patchValue(tipo);
     this.tipoEquipamento = this.formCreateTipoEquipamento.value;
-    console.log('NOVOTIPO' , this.tipoEquipamento);
     this.tipoEquipamentoService.postTipoEquipamento(this.tipoEquipamento).subscribe(
       () => {
         this.tipoEquipamentoService.showMessage("Tipo de Equipamento criado com sucesso.");

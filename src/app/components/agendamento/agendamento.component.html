@@ -1,7 +1,7 @@
 <div fxLayout="column">
   <div class="agendamento-form">
     <mat-card>
-      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-header fxLayout="row wrap">
         <span class="spacer-flex-right-left"></span>
         <div>
           <mat-card-title fxLayoutAlign="center center"
@@ -22,6 +22,7 @@
                   type="text"
                   placeholder="Número do agendamento:"
                   formControlName="id"
+                  (input)="onSerachNumAgendaChange($event.target.value)"
                   name="agendamento"
                   [matAutocomplete]="autoAgenda"
                 />
@@ -183,7 +184,7 @@
               <div fxFlex *ngIf="pesquisouAgenda">
                 <mat-form-field
                   appearance="outline"
-                  class="input-TipoAgendamento"                 
+                  class="input-TipoAgendamento"
                 >
                   <mat-label>Status Agendamento</mat-label>
                   <mat-select
@@ -202,6 +203,40 @@
                   </mat-select>
                 </mat-form-field>
               </div>
+              <div fxFlex *ngIf="formAgenda.controls.dataFinal.value">
+                <mat-form-field appearance="outline" class="input-dataFinal">
+                  <mat-label>Data Final</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Ex: 01/01/1900"
+                    name="dataFinal"
+                    formControlName="dataFinal"
+                    [matDatepicker]="picker2"                    
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex *ngIf="formAgenda.controls.duracao.value">
+                <mat-form-field
+                  appearance="outline"
+                  class="input-duracao"
+                >
+                  <mat-label>Duraçao:</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Duraçao"
+                    name="duracao"
+                    formControlName="duracao"                   
+                  />
+                </mat-form-field>
+              </div>
+              <div fxFlex *ngIf="formAgenda.controls.duracao.value"></div>
             </div>
           </div>
         </form>
@@ -219,7 +254,7 @@
                 *ngIf="isLoading"
                 mode="indeterminate"
               ></mat-progress-bar>
-              {{!pesquisouAgenda ? 'Agendar' : 'Salvar'}} 
+              {{ !pesquisouAgenda ? "Agendar" : "Salvar" }}
             </button>
             <button mat-raised-button (click)="limparForm()">Limpar</button>
           </mat-card-actions>
@@ -227,5 +262,9 @@
       </div>
     </mat-card>
   </div>
-  <div></div>
+  <div *ngIf="pesquisouAgenda">
+    <app-inspecao-detalhe
+      [agendamentoId]="formAgenda.controls.id.value"
+    ></app-inspecao-detalhe>
+  </div>
 </div>

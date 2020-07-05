@@ -5,6 +5,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { InspecaoService } from 'src/app/services/Inspecao.service';
 import { InspecaoDTO } from 'src/app/models/InspecaoDTO';
+import { exit, abort } from 'process';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class InspecaoEquipamentoComponent implements OnInit {
   date = new FormControl(new Date());
   dateMonthYear: any[] = []; 
   agendamentoSeleted: any;
+  usuarioAtual: any;
+  precisaManutencao: boolean;
   opcoesInspecao: {opcao:string; value:string}[] = [{opcao:'Conforme', value:'C'}, {opcao:'Não Conforme', value:'NC'}, {opcao:'Não Aplicável', value:'NA'}];
   isLoading: boolean;
   metodoApi = 'postInspecao';
@@ -34,7 +37,9 @@ export class InspecaoEquipamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.agendamentoSeleted = JSON.parse(localStorage.getItem('AgendaSeleted'));
+    this.usuarioAtual = JSON.parse(localStorage.getItem('cacheUsuario'));
     this.createDropdownMonthYear();
+    
     if(this.data.inspecao){
       this.montaInfoInspecao();
     }
@@ -64,9 +69,10 @@ export class InspecaoEquipamentoComponent implements OnInit {
       obs_Insp: [this.data.inspecao.obs_Insp, Validators.compose([Validators.required])],
       dataInicial: [this.data.dataIncial],
       dataFinal: [this.data.inspecao.dataFinal],
-      duracao: [this.data.inspecao.duracao]
+      duracao: [this.data.inspecao.duracao],
+      precisaManutencao: [this.data.inspecao.precisaManutencao]
     });
-
+    console.log(this.data.inspecao);
     this.metodoApi = 'putInspecao';
   }
 
@@ -96,14 +102,23 @@ export class InspecaoEquipamentoComponent implements OnInit {
       obs_Insp: ['', Validators.compose([Validators.required])],
       dataInicial: [this.data.dataIncial],
       dataFinal: [''],
-      duracao: ['']
+      duracao: [''],
+      precisaManutencao: [false]
     });
 
     // this.formInspecao.valueChanges.subscribe(data => console.log('form changes', data));
   }
 
   salvarInspecao(): void {
-    this.formInspecao.controls.dataFinal.patchValue(this.date.value);
+    
+    if(this.usuarioAtual.perfil === "Inspetor" && this.metodoApi === "putInspecao"){
+      this.inspecaoService.showMessage("Somente adminsitradores podem alterar a inspeção", true);
+      return;
+    }
+
+    if(this.metodoApi !== "putInspecao")
+      this.formInspecao.controls.dataFinal.patchValue(this.date.value);
+
     this.inspecao = this.formInspecao.value;
   
     this.isLoading = !this.isLoading;
@@ -147,6 +162,7 @@ export class InspecaoEquipamentoComponent implements OnInit {
       }      
     }
   }
+
 
   onNoClick(isReaload: boolean = false): void {
     this.dialogRef.close(isReaload);

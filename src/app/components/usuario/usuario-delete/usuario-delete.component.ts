@@ -37,7 +37,7 @@ export class UsuarioDeleteComponent implements OnInit {
 
   deleteUsuario(): void {
     this.usuario = this.formDelete.value;
-    console.log(this.usuario);
+    
     this.usuarioService.putUsuario(this.usuario).subscribe(
       () => {
         this.usuarioService.showMessage("Usuário alterado com sucesso!");
@@ -49,7 +49,7 @@ export class UsuarioDeleteComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get("id");
     this.usuarioService.getUsuarioById(id).subscribe(
       (perfil: Usuario) => {
-        console.log(perfil);
+        
         this.formDelete.patchValue(perfil);
       }
     );

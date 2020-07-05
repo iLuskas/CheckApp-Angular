@@ -3,11 +3,23 @@
   <form [formGroup]="formInspecao">
     <div fxLayout="row wrap">
       <div fxFlex="20" fxLayout="column">
-        <img
-          [src]="'../../../../../assets/img/no-image.png'"
-          width="150"
-          alt="Imagem local equipamento"
-        />
+        <div>
+          <img
+            [src]="'../../../../../assets/img/no-image.png'"
+            width="150"
+            alt="Imagem local equipamento"
+          />
+        </div>
+        <div>
+          <section class="example-section">
+            <mat-checkbox
+              class="example-margin"
+              formControlName="precisaManutencao"
+              matTooltip="Marcar caso o equipamento necessite de alguma manutenção."
+              >Manutenção</mat-checkbox
+            >
+          </section>
+        </div>
       </div>
       <div fxFlex fxLayout="column">
         <div fxLayout="row wrap">
@@ -83,7 +95,7 @@
               appearance="outline"
               class="input-proximoReteste_Insp"
             >
-              <mat-label>Próximo Recarga</mat-label>
+              <mat-label>Próximo Reteste</mat-label>
               <mat-select
                 name="proximoReteste_Insp"
                 formControlName="proximoReteste_Insp"
@@ -203,7 +215,7 @@
           </div>
           <!-- Piso de Sinalização -->
 
-          <!-- Piso de Sinalização -->
+          <!-- Sinalização de Acesso -->
           <div fxFlex>
             <mat-form-field
               appearance="outline"
@@ -228,7 +240,7 @@
               Informe o Estado da Sinalização.
             </mat-error>
           </div>
-          <!-- Piso de Sinalização -->
+          <!-- Sinalização de Acesso -->
         </div>
         <div fxFlex>
           <!-- Observação -->
@@ -250,6 +262,57 @@
             </mat-error>
           </div>
           <!-- Observação -->
+        </div>
+        <div fxFlex fxLayout="row wrap" *ngIf="data.inspecao">
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Inicial:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataFinal"
+                formControlName="dataFinal"
+                [matDatepicker]="picker2"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Final:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataFinal"
+                formControlName="dataFinal"
+                [matDatepicker]="picker1"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Duraçao:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Duraçao"
+                name="duracao"
+                formControlName="duracao"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex></div>
         </div>
       </div>
     </div>

@@ -95,6 +95,7 @@ export class EmpresaCreateComponent implements OnInit {
       cnpj: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
       inscricao_estadual: ["", Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
       imagemUrl: [""],
+      email: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
       enderecoDTOs: this.fb.array([this.criaFormGroupEndereco()]),
       telefoneDTOs: this.fb.array([this.criaFormGroupTelefone()]),
     });
@@ -106,13 +107,13 @@ export class EmpresaCreateComponent implements OnInit {
       (empresas: EmpresaClienteDTO[]) => {
         this.empresas = empresas;
         this.autoCompleteEmpresa();
-        console.log(this.empresas);
       }
     );
   }
 
   uploadImage() {
-    this.empresaService.postUpload(this.file).subscribe();
+    if(this.file)
+      this.empresaService.postUpload(this.file).subscribe();
   }
 
   getImagemFromBase64(any) {
@@ -151,9 +152,9 @@ export class EmpresaCreateComponent implements OnInit {
     this.imgPreview = '';
     this.metodoApi = 'putEmpresaCliente';
     this.empresa = Object.assign(modeloEmpresa);
-
-    if(modeloEmpresa.imagemUrl)
-      this.getImagemFromBase64(modeloEmpresa.imagemUrl);    
+    console.log(modeloEmpresa);
+    if(modeloEmpresa.imagemUrlBase64)
+      this.getImagemFromBase64(modeloEmpresa.imagemUrlBase64);    
     
     this.formCreate.patchValue(this.empresa);
   }

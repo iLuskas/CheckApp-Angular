@@ -10,7 +10,7 @@ import { map, catchError } from "rxjs/operators";
 })
 export class EmpresaClienteService {
    baseURL = "https://www.safetyplan.net.br/checkapp/api/EmpresaCliente";
-  //baseURL = "https://localhost:44363/api/EmpresaCliente";
+   //baseURL = "https://localhost:44363/api/EmpresaCliente";
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 

@@ -64,7 +64,7 @@ export class UsuarioCreateComponent implements OnInit {
       (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
         this.autoCompleteUsuario();
-        console.log(this.usuarios);
+        
       }
     );
   }
@@ -72,7 +72,7 @@ export class UsuarioCreateComponent implements OnInit {
   createUsuario(): void {
     this.usuario = this.formCreate.value;
     this.isLoading = !this.isLoading;
-    console.log('USUARIO',this.usuario);
+    
     this.usuarioService[this.metodoApi](this.usuario).subscribe(
       () => {
         this.usuarioService.showMessage(
@@ -88,7 +88,7 @@ export class UsuarioCreateComponent implements OnInit {
   deleteUsuario(): void {
     this.usuario = this.formCreate.value;
     this.isLoading = !this.isLoading;
-    console.log(this.usuario);
+    
     this.usuarioService.deleteUsuario(this.usuario).subscribe(
       () => {
         this.usuarioService.showMessage("Usuário removido com sucesso!");
@@ -99,7 +99,7 @@ export class UsuarioCreateComponent implements OnInit {
 
   updateUsuario(): void {
     this.usuario = this.formCreate.value;
-    console.log(this.usuario);
+    
     this.usuarioService.putUsuario(this.usuario).subscribe(
       () => {
         this.usuarioService.showMessage("Usuário alterado com sucesso!");
@@ -111,7 +111,7 @@ export class UsuarioCreateComponent implements OnInit {
     this.lblSenha = "Senha Atual";
     this.metodoApi = 'putUsuario';
     this.UpdateOrDelete = true;
-    console.log(modeloUsuario);
+    
     this.formCreate.patchValue(modeloUsuario);
   }
 

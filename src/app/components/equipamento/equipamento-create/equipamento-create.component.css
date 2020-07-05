@@ -30,6 +30,7 @@ button {
 
 .btnDownload-qrCode{
     padding-top: 5px;
+    padding-left: 50px;
 }
 
 .btnDownload-qrCode div > button {
@@ -49,10 +50,22 @@ button {
     height: 200px;
 }
 
+.container-fields-extintor-mobile {
+    height: 60vh !important;
+}
+
 .div-form-fields {
     height: 50px;
 }
 
 .iconAnoFabricao-size {
     font-size: 1em;
+}
+
+.form-part2-mobile-layout {
+    margin-top: 10px;
+}
+
+.localizacao-field-mobile {
+    width: 60vw !important;
 }

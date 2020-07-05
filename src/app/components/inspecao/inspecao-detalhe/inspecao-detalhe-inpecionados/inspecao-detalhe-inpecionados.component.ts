@@ -24,6 +24,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class InspecaoDetalheInpecionadosComponent
   implements OnInit, AfterViewInit {
+  @Input() agendamentoId: any;
   EquipamentosInsp: any[];
   agendamentoSeleted: any;
   date = new Date();
@@ -52,17 +53,10 @@ export class InspecaoDetalheInpecionadosComponent
   ) {
     this.estadoInspecao.isInspetionDone.subscribe((value) => {
       if (value) {
-        this.primeiroDiaMes = new Date(
-          this.date.getFullYear(),
-          this.date.getMonth(),
-          1
-        );
-        this.ultimoDiaMes = new Date(
-          this.date.getFullYear(),
-          this.date.getMonth() + 1,
-          0
-        );
-        this.getAllEquipInspByDtAgendamento();
+        this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
+        console.log( this.agendamentoSeleted.ageId)
+        
+        this.getAllEquipInspByAgendamentoId();
       }
     });
   }
@@ -73,33 +67,16 @@ export class InspecaoDetalheInpecionadosComponent
   }
 
   ngOnInit(): void {
-    this.primeiroDiaMes = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth(),
-      1
-    );
-    this.ultimoDiaMes = new Date(
-      this.date.getFullYear(),
-      this.date.getMonth() + 1,
-      0
-    );
     this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
-    this.getAllEquipInspByDtAgendamento();
+    this.getAllEquipInspByAgendamentoId();
   }
 
-  getAllEquipInspByDtAgendamento(): void {
+  getAllEquipInspByAgendamentoId(): void {
     this.agendamentoService
-      .getAllEquipInspByDtAgendamento(
-        this.transformDate(this.primeiroDiaMes),
-        this.transformDate(this.ultimoDiaMes, true)
-      )
+      .getAllEquipInspByAgendamentoId(this.agendamentoSeleted.ageId.toString())
       .subscribe((agendamentos) => {
         if (agendamentos) {
-          console.log(agendamentos);
-          this.EquipamentosInsp = agendamentos.filter((agenda) =>
-            agenda.empresa.match(this.agendamentoSeleted.empresa)
-          );
-          console.log(this.EquipamentosInsp);
+          this.EquipamentosInsp = agendamentos
           this.dataSource.data = this.EquipamentosInsp;
         }
       });
@@ -109,9 +86,10 @@ export class InspecaoDetalheInpecionadosComponent
     this.inspecaoService
       .GetInspecaoByEquipIdAndAgeId(
         equipamento.equipamentoId,
-        this.agendamentoSeleted.ageId
+        this.agendamentoSeleted.ageId.toString()
       )
       .subscribe((equipamentoInspecao: InspecaoDTO) => {
+        console.log(equipamentoInspecao);
         const dialogRef = this.dialog.open(InspecaoEquipamentoComponent, {
           data: {
             equip: equipamento,
@@ -125,15 +103,9 @@ export class InspecaoDetalheInpecionadosComponent
         dialogRef.afterClosed().subscribe((result) => {
           console.log("The dialog was closed", result);
           if (result) {
-            this.getAllEquipInspByDtAgendamento();
+            this.getAllEquipInspByAgendamentoId();
           }
         });
       });
-  }
-
-  transformDate(date, usaUltimaHora: boolean = false): string {
-    return !usaUltimaHora
-      ? this.datePipe.transform(date, "yyyy-MM-ddTHH:mm:ss")
-      : this.datePipe.transform(date, "yyyy-MM-ddT23:59:59");
   }
 }

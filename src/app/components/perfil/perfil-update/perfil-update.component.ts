@@ -35,7 +35,7 @@ export class PerfilUpdateComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get("id");
     this.perfilService.getPerfilById(id).subscribe(
       (perfil: PerfilDTO) => {
-        console.log(perfil);
+        
         this.formUpdate.patchValue(perfil);
       }
     );
@@ -43,7 +43,7 @@ export class PerfilUpdateComponent implements OnInit {
 
   updatePerfil(): void {
     this.perfil = this.formUpdate.value;
-    console.log(this.perfil);
+    
     this.perfilService.putPerfil(this.perfil).subscribe(
       () => {
         this.perfilService.showMessage("Perfil editado com sucesso!");

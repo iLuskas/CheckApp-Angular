@@ -88,8 +88,6 @@ export class EmpresaDeleteComponent implements OnInit {
       .subscribe((empresa: EmpresaClienteDTO) => {
         this.empresa = empresa;
         this.formDelete.patchValue(empresa);
-        console.log(this.formDelete.value);
-        console.log(this.empresa);
       });
   }
 

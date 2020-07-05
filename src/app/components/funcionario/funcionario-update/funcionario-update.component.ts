@@ -160,7 +160,7 @@ export class FuncionarioUpdateComponent implements OnInit {
 
   updateFuncionario(): void {
     this.funcionario = this.formUpdate.value;
-    console.log(this.funcionario);
+    
     this.funcionarioService.putFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário alterado com sucesso!");
       this.router.navigate(["/funcionarios"]);
@@ -172,7 +172,7 @@ export class FuncionarioUpdateComponent implements OnInit {
     this.funcionarioService
       .getFuncionarioById(id)
       .subscribe((funcionario) => {        
-        console.log(funcionario);
+        
         this.formUpdate.patchValue(funcionario);
         this.getPerfilById(funcionario.perfilId);
         if(funcionario.usuarioId)
@@ -193,25 +193,25 @@ export class FuncionarioUpdateComponent implements OnInit {
 
   getPerfilById(id: number) {
     this.perfil = this.perfils.find(perfil => perfil.id === id);
-    console.log(this.perfil)
+    
   }
 
   getAllUsuarios(): void {
     this.usuarioService.getAllUsuario().subscribe((usuarios: Usuario[]) => {
       this.usuarios = usuarios;
-      console.log(this.usuarios);
+      
     });
   }
 
   getUsuarioById(id: number) {
     this.usuario = this.usuarios.find(usuario => usuario.id === id);
-    console.log(this.usuario)
+    
   }
 
   usuarioSelecionado(usuario: Usuario): void {
     this.formGroupUpdateUsuario.patchValue(usuario);
     this.formUpdate.controls["usuarioid"].patchValue(usuario.id);
-    console.log(this.formUpdate.value);
+    
   }
 
   cancelar(): void {

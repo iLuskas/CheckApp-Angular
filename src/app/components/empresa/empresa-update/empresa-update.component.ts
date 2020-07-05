@@ -78,14 +78,12 @@ export class EmpresaUpdateComponent implements OnInit {
     this.empresaService
       .getEmpresaClienteById(id)
       .subscribe((empresa) => {        
-        console.log(empresa);
         this.formUpdate.patchValue(empresa);
       });
   }
 
   updateEmpresa(): void {
     this.empresa = this.formUpdate.value;
-    console.log(JSON.stringify(this.empresa));
     this.empresaService.putEmpresaCliente(this.empresa).subscribe(() => {
       this.empresaService.showMessage("Produto atualizado com sucesso!");
       this.router.navigate(["/empresas"]);

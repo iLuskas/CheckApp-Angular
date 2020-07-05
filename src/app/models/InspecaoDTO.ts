@@ -17,5 +17,6 @@ export interface InspecaoDTO {
     dataInicial?: Date;
     dataFinal?: Date;
     duracao: string;
+    precisaManutencao?: boolean;
     id: number;
 }

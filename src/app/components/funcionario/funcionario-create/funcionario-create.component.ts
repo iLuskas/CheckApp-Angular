@@ -163,6 +163,7 @@ export class FuncionarioCreateComponent implements OnInit {
     this.formGroupcreateUsuario = this.fb.group({
       id: [null],
       login: [""],
+      perfil: [""],
       senha: [""],
     });
   }
@@ -204,14 +205,13 @@ export class FuncionarioCreateComponent implements OnInit {
         (funcionarios: FuncionarioDTO[]) => {
           this.funcionarios = funcionarios;
           this.autoCompleteFuncionario();
-          console.log('FUNCIONARIOS',this.funcionarios);
+    
       });
   }
 
   salvarFuncionario(stepper: any): void {
     this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
-    console.log(this.funcionario);
     this.funcionarioService[this.metodoApi](this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage(
         !this.UpdateOrDelete ?
@@ -236,7 +236,6 @@ export class FuncionarioCreateComponent implements OnInit {
   deleteFuncionario(stepper: any): void {
     this.isLoading = !this.isLoading;
     this.funcionario = this.formCreate.value;
-    console.log(this.funcionario);
     this.funcionarioService.deleteFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário removido com sucesso!");
       this.limparForm(stepper);
@@ -259,13 +258,12 @@ export class FuncionarioCreateComponent implements OnInit {
   perfilSelecionado(perfil: PerfilDTO): void {
     this.formGroupCreatePerfil.patchValue(perfil);
     this.formCreate.controls["perfilid"].patchValue(perfil.id);
-    console.log('formcreateAfterperfil',this.formCreate.value);
   }
 
   getAllUsuarios(): void {
     this.usuarioService.getAllUsuario().subscribe((usuarios: Usuario[]) => {
       this.usuarios = usuarios;
-      console.log(this.usuarios);
+
     });
   }
 
@@ -277,7 +275,6 @@ export class FuncionarioCreateComponent implements OnInit {
   usuarioSelecionado(usuario: Usuario): void {
     this.formGroupcreateUsuario.patchValue(usuario)
     this.formCreate.controls["usuarioid"].patchValue(usuario.id);
-    console.log('formcreateAfterusuario',this.formCreate.value);
   }
 
   updateForm(modeloFuncionario: FuncionarioDTO): void {

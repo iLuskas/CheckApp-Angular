@@ -106,7 +106,7 @@ export class FuncionarioDeleteComponent implements OnInit {
 
   deleteFuncionario(): void {
     this.funcionario = this.formDelete.value;
-    console.log(this.funcionario);
+    
     this.funcionarioService.deleteFuncionario(this.funcionario).subscribe(() => {
       this.funcionarioService.showMessage("Funcionário removido com sucesso!");
       this.router.navigate(["/funcionarios"]);
@@ -116,7 +116,7 @@ export class FuncionarioDeleteComponent implements OnInit {
   getFuncionarioById() {
     const id = this.route.snapshot.paramMap.get("id");
     this.funcionarioService.getFuncionarioById(id).subscribe((funcionario) => {
-      console.log(funcionario);
+      
       this.formDelete.patchValue(funcionario);
       this.getPerfilById(funcionario.perfilId);
       if (funcionario.usuarioId) this.getUsuarioById(funcionario.usuarioId);
@@ -136,25 +136,25 @@ export class FuncionarioDeleteComponent implements OnInit {
 
   getPerfilById(id: number) {
     this.perfil = this.perfils.find((perfil) => perfil.id === id);
-    console.log(this.perfil);
+    
   }
 
   getAllUsuarios(): void {
     this.usuarioService.getAllUsuario().subscribe((usuarios: Usuario[]) => {
       this.usuarios = usuarios;
-      console.log(this.usuarios);
+      
     });
   }
 
   getUsuarioById(id: number) {
     this.usuario = this.usuarios.find((usuario) => usuario.id === id);
-    console.log(this.usuario);
+    
   }
 
   usuarioSelecionado(usuario: Usuario): void {
     this.formGroupDeleteUsuario.patchValue(usuario);
     this.formDelete.controls["usuarioid"].patchValue(usuario.id);
-    console.log(this.formDelete.value);
+    
   }
 
   cancelar(): void {

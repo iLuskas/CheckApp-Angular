@@ -17,6 +17,7 @@ import { AgendaInspManutDTO } from 'src/app/models/AgendaInspManutDTO';
 import { StatusAgendaDTO } from 'src/app/models/StatusAgendaDTO';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderService } from '../template/header/header.service';
+import { InspecaoEstadoService } from '../inspecao/inspecao-estado.service';
 
 @Component({
   selector: 'app-agendamento',
@@ -78,7 +79,8 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     private agendamentoService: AgendamentoService,
     private tipoEquipamentoService: TipoEquipamentoService,
     private datePipe: DatePipe,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private estadoInspecao: InspecaoEstadoService
     ) { }
 
   ngAfterContentInit(): void {
@@ -98,6 +100,8 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       tipoAgendamento: new FormControl('', Validators.compose([Validators.required])),
       statusInspManut: [''],
       dataInicial: [this.date.value, Validators.compose([Validators.required])],
+      dataFinal: [''],
+      duracao: [''],
     });
 
     this.formPesquisa = this.fb.group({
@@ -156,7 +160,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
         (funcionarios: FuncionarioDTO[]) => {
           this.funcionarios = funcionarios;
           this.autoCompleteFuncionario();
-          console.log('FUNCIONARIOS',this.funcionarios);
       });
   }
 
@@ -165,7 +168,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       .getAllTipoEquipamento()
       .subscribe((tipoEquipamento: TipoEquipamentoDTO[]) => {
         this.tiposEquipamentos = tipoEquipamento;
-        console.log("TIPOSEQUIPAMENTOS", this.tiposEquipamentos);
       });
   }
 
@@ -175,7 +177,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       .subscribe((empresas: EmpresaClienteDTO[]) => {
         this.empresas = empresas;
         this.autoCompleteEmpresa();
-        console.log("EMPRESAS", this.empresas);
       });
   }
 
@@ -185,7 +186,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     .subscribe((tiposAgendamentos: TipoAgendamentoDTO[]) => {
       this.tiposAgendamentos = tiposAgendamentos;
       this.autoCompleteAgenda();
-      console.log("TIPOSAGENDAMENTOS", this.tiposAgendamentos);
     });
   }
 
@@ -193,7 +193,7 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.agendamentoService.getAllAgendamento().subscribe(
       (response: AgendaInspManutDTO[]) => {
         this.agendamentos = response;      
-        console.log("AGENDAMENTOS", this.agendamentos);
+        console.log(response);
     });
   }
 
@@ -201,7 +201,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.agendamentoService.getAllStatus().subscribe(
       (response: StatusAgendaDTO[]) => {
         this.tiposStatus = response;      
-        console.log("STATUS", this.tiposStatus);
     });
   }
 
@@ -220,7 +219,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
   }
 
   tipoEquipamentoSelecionado(tipoEquipamento: TipoEquipamentoDTO): void {
-    console.log('testeequip',tipoEquipamento)
     this.tipoEquipamento = tipoEquipamento;
     this.modeloAgendamento.tipoEquipamentoId = tipoEquipamento.id;
   }
@@ -243,7 +241,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       this.modeloAgendamento.tipoEquipamentoId = this.tipoEquipamento.id;
     }
 
-    console.log(this.modeloAgendamento);
     this.agendamentoService[this.metodoApi](this.modeloAgendamento).subscribe(
       () => {
         this.agendamentoService.showMessage(
@@ -269,6 +266,23 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.tipoStatus = this.tiposStatus.find(status => status.statusAgenda.match(this.formAgenda.controls.statusInspManut.value));
     this.metodoApi = "putAgendamento";
     this.pesquisouAgenda = true;
+    this.salvaInfoLocal();
+    this.estadoInspecao.isInspetionDone.next(true);
+  }
+
+  salvaInfoLocal(): void {
+    var infoAgendaSel = {
+      ageId: this.formAgenda.controls.id.value,
+      funcId: this.funcionarios.find(func => func.nome.match(this.formAgenda.controls.nomeFuncionario.value)).id,
+      empId: this.empresas.find(empresa => empresa.razaoSocial.match(this.formAgenda.controls.empresa.value)).id
+    }
+    localStorage.setItem("AgendaSeleted", JSON.stringify(infoAgendaSel));
+  }
+
+  onSerachNumAgendaChange(value) : void {
+    if(!value){
+      this.limparForm();
+    }
   }
 
   transformDate(date): string {

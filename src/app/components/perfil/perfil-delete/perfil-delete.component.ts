@@ -35,7 +35,7 @@ export class PerfilDeleteComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get("id");
     this.perfilService.getPerfilById(id).subscribe(
       (perfil: PerfilDTO) => {
-        console.log(perfil);
+        
         this.formDelete.patchValue(perfil);
       }
     );
@@ -43,7 +43,7 @@ export class PerfilDeleteComponent implements OnInit {
 
   deletePerfil(): void {
     this.perfil = this.formDelete.value;
-    console.log(this.perfil);
+    
     this.perfilService.deletePerfil(this.perfil).subscribe(
       () => {
         this.perfilService.showMessage("Perfil deletado com sucesso!");

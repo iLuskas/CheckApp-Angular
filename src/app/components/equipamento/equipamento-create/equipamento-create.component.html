@@ -88,7 +88,7 @@
           }}</ng-template>
           <div fxLayout="row wrap" fxLayout.xs="column">
             <div fxFlex="30" fxLayout="column" class="rigth-container-form">
-              <div fxFlex fxLayoutAlign="center center" >
+              <div fxFlex>
                 <div class="container-qrCode">
                   <qrcode
                     *ngIf="display"
@@ -100,7 +100,7 @@
                 </div>
               </div>
               <div fxFlex class="btnDownload-qrCode">
-                <div fxLayoutAlign="center center">
+                <div>
                   <button
                     mat-raised-button
                     color="primary"
@@ -130,6 +130,7 @@
                 fxLayoutGap="2%"
                 fxLayout="row wrap"
                 class="container-fields-extintor"
+                ngClass.xs="container-fields-extintor-mobile"
               >
                 <div fxFlex class="div-form-fields">
                   <mat-form-field
@@ -292,7 +293,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div fxLayout="column">
+              <div fxFlex ngClass.xs="form-part2-mobile-layout" fxLayout="column">
                 <div fxFlex fxLayout="row">
                   <div fxFlex class="div-form-fields">
                     <mat-form-field
@@ -346,6 +347,7 @@
                   <mat-form-field
                     class="localizacao-field"
                     appearance="outline"
+                    ngClass.xs="localizacao-field-mobile"
                   >
                     <mat-label>Localização</mat-label>
                     <textarea

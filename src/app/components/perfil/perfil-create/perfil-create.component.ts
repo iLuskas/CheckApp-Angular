@@ -62,14 +62,14 @@ export class PerfilCreateComponent implements OnInit {
     this.perfilService.getAllPerfil().subscribe((perfils: PerfilDTO[]) => {
       this.perfils = perfils;
       this.autoCompletePerfil();
-      console.log(this.perfils);
+      
     });
   }
 
   createPerfil(): void {
     this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
-    console.log(this.perfil);
+    
     this.perfilService[this.metodoApi](this.perfil).subscribe(() => {
       this.perfilService.showMessage(
         !this.UpdateOrDelete ?
@@ -85,7 +85,7 @@ export class PerfilCreateComponent implements OnInit {
   updatePerfil(): void {
     this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
-    console.log(this.perfil);
+    
     this.perfilService.putPerfil(this.perfil).subscribe(() => {
       this.perfilService.showMessage("Perfil editado com sucesso!");
       this.isLoading = !this.isLoading;
@@ -97,7 +97,7 @@ export class PerfilCreateComponent implements OnInit {
   deletePerfil(): void {
     this.isLoading = !this.isLoading;
     this.perfil = this.formCreate.value;
-    console.log(this.perfil);
+    
     this.perfilService.deletePerfil(this.perfil).subscribe(() => {
       this.perfilService.showMessage("Perfil removido com sucesso!");
       this.isLoading = !this.isLoading;
@@ -109,7 +109,7 @@ export class PerfilCreateComponent implements OnInit {
   updateForm(modeloPerfil: PerfilDTO): void {
     this.UpdateOrDelete = true;
     this.metodoApi = 'putPerfil'
-    console.log(modeloPerfil);
+    
     this.formCreate.patchValue(modeloPerfil);
   }
 

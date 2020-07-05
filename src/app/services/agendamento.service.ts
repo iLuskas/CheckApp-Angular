@@ -15,7 +15,7 @@ import { ModeloAgendaInspManut } from '../models/modelsHelper/ModeloAgendaInspMa
 })
 export class AgendamentoService {
    //baseURL = "https://localhost:44363/api/Agendamento";
-  baseURL = "https://www.safetyplan.net.br/checkapp/api/Agendamento";
+   baseURL = "https://www.safetyplan.net.br/checkapp/api/Agendamento";
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -52,8 +52,8 @@ export class AgendamentoService {
     );
   }
 
-  getAllAgendamentosByUsuario(user: string, token: string = null): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseURL}/getAllAgendamentosByUsuario/?usuario=${user}`).pipe(
+  getAllAgendaByUserAndTipo(user: string, tipoAgendamentoId: string,token: string = null): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/getAllAgendaByUserAndTipo/?usuario=${user}&tipoAgendamento=${tipoAgendamentoId}`).pipe(
       map((obj) => obj)
       );
   }
@@ -102,6 +102,19 @@ export class AgendamentoService {
     );
   }
 
+  
+  getAllEquipInspByAgendamentoId(ageId: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllEquipInspByAgendamentoId?agendamentoId=${ageId}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
+  getAllEquipNotInspByAgendamentoId(ageId: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllEquipNotInspByAgendamentoId?agendamentoId=${ageId}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
   postAgendamento(agendamento: ModeloAgendaInspManut, token: string = null) {
     const options: Object = {
       headers: new HttpHeaders({
@@ -114,6 +127,20 @@ export class AgendamentoService {
       map((obj) => obj)
     );
   }
+
+  finalizaAgendamentoById(ageId: string, token: string = null) {
+    const options: Object = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+      responseType: "text",
+    };
+
+    return this.http.post(`${this.baseURL}/finalizaAgendamentoById?ageId=${ageId}`, options).pipe(
+      map((obj) => obj)
+    );
+  }
+
 
   putAgendamento(agendamento: ModeloAgendaInspManut, token: string = null) {
     const options: Object = {

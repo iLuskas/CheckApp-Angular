@@ -92,6 +92,26 @@
               </mat-error>
             </mat-form-field>
           </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline">
+              <mat-label>E-mail:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: contoso@gmail.com"
+                name="email"
+                formControlName="email"
+                matTooltip="Ao inserir esse E-mail sua empresa irá receber E-mails automáticos sobre os agendamentos/inpeções/manutenções realizadas em sua empresa."
+              />
+              <mat-error *ngIf="isFieldInvalid('email')">
+                Por favor, Informe o E-mail.
+              </mat-error>
+              <mat-error *ngIf="hasError('email', 'maxlength')">
+                O máximo de caracteres é 50
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex></div>
         </div>       
       </div>
 

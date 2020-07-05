@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { AgendamentoService } from "src/app/services/agendamento.service";
 import { DatePipe } from "@angular/common";
 import { InspecaoEstadoService } from "../inspecao-estado.service";
@@ -14,11 +14,12 @@ import { InspecaoEquipamentoComponent } from './inspecao-equipamento/inspecao-eq
   styleUrls: ["./inspecao-detalhe.component.css"],
 })
 export class InspecaoDetalheComponent implements OnInit {
+  @Input() agendamentoId: any
   agendamentoSeleted: any;
   isFinishInspetion: boolean;
   isLoading: boolean;
   date = new Date();
-
+  ageId: number;
   constructor(
     private estadoInspecao: InspecaoEstadoService,
     private agendamentoService: AgendamentoService,
@@ -41,14 +42,18 @@ export class InspecaoDetalheComponent implements OnInit {
 
   ngOnInit(): void {
     this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
+    this.ageId = !this.agendamentoId ? this.agendamentoSeleted.ageId : this.agendamentoId;
   }
 
   finalizarAgendamento() {
-    this.agendamentoService.putAgendamentoStatusById(this.agendamentoSeleted.ageId.toString(), '3').subscribe(
+    this.agendamentoService.finalizaAgendamentoById(this.ageId.toString()).subscribe(
       () => {
         localStorage.removeItem("AgendaSeleted");
         this.router.navigate(["/inspecoes"], { relativeTo: this.route });
         this.agendamentoService.showMessage('Inspeção finalizada.');
+      },
+      (error) =>{
+        this.agendamentoService.erroHandler(error);
       }
     );
   }
@@ -75,6 +80,7 @@ export class InspecaoDetalheComponent implements OnInit {
   }
 
   openDialogInspecao(extintor : any): void {
+    console.log(extintor)
     const dialogRef = this.dialog.open(InspecaoEquipamentoComponent, {
       data: {equip: extintor, dataIncial: this.date},
       autoFocus: true,
@@ -84,9 +90,11 @@ export class InspecaoDetalheComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       if(result){
-        this.agendamentoSeleted.qtdInsp++;
-        this.agendamentoSeleted.qtdNotInsp--;
-        localStorage.setItem("AgendaSeleted", JSON.stringify(this.agendamentoSeleted));
+        if(!this.agendamentoId){
+          this.agendamentoSeleted.qtdInsp++;
+          this.agendamentoSeleted.qtdNotInsp--;
+          localStorage.setItem("AgendaSeleted", JSON.stringify(this.agendamentoSeleted));
+        }
         this.estadoInspecao.isInspetionDone.next(true);
       }
     });

@@ -91,7 +91,7 @@ export class HomePainelLayoutComponent implements OnInit {
         this.transformDate(this.ultimoDiaMes, true)
       )
       .subscribe((agendamentos) => {
-        console.log('notobjinsp',agendamentos);
+        
         this.EquipamentosNotInsp = agendamentos;
       });
   }
@@ -103,7 +103,7 @@ export class HomePainelLayoutComponent implements OnInit {
         this.transformDate(this.date, true)
       )
       .subscribe((agendamentos) => {
-        console.log('insp',agendamentos);
+        
         if (agendamentos) {
           this.EquipamentosInspQtd = agendamentos;
           agendamentos.forEach(
@@ -118,9 +118,9 @@ export class HomePainelLayoutComponent implements OnInit {
     .getAllQtdEquipNotInspByDtAgendamento(this.transformDate(this.primeiroDiaMes), 
     this.transformDate(this.ultimoDiaMes, true))
     .subscribe((agendamentos) => {
-      console.log('not insp',agendamentos);
+      
       if(agendamentos) {
-        console.log('not insp',agendamentos);
+        
         this.EquipamentosNotInspQtd = agendamentos;
         agendamentos.forEach(agenda => this.totalNotInsp += agenda.totalNaoInpecionados);        
       }
