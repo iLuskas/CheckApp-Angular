@@ -123,7 +123,6 @@ export class EmpresaCreateComponent implements OnInit {
   salvarEmpresa(): void {
     this.isLoading = !this.isLoading;
     this.empresa = this.formCreate.value;
-    console.log(this.empresa);
     this.uploadImage();
     this.empresaService[this.metodoApi](this.empresa).subscribe(
       () => {

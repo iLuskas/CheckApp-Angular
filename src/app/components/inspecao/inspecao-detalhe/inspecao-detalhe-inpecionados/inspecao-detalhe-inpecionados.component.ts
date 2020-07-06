@@ -53,9 +53,7 @@ export class InspecaoDetalheInpecionadosComponent
   ) {
     this.estadoInspecao.isInspetionDone.subscribe((value) => {
       if (value) {
-        this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
-        console.log( this.agendamentoSeleted.ageId)
-        
+        this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));       
         this.getAllEquipInspByAgendamentoId();
       }
     });

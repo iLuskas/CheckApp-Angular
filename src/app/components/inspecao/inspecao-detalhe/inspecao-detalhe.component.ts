@@ -73,9 +73,12 @@ export class InspecaoDetalheComponent implements OnInit {
   }
 
   getEquipByNumExtintor(equipamento: any) : void {
-    this.equipamentoService.getEquipByNumExtintor(equipamento.num_ext.toString()).subscribe
+    this.equipamentoService.getEquipByNumExtintor(equipamento.num_ext.toString(), this.agendamentoSeleted.empId).subscribe
     ((extintor) =>{
-      this.openDialogInspecao(extintor);
+      if(extintor)
+        this.openDialogInspecao(extintor);
+      else
+        this.equipamentoService.showMessage("Equipamento não foi encontrato.😓", true);
     });
   }
 

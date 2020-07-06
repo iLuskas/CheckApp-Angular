@@ -65,6 +65,18 @@ postInspecao(inspecao: InspecaoDTO, token: string = null) {
   );
 }
 
+postUpload(
+  file: File,
+  token: string = null
+) {
+  const fileToUplaod = <File>file[0];
+  const formData = new FormData();
+  formData.append('file', fileToUplaod, fileToUplaod.name);
+
+  return this.http.post(`${this.baseURL}/upload`, formData).pipe(
+    map((obj) => obj));
+}
+
 putInspecao(inspecao: InspecaoDTO, token: string = null) {
   const options: Object = {
     headers: new HttpHeaders({

@@ -98,7 +98,7 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       empresa: ['', Validators.compose([Validators.required])],
       tipoEquipamento: new FormControl('', Validators.compose([Validators.required])),
       tipoAgendamento: new FormControl('', Validators.compose([Validators.required])),
-      statusInspManut: [''],
+      statusInspManut: new FormControl(''),
       dataInicial: [this.date.value, Validators.compose([Validators.required])],
       dataFinal: [''],
       duracao: [''],
@@ -193,7 +193,6 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.agendamentoService.getAllAgendamento().subscribe(
       (response: AgendaInspManutDTO[]) => {
         this.agendamentos = response;      
-        console.log(response);
     });
   }
 
@@ -258,8 +257,8 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
 
   updateForm(agendamento: AgendaInspManutDTO) {
     this.formAgenda.patchValue(agendamento);
-    this.formAgenda.controls.tipoAgendamento.setValue(this.tiposAgendamentos.find(tipoAgenda => tipoAgenda.tipoAgenda.match(this.formAgenda.controls.tipoAgendamento.value)));
-    this.formAgenda.controls.tipoEquipamento.setValue(this.tiposEquipamentos.find(tipoEquip => tipoEquip.tipo.match(this.formAgenda.controls.tipoEquipamento.value)));
+    this.formAgenda.controls.tipoAgendamento.setValue(this.tiposAgendamentos.find(tipoAgenda => tipoAgenda.tipoAgenda.match(this.formAgenda.controls.tipoAgendamento.value)).tipoAgenda);
+    this.formAgenda.controls.tipoEquipamento.setValue(this.tiposEquipamentos.find(tipoEquip => tipoEquip.tipo.match(this.formAgenda.controls.tipoEquipamento.value)).tipo);
     this.formAgenda.controls.statusInspManut.setValue(this.tiposStatus.find(status => status.statusAgenda.match(this.formAgenda.controls.statusInspManut.value)));
     this.tipoAgendamento = this.tiposAgendamentos.find(tipoAgenda => tipoAgenda.tipoAgenda.match(this.formAgenda.controls.tipoAgendamento.value));
     this.tipoEquipamento = this.tiposEquipamentos.find(tipoEquip => tipoEquip.tipo.match(this.formAgenda.controls.tipoEquipamento.value));

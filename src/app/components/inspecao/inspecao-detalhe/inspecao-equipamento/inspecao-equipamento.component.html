@@ -4,11 +4,14 @@
     <div fxLayout="row wrap">
       <div fxFlex="20" fxLayout="column">
         <div>
-          <img
-            [src]="'../../../../../assets/img/no-image.png'"
-            width="150"
-            alt="Imagem local equipamento"
-          />
+          <img [src]=" imgPreview ? imgPreview : '../../../../assets/img/no-image.png'" width="150" alt="Imagem Ocorrência" />
+          <input type="file" #file (change)="onFileChange($event)" accept="image/png,image/jpg,image/jpeg" style="display: none;"/>
+          <input type="hidden" #file formControlName="imagemOcorrencia"/>
+          <div class="container-btnAddImage">
+            <button mat-raised-button (click)="file.click()" color="primary">
+              Add Imagem
+            </button>
+          </div>
         </div>
         <div>
           <section class="example-section">

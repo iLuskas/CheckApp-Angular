@@ -105,6 +105,7 @@ export class EquipamentoSegurancaService {
 
   getEquipByNumExtintor(
     numExtintor: string,
+    empId: string,
     token: string = null
   ): Observable<any> {
     // const options = {
@@ -116,7 +117,7 @@ export class EquipamentoSegurancaService {
 
     return this.http
       .get<any>(
-        `${this.baseURL}/getEquipByNumExtintor/?numExtintor=${numExtintor}`
+        `${this.baseURL}/getEquipByNumExtintor/?numExtintor=${numExtintor}&empId=${empId}`
       )
       .pipe(
         map((obj) => obj),

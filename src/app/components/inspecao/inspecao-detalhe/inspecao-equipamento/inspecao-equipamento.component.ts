@@ -1,29 +1,39 @@
-import { Component, OnInit, Inject, ViewChild, NgZone } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { take } from 'rxjs/operators';
-import { InspecaoService } from 'src/app/services/Inspecao.service';
-import { InspecaoDTO } from 'src/app/models/InspecaoDTO';
-import { exit, abort } from 'process';
-
+import { Component, OnInit, Inject, ViewChild, NgZone } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
+import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { take } from "rxjs/operators";
+import { InspecaoService } from "src/app/services/Inspecao.service";
+import { InspecaoDTO } from "src/app/models/InspecaoDTO";
+import { exit, abort } from "process";
 
 @Component({
-  selector: 'app-inspecao-equipamento',
-  templateUrl: './inspecao-equipamento.component.html',
-  styleUrls: ['./inspecao-equipamento.component.css'],
+  selector: "app-inspecao-equipamento",
+  templateUrl: "./inspecao-equipamento.component.html",
+  styleUrls: ["./inspecao-equipamento.component.css"],
 })
 export class InspecaoEquipamentoComponent implements OnInit {
-  formInspecao : FormGroup;
+  formInspecao: FormGroup;
   inspecao: InspecaoDTO;
   date = new FormControl(new Date());
-  dateMonthYear: any[] = []; 
+  dateMonthYear: any[] = [];
   agendamentoSeleted: any;
   usuarioAtual: any;
   precisaManutencao: boolean;
-  opcoesInspecao: {opcao:string; value:string}[] = [{opcao:'Conforme', value:'C'}, {opcao:'Não Conforme', value:'NC'}, {opcao:'Não Aplicável', value:'NA'}];
+  opcoesInspecao: { opcao: string; value: string }[] = [
+    { opcao: "Conforme", value: "C" },
+    { opcao: "Não Conforme", value: "NC" },
+    { opcao: "Não Aplicável", value: "NA" },
+  ];
   isLoading: boolean;
-  metodoApi = 'postInspecao';
+  metodoApi = "postInspecao";
+  file: File;
+  imgPreview: any;
   @ViewChild("autosize") autosize: CdkTextareaAutosize;
 
   private formSubmitAttempt: boolean;
@@ -33,47 +43,81 @@ export class InspecaoEquipamentoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
     private _ngZone: NgZone,
-    private inspecaoService: InspecaoService) {}
+    private inspecaoService: InspecaoService
+  ) {}
 
   ngOnInit(): void {
-    this.agendamentoSeleted = JSON.parse(localStorage.getItem('AgendaSeleted'));
-    this.usuarioAtual = JSON.parse(localStorage.getItem('cacheUsuario'));
+    this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
+    this.usuarioAtual = JSON.parse(localStorage.getItem("cacheUsuario"));
     this.createDropdownMonthYear();
-    
-    if(this.data.inspecao){
+
+    if (this.data.inspecao) {
       this.montaInfoInspecao();
-    }
-    else {
+    } else {
       this.createFormInpecao();
     }
-
   }
 
   montaInfoInspecao() {
+    this.metodoApi = "putInspecao";
+    console.log(this.data.inspecao);
     this.formInspecao = this.fb.group({
-      id:[this.data.inspecao.id],
+      id: [this.data.inspecao.id],
       statusInspManutId: [this.data.inspecao.statusInspManutId],
       funcionarioId: [this.data.inspecao.funcionarioId],
       empresaClienteId: [this.data.inspecao.empresaClienteId],
       agendaInspManutId: [this.data.inspecao.agendaInspManutId],
       equipamentoSegurancaId: [this.data.inspecao.equipamentoSegurancaId],
-      ultimaRec_Insp: [this.data.inspecao.ultimaRec_Insp, Validators.compose([Validators.required])],
-      proximoRec_Insp: [this.data.inspecao.proximoRec_Insp, Validators.compose([Validators.required])],
-      ultimoReteste_Insp: [this.data.inspecao.ultimoReteste_Insp, Validators.compose([Validators.required])],
-      proximoReteste_Insp: [this.data.inspecao.proximoReteste_Insp, Validators.compose([Validators.required])],
-      estadoCilindro_Insp: [this.data.inspecao.estadoCilindro_Insp, Validators.compose([Validators.required])],
-      estadoLocal_Insp: [this.data.inspecao.estadoLocal_Insp, Validators.compose([Validators.required])],
-      seloLacre_insp: [this.data.inspecao.seloLacre_insp, Validators.compose([Validators.required])],
-      sinalizacaoPiso_insp: [this.data.inspecao.sinalizacaoPiso_insp, Validators.compose([Validators.required])],
-      sinalizacaoAcesso_insp: [this.data.inspecao.sinalizacaoAcesso_insp, Validators.compose([Validators.required])],
-      obs_Insp: [this.data.inspecao.obs_Insp, Validators.compose([Validators.required])],
+      ultimaRec_Insp: [
+        this.data.inspecao.ultimaRec_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      proximoRec_Insp: [
+        this.data.inspecao.proximoRec_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      ultimoReteste_Insp: [
+        this.data.inspecao.ultimoReteste_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      proximoReteste_Insp: [
+        this.data.inspecao.proximoReteste_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      estadoCilindro_Insp: [
+        this.data.inspecao.estadoCilindro_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      estadoLocal_Insp: [
+        this.data.inspecao.estadoLocal_Insp,
+        Validators.compose([Validators.required]),
+      ],
+      seloLacre_insp: [
+        this.data.inspecao.seloLacre_insp,
+        Validators.compose([Validators.required]),
+      ],
+      sinalizacaoPiso_insp: [
+        this.data.inspecao.sinalizacaoPiso_insp,
+        Validators.compose([Validators.required]),
+      ],
+      sinalizacaoAcesso_insp: [
+        this.data.inspecao.sinalizacaoAcesso_insp,
+        Validators.compose([Validators.required]),
+      ],
+      obs_Insp: [
+        this.data.inspecao.obs_Insp,
+        Validators.compose([Validators.required]),
+      ],
       dataInicial: [this.data.dataIncial],
       dataFinal: [this.data.inspecao.dataFinal],
       duracao: [this.data.inspecao.duracao],
-      precisaManutencao: [this.data.inspecao.precisaManutencao]
+      precisaManutencao: [this.data.inspecao.precisaManutencao],
+      imagemOcorrencia: [this.data.inspecao.imagemOcorrencia],
     });
-    console.log(this.data.inspecao);
-    this.metodoApi = 'putInspecao';
+
+    if(this.data.inspecao.imagemOcorrenciaBase64)
+      this.getImagemFromBase64(this.data.inspecao.imagemOcorrenciaBase64);  
+
   }
 
   triggerResize() {
@@ -82,27 +126,28 @@ export class InspecaoEquipamentoComponent implements OnInit {
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  createFormInpecao() : void {
+  createFormInpecao(): void {
     this.formInspecao = this.fb.group({
-      id:[''],
+      id: [""],
       statusInspManutId: [3],
       funcionarioId: [this.agendamentoSeleted.funcId],
       empresaClienteId: [this.agendamentoSeleted.empId],
       agendaInspManutId: [this.agendamentoSeleted.ageId],
       equipamentoSegurancaId: [this.data.equip.equipamentoId],
-      ultimaRec_Insp: ['', Validators.compose([Validators.required])],
-      proximoRec_Insp: ['', Validators.compose([Validators.required])],
-      ultimoReteste_Insp: ['', Validators.compose([Validators.required])],
-      proximoReteste_Insp: ['', Validators.compose([Validators.required])],
-      estadoCilindro_Insp: ['', Validators.compose([Validators.required])],
-      estadoLocal_Insp: ['', Validators.compose([Validators.required])],
-      seloLacre_insp: ['', Validators.compose([Validators.required])],
-      sinalizacaoPiso_insp: ['', Validators.compose([Validators.required])],
-      sinalizacaoAcesso_insp: ['', Validators.compose([Validators.required])],
-      obs_Insp: ['', Validators.compose([Validators.required])],
+      ultimaRec_Insp: ["", Validators.compose([Validators.required])],
+      proximoRec_Insp: ["", Validators.compose([Validators.required])],
+      ultimoReteste_Insp: ["", Validators.compose([Validators.required])],
+      proximoReteste_Insp: ["", Validators.compose([Validators.required])],
+      estadoCilindro_Insp: ["", Validators.compose([Validators.required])],
+      estadoLocal_Insp: ["", Validators.compose([Validators.required])],
+      seloLacre_insp: ["", Validators.compose([Validators.required])],
+      sinalizacaoPiso_insp: ["", Validators.compose([Validators.required])],
+      sinalizacaoAcesso_insp: ["", Validators.compose([Validators.required])],
+      obs_Insp: ["", Validators.compose([Validators.required])],
       dataInicial: [this.data.dataIncial],
-      dataFinal: [''],
-      duracao: [''],
+      dataFinal: [""],
+      duracao: [""],
+      imagemOcorrencia: [""],
       precisaManutencao: [false]
     });
 
@@ -110,59 +155,107 @@ export class InspecaoEquipamentoComponent implements OnInit {
   }
 
   salvarInspecao(): void {
-    
-    if(this.usuarioAtual.perfil === "Inspetor" && this.metodoApi === "putInspecao"){
-      this.inspecaoService.showMessage("Somente adminsitradores podem alterar a inspeção", true);
+    if (
+      this.usuarioAtual.perfil === "Inspetor" &&
+      this.metodoApi === "putInspecao"
+    ) {
+      this.inspecaoService.showMessage(
+        "Somente adminsitradores podem alterar a inspeção",
+        true
+      );
       return;
     }
 
-    if(this.metodoApi !== "putInspecao")
+    if (this.metodoApi !== "putInspecao")
       this.formInspecao.controls.dataFinal.patchValue(this.date.value);
-
+      
     this.inspecao = this.formInspecao.value;
-  
     this.isLoading = !this.isLoading;
+    this.uploadImage(); 
     this.inspecaoService[this.metodoApi](this.inspecao).subscribe(
       () => {
         this.isLoading = !this.isLoading;
-        this.inspecaoService.showMessage("Equipamento inspecionado com sucesso!");
+        this.inspecaoService.showMessage(
+          "Equipamento inspecionado com sucesso!"
+        );
         this.onNoClick(true);
       },
-      (error) =>{
+      (error) => {
         this.isLoading = !this.isLoading;
         this.inspecaoService.showMessage("Ocorreu um erro!");
       }
-    );    
+    );
   }
 
-  selectionChange(event) : void {}
+  selectionChange(event): void {}
 
-  createDropdownMonthYear() : void {
+  createDropdownMonthYear(): void {
     var controlForMothnYear = true;
     var date = new Date();
     var currentYear = date.getFullYear();
     var months;
-    months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    months = [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ];
 
     for (var i = 1; i == 1; i++) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {
           const element = months[key];
-          this.dateMonthYear.push(`${element}-${(currentYear + i).toString().substring(2,4)}`);
+          this.dateMonthYear.push(
+            `${element}-${(currentYear + i).toString().substring(2, 4)}`
+          );
         }
-      }      
+      }
     }
 
     for (var i = 0; i <= 1; i++) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {
           const element = months[key];
-          this.dateMonthYear.push(`${element}-${(currentYear - i).toString().substring(2,4)}`);
+          this.dateMonthYear.push(
+            `${element}-${(currentYear - i).toString().substring(2, 4)}`
+          );
         }
-      }      
+      }
     }
   }
 
+  onFileChange(event): void {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (_event) => {
+      this.imgPreview = reader.result;
+    };
+
+    if (event.target.files && event.target.files.length) {
+      this.file = event.target.files;
+      console.log(this.file);
+      
+      this.formInspecao.controls.imagemOcorrencia.setValue(this.file[0].name);
+    }
+  }
+
+  uploadImage() {
+    if(this.file)
+      this.inspecaoService.postUpload(this.file).subscribe();
+  }
+
+  getImagemFromBase64(any) {
+    this.imgPreview = "data:image/png;base64," + any;
+  }
 
   onNoClick(isReaload: boolean = false): void {
     this.dialogRef.close(isReaload);
@@ -179,5 +272,4 @@ export class InspecaoEquipamentoComponent implements OnInit {
       (this.formInspecao.get(field).untouched && this.formSubmitAttempt)
     );
   }
-
 }

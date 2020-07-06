@@ -8,7 +8,7 @@
         class="check-margin"
         (change)="checkEmpresaChange()"
         [(ngModel)]="PesquisaPorEmpresa"
-        >Nome</mat-checkbox
+        >Empresa</mat-checkbox
       >
       <mat-checkbox
         class="check-margin"
@@ -87,6 +87,50 @@
           </mat-form-field>
         </form>
       </div>
+      <div fxFlex *ngIf="SomenteInspecionados || SomenteNotInspecionados">
+        <p>Range de datas:</p>
+        <form [formGroup]="RangeDatas">
+          <div fxLayout="row wrap">
+            <div fxFlex>
+              <mat-form-field appearance="outline" class="input-duracao">
+                <mat-label>Data Inicial:</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Ex: 01/01/1900"
+                  name="dataIni"
+                  formControlName="dataIni"
+                  [matDatepicker]="picker2"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex>
+              <mat-form-field appearance="outline" class="input-duracao">
+                <mat-label>Data Final:</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Ex: 01/01/1900"
+                  name="dataFim"
+                  formControlName="dataFim"
+                  [matDatepicker]="picker1"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker (selectedChanged)="dataSelected($event)" touchUi #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex></div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -142,26 +186,26 @@
 
           <!-- Rua Column -->
           <ng-container matColumnDef="fabricante_ext">
-            <th mat-header-cell *matHeaderCellDef>Rua</th>
-            <td mat-cell *matCellDef="let row">{{ row.fabricante_ext }}</td>
+            <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+            <td mat-cell *matCellDef="let row">{{ row.extintorDTO.fabricante_ext }}</td>
           </ng-container>
 
           <!-- Número Column -->
           <ng-container matColumnDef="tipo_ext">
             <th mat-header-cell *matHeaderCellDef>Tipo</th>
-            <td mat-cell *matCellDef="let row">{{ row.numero_end }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.extintorDTO.tipo_ext }}</td>
           </ng-container>
 
           <!-- Estado Column -->
           <ng-container matColumnDef="capacidade_ext">
             <th mat-header-cell *matHeaderCellDef>Capacidade</th>
-            <td mat-cell *matCellDef="let row">{{ row.capacidade_ext }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.extintorDTO.capacidade_ext }}</td>
           </ng-container>
 
           <!-- Pais Column -->
           <ng-container matColumnDef="anoFabricacao_ext">
             <th mat-header-cell *matHeaderCellDef>Ano</th>
-            <td mat-cell *matCellDef="let row">{{ row.anoFabricacao_ext }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.extintorDTO.anoFabricacao_ext }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -170,6 +214,7 @@
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
       </div>
     </div>
     <mat-divider></mat-divider>

@@ -18,5 +18,6 @@ export interface InspecaoDTO {
     dataFinal?: Date;
     duracao: string;
     precisaManutencao?: boolean;
+    imagemOcorrencia: string;
     id: number;
 }

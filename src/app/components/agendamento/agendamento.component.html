@@ -262,7 +262,7 @@
       </div>
     </mat-card>
   </div>
-  <div *ngIf="pesquisouAgenda">
+  <div *ngIf="pesquisouAgenda && formAgenda.controls.tipoAgendamento.value !== 'Manutenção'">
     <app-inspecao-detalhe
       [agendamentoId]="formAgenda.controls.id.value"
     ></app-inspecao-detalhe>

@@ -50,7 +50,7 @@ export class InspecaoDetalheNaoinpecionadosComponent
   ) {
     this.estadoInspecao.isInspetionDone.subscribe((value) => {
       if (value){
-        console.log( this.agendamentoSeleted.ageId)
+        this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
         this.getAllEquipNotInspByAgendamentoId();
       } 
     });

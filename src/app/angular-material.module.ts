@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -83,8 +83,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatCheckboxModule,
     MatDividerModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatNativeDateModule
   ],
   providers: [],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AngularMaterialModule {}
