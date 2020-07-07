@@ -1,0 +1,99 @@
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+  }
+
+  h3 {
+    font-weight: 570;
+  }
+
+.content {
+    margin-bottom: 10px;
+}
+
+.button-add-funcionario > button {
+    margin-top: 13px;
+}
+
+.input-filtrar {
+    font-size: 1em;
+}
+
+.box-pesquisa:hover > .input-pesquisar-txt{
+    width: 240px;
+    padding: 0;
+}
+
+.box-pesquisa {
+    position: absolute;
+    transform: translate(0%, -100%);
+    background-color: #ddd;
+    margin-top: 50px;
+    left: 1%;
+    height:20px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.btnPesquisar {
+    color: black;
+    float: right;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .input-pesquisar-txt {
+    border: none;
+    background: none;
+    outline:  none;
+    float: left;
+    padding: 0;
+    color: black;
+    font-size: 1em;
+    transition: 0.4s;
+    line-height: 20px;
+    width: 0px;
+  }
+
+  .form-container {
+    margin-top: 30px;
+  }
+  
+  .check-margin {
+    margin: 0 10px;
+  }
+  
+  .configuration-container{
+     margin-top: 10px;
+  }
+  
+  .h3-pesquisa {
+    margin-right: 10px;
+  }
+  
+  .form-field {
+      width: 400px;
+  }
+  
+  .btnExportar-container{
+      margin: 10px;
+  }
+  
+  .table-telefone-container {
+    margin-top: 20px;
+  }
+
+  .input-duracao {
+    margin-right: 10px;
+  }
+
+

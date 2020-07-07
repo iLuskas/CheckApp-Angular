@@ -60,6 +60,7 @@ import { InspecaoEquipamentoComponent } from './components/inspecao/inspecao-det
 import { MatTableResponsiveModule } from './directives/mat-table-responsive/mat-table-responsive.module';
 import { QrCodeReaderComponent } from './components/qr-code-reader/qr-code-reader.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { EquipamentosReadLayoutComponent } from './components/equipamento/equipamento-read/equipamentos-read-layout/equipamentos-read-layout.component';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -107,7 +108,8 @@ registerLocaleData(localePt);
     InspecaoDetalheInpecionadosComponent,
     InspecaoDetalheNaoinpecionadosComponent,
     InspecaoEquipamentoComponent,
-    QrCodeReaderComponent
+    QrCodeReaderComponent,
+    EquipamentosReadLayoutComponent
   ],
   imports: [
     BrowserModule,

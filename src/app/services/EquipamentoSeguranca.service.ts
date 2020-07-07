@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
 import { EquipamentoSegurancaDTO } from '../models/EquipamentoSeguranca';
 import { map, catchError } from 'rxjs/operators';
+import { RelatEquipamento } from '../models/RelatEquipamento';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,21 @@ export class EquipamentoSegurancaService {
     // };
 
     return this.http.get<EquipamentoSegurancaDTO[]>(`${this.baseURL}/getAllEquipamento`).pipe(
+      map((obj) => obj),
+      catchError((e) => this.erroHandler(e))
+    );
+  }
+
+  
+  getRelatEquipamentos(dataIni:string, dataFim: string, token: string = null): Observable<RelatEquipamento[]> {
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token
+    //   })
+    // };
+
+    return this.http.get<RelatEquipamento[]>(`${this.baseURL}/getRelatEquipamentos?dataIni=${dataIni}&dataFim=${dataFim}`).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
     );

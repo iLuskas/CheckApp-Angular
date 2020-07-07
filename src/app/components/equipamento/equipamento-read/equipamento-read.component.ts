@@ -18,6 +18,8 @@ import { EquipamentoSegurancaDTO } from "src/app/models/EquipamentoSeguranca";
 import { TipoEquipamentoService } from "src/app/services/TipoEquipamento.service";
 import { EquipamentoSegurancaService } from "src/app/services/EquipamentoSeguranca.service";
 import { EmpresaClienteService } from "src/app/services/EmpresaCliente.service";
+import { ExtintorDTO } from 'src/app/models/ExtintorDTO';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: "app-equipamento-read",
   templateUrl: "./equipamento-read.component.html",
@@ -32,19 +34,26 @@ export class EquipamentoReadComponent implements OnInit {
   empresas: EmpresaClienteDTO[];
   PesquisaPorEmpresa: boolean;
   PesquisaPorTipo: boolean;
+  PesquisaPorFabricante: boolean;
   SomenteInspecionados: boolean;
   SomenteNotInspecionados: boolean;
   DataAtual = new Date();
-  filteredOptionsTipos: Observable<TipoEquipamentoDTO[]>;
   filteredOptionsEmp: Observable<EmpresaClienteDTO[]>;
   TiposEquips: TipoEquipamentoDTO[];
   TipoEquip: TipoEquipamentoDTO;
-  dataSource = new MatTableDataSource<EquipamentoSegurancaDTO>(
-    this.equipamentos
+  equipFormatado: {
+    id?: number;
+    empresa: string;
+    localizacao_equipamento: string;
+    extintorDTO: ExtintorDTO;
+  }[] = []; 
+
+  dataSource = new MatTableDataSource<any>(
+    this.equipFormatado
   );
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns = [
-    "id",
-    "empresaClienteId",
+    "empresa",
     "num_ext",
     "seloInmetro_ext",
     "fabricante_ext",
@@ -75,13 +84,13 @@ export class EquipamentoReadComponent implements OnInit {
   constructor(
     private equipamentoService: EquipamentoSegurancaService,
     private datePipe: DatePipe,
-    private tipoEquipamento: TipoEquipamentoService,
     private fb: FormBuilder,
     private empresaService: EmpresaClienteService
   ) {}
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   get filtrarLista() {
@@ -92,41 +101,12 @@ export class EquipamentoReadComponent implements OnInit {
     this._filtroLista = value;
     this.dataSource.data = this._filtroLista
       ? this.filtrarEquipamentos(this.filtrarLista)
-      : this.equipamentos;
+      : this.equipFormatado;
   }
 
   ngOnInit(): void {
-    this.getAllEquipamentos();
-    this.criaFormTipo();
-    this.criaformEmp();
     this.criaFormRangeDatas();
-    this.getAllTipos();
     this.getAllEmpresas();
-  }
-
-  autoCompleteTipo(): void {
-    this.filteredOptionsTipos = this.formTipoEquip
-      .get("tipo")!
-      .valueChanges.pipe(
-        startWith(""),
-        map((value) => this._filter(value))
-      );
-  }
-
-  autoCompleteEmpresa(): void {
-    this.filteredOptionsEmp = this.formEmp
-      .get("razaoSocial")!
-      .valueChanges.pipe(
-        startWith(""),
-        map((value) => this._filtrarEmpresas(value))
-      );
-  }
-
-  criaFormTipo() {
-    this.formTipoEquip = this.fb.group({
-      id: [null],
-      tipo: [""],
-    });
   }
 
   criaFormRangeDatas(): void {
@@ -136,33 +116,28 @@ export class EquipamentoReadComponent implements OnInit {
     });
   }
 
-  criaformEmp() {
-    this.formEmp = this.fb.group({
-      id: [null],
-      razaoSocial: [""],
-      cnpj: [""],
-      inscricao_estadual: [""],
-      enderecoDTOs: [null],
-      telefoneDTOs: [null],
-    });
-  }
-
-  filtrarEquipamentos(value: string): EquipamentoSegurancaDTO[] {
+  filtrarEquipamentos(value: string): any[] {
     value = value.toLocaleLowerCase();
 
-    if (this.PesquisaPorTipo) {
-      if (this.TipoEquip) {
-        return this.equipamentos.filter(
-          (equipamento) =>
-            equipamento.tipo_equipamentoId
-              .toString()
-              .toLocaleLowerCase()
-              .indexOf(this.TipoEquip.id.toString()) !== -1
-        );
-      }
+    if (this.PesquisaPorEmpresa) {
+      return this.equipFormatado.filter(
+        (equip) => equip.empresa.toLocaleLowerCase().indexOf(value) !== -1
+      );
     }
 
-    return this.equipamentos;
+    if (this.PesquisaPorTipo) {
+      return this.equipFormatado.filter(
+        (equip) => equip.extintorDTO.tipo_ext.toLocaleLowerCase().indexOf(value) !== -1
+      );
+    }
+
+    if (this.PesquisaPorFabricante) {
+      return this.equipFormatado.filter(
+        (equip) => equip.extintorDTO.fabricante_ext.toLocaleLowerCase().indexOf(value) !== -1
+      );
+    }
+
+    return this.equipFormatado;
   }
 
   getAllEquipamentos(): void {
@@ -171,7 +146,15 @@ export class EquipamentoReadComponent implements OnInit {
       .subscribe((equipamentos: EquipamentoSegurancaDTO[]) => {
         console.log(equipamentos);
         this.equipamentos = equipamentos;
-        this.dataSource.data = equipamentos;
+        equipamentos.forEach(equip =>
+          this.equipFormatado.push({
+            id: equip.id,
+            empresa: this.empresas.find(emp => emp.id === equip.empresaClienteId).razaoSocial,
+            extintorDTO: equip.extintorDTO,
+            localizacao_equipamento: equip.localizacao_equipamento
+          }))
+
+        this.dataSource.data = this.equipFormatado;
       });
   }
 
@@ -180,48 +163,38 @@ export class EquipamentoReadComponent implements OnInit {
       .getAllInfoEmpresaCliente()
       .subscribe((emp: EmpresaClienteDTO[]) => {
         this.empresas = emp;
-        this.autoCompleteEmpresa();
+        this.getAllEquipamentos();
       });
-  }
-
-  getAllTipos() {
-    this.tipoEquipamento
-      .getAllTipoEquipamento()
-      .subscribe((tipos: TipoEquipamentoDTO[]) => {
-        this.TiposEquips = tipos;
-        this.autoCompleteTipo();
-      });
-  }
-
-  getPerfil(Tipo: TipoEquipamentoDTO) {
-    this.TipoEquip = Tipo;
-  }
-
-  getEmpresa(emp: EmpresaClienteDTO) {}
-
-  dataSelected(event): void {
-    console.log(event);
   }
 
   checkEmpresaChange() {
     if (this.PesquisaPorEmpresa) {
       this.PesquisaPorTipo = false;
+      this.PesquisaPorFabricante = false;
     }
   }
 
   checkTipoChange() {
     if (this.PesquisaPorTipo) {
       this.PesquisaPorEmpresa = false;
+      this.PesquisaPorFabricante = false;
+    }
+  }
+
+  checkFabricanteChange() {
+    if (this.PesquisaPorFabricante) {
+      this.PesquisaPorEmpresa = false;
+      this.PesquisaPorTipo = false;
     }
   }
 
   ExportExcel() {
-    let element = document.getElementById("table-equipmaentos");
+    let element = document.getElementById("table-equipamentos");
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
 
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(wb, ws, "FUNCIONARIOS");
+    XLSX.utils.book_append_sheet(wb, ws, "EQUIPAMENTOS");
 
     XLSX.writeFile(
       wb,

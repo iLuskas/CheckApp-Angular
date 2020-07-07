@@ -1,0 +1,331 @@
+<div fxLayout="row wrap" class="configuration-container">
+  <div class="text-pesquisa-container text-bold">
+    <h3 class="h3-pesquisa">Pesquisar Por:</h3>
+  </div>
+  <section fxFlex>
+    <mat-checkbox
+      class="check-margin"
+      (change)="checkEmpresaChange()"
+      [(ngModel)]="PesquisaPorEmpresa"
+      >Empresa</mat-checkbox
+    >
+    <mat-checkbox
+      class="check-margin"
+      (change)="checkTipoChange()"
+      [(ngModel)]="PesquisaPorTipo"
+      >Tipo</mat-checkbox
+    >
+    <mat-checkbox
+      class="check-margin"
+      (change)="checkFabricanteChange()"
+      [(ngModel)]="PesquisaPorFabricante"
+      >Fabricante</mat-checkbox
+    >
+  </section>
+</div>
+
+<div class="form-container">
+  <div fxLayout="row wrap">
+    <div fxFlex *ngIf="PesquisaPorEmpresa">
+      <form>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Pesquisar"
+            name="pequisa"
+            [(ngModel)]="filtrarLista"
+            [matAutocomplete]="auto2"
+          />
+        </mat-form-field>
+        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredOptionsEmp | async"
+            [value]="option.razaoSocial"
+          >
+            {{ option.razaoSocial }}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+    <div fxFlex *ngIf="PesquisaPorTipo">
+      <form>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Tipo</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Pesquisar"
+            name="tipo"
+            [(ngModel)]="filtrarLista"
+          />
+        </mat-form-field>
+      </form>
+    </div>
+    <div fxFlex *ngIf="PesquisaPorFabricante">
+      <form>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Fabricante</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Pesquisar"
+            name="pequisa"
+            [(ngModel)]="filtrarLista"
+          />
+        </mat-form-field>
+      </form>
+    </div>
+    <div fxFlex>
+      <form [formGroup]="RangeDatas">
+        <div fxLayout="row wrap">
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Inicial:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataIni"
+                formControlName="dataIni"
+                [matDatepicker]="picker2"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Final:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataFim"
+                formControlName="dataFim"
+                [matDatepicker]="picker1"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker1></mat-datepicker>
+            </mat-form-field>
+            <button
+              mat-mini-fab
+              color="primary"
+              aria-label="Botão de pesquisa"
+              matTooltip="Pesquisar"
+              (click)="PesquisarDatas()"
+            >
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+          <div fxFlex></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="table-container" fxLayout="column">
+  <div class="mat-elevation-z8">
+    <div fxLayout="row">
+      <span class="spacer-flex-right-left"></span>
+      <div fxLayoutAlign="center center">
+        <h2>EQUIPAMENTOS</h2>
+      </div>
+      <span class="spacer-flex-right-left"></span>
+      <div class="btnExportar-container">
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Botão de exportar tabela"
+          matTooltip="Exportar em Excel"
+          (click)="ExportExcel()"
+        >
+          <mat-icon>description</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <table
+      mat-table
+      matTableResponsive
+      matSort
+      [dataSource]="dataSourceAgenda"
+      id="table-equipAgenda"
+    >
+      <!-- Cep Column -->
+      <ng-container matColumnDef="empresa">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Empresa</th>
+        <td mat-cell *matCellDef="let row">{{ row.empresa }}</td>
+      </ng-container>
+
+      <!-- Cep Column -->
+      <ng-container matColumnDef="localizacao">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Localização</th>
+        <td mat-cell *matCellDef="let row">{{ row.localizacao }}</td>
+      </ng-container>
+
+      <!-- Cidade Column -->
+      <ng-container matColumnDef="num_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Número</th>
+        <td mat-cell *matCellDef="let row">{{ row.num_ext }}</td>
+      </ng-container>
+
+      <!-- Selo Column -->
+      <ng-container matColumnDef="seloInmetro_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Selo</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.seloInmetro_ext }}
+        </td>
+      </ng-container>
+
+      <!-- Fabricante Column -->
+      <ng-container matColumnDef="fabricante_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Fabricante</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.fabricante_ext }}
+        </td>
+      </ng-container>
+
+      <!-- Tipo Column -->
+      <ng-container matColumnDef="tipo_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let row">{{ row.tipo_ext }}</td>
+      </ng-container>
+
+      <!-- Capacidade Column -->
+      <ng-container matColumnDef="capacidade_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Capacidade</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.capacidade_ext }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="anoFabricacao_ext">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Ano</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.anoFabricacao_ext }}
+        </td>
+      </ng-container>
+
+      <!-- Inspetor Column -->
+      <ng-container matColumnDef="nomeInspetor">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Inspetor</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.nomeInspetor }}
+        </td>
+      </ng-container>
+      <!-- Ano Column -->
+      <ng-container matColumnDef="ultimoRecInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          última Recarga
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.ultimoRecInsp }}
+        </td>
+      </ng-container>
+      <!-- Ano Column -->
+      <ng-container matColumnDef="proximoRecInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Próxima Recarga
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.proximoRecInsp }}
+        </td>
+      </ng-container>
+      <!-- Ano Column -->
+      <ng-container matColumnDef="ultimoRetInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Último Reteste
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.ultimoRetInsp }}
+        </td>
+      </ng-container>
+      <!-- Ano Column -->
+      <ng-container matColumnDef="proximoRetInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Último Reteste
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.proximoRetInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="estadoCilindroInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Estado Cilindro
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.estadoCilindroInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="estadoLocalInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Estado Local</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.estadoLocalInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="seloLacreInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Selo Lacre</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.seloLacreInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="sinalizacaoPisoInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Sinalização Piso
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.sinalizacaoPisoInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="sinalizacaoAcessoInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Sinalização Acesso
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.sinalizacaoAcessoInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="obsInsp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Observação</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.obsInsp }}
+        </td>
+      </ng-container>
+
+      <!-- Ano Column -->
+      <ng-container matColumnDef="duracao">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Duração</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.duracao }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedAgendaColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedAgendaColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[10, 50, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>
