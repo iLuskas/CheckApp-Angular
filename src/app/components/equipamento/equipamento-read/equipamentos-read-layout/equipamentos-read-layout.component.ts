@@ -170,10 +170,8 @@ export class EquipamentosReadLayoutComponent implements OnInit {
         )
       )
       .subscribe((equipamentos: RelatEquipamento[]) => {
-        console.log(equipamentos);
         this.equipamentosAgenda = equipamentos;
         this.dataSourceAgenda.data = equipamentos;
-        console.log(equipamentos);
       });
   }
 

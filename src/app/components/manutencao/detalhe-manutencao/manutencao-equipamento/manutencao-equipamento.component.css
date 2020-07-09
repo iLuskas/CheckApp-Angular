@@ -1,0 +1,11 @@
+.input-ObsManut {
+    width: 40vmax;
+}
+
+.chk-aprovado {
+    margin-right: 10px;
+}
+
+::ng-deep .mat-tooltip  {
+    white-space: pre-line    !important;
+}

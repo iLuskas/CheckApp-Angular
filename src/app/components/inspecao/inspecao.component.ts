@@ -40,6 +40,9 @@ export class InspecaoComponent implements OnInit, AfterViewInit {
       .getAllAgendaByUserAndTipo(this.cacheUsuario.login, '1')
       .subscribe((agendamentos) => {
         this.agendamentos = agendamentos;
+      }, 
+      (error) => {
+        this.agendamentoService.showMessage("Ocorreu um erro ao buscar os agendamentos.", true);
       });
   }
 

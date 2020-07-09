@@ -1,46 +1,49 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { AgendamentoService } from "src/app/services/agendamento.service";
-import { DatePipe } from "@angular/common";
-import { InspecaoEstadoService } from "../inspecao-estado.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { AgendamentoService } from 'src/app/services/agendamento.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { QrCodeReaderComponent } from '../../qr-code-reader/qr-code-reader.component';
 import { EquipamentoSegurancaService } from 'src/app/services/EquipamentoSeguranca.service';
-import { InspecaoEquipamentoComponent } from './inspecao-equipamento/inspecao-equipamento.component';
+import { QrCodeReaderComponent } from '../../qr-code-reader/qr-code-reader.component';
+import { InspecaoEquipamentoComponent } from '../../inspecao/inspecao-detalhe/inspecao-equipamento/inspecao-equipamento.component';
+import { ManutencaoEquipamentoComponent } from './manutencao-equipamento/manutencao-equipamento.component';
+import { ManutencaoEstadoService } from '../manutencao-estado.service';
+import { Usuario } from 'src/app/models/Usuario';
 
 @Component({
-  selector: "app-inspecao-detalhe",
-  templateUrl: "./inspecao-detalhe.component.html",
-  styleUrls: ["./inspecao-detalhe.component.css"],
+  selector: 'app-detalhe-manutencao',
+  templateUrl: './detalhe-manutencao.component.html',
+  styleUrls: ['./detalhe-manutencao.component.css']
 })
-export class InspecaoDetalheComponent implements OnInit {
+export class DetalheManutencaoComponent implements OnInit {
   @Input() agendamentoId: any
   agendamentoSeleted: any;
   isFinishInspetion: boolean;
   isLoading: boolean;
   date = new Date();
+  usuarioAtual: Usuario;
   ageId: number;
   constructor(
-    private estadoInspecao: InspecaoEstadoService,
     private agendamentoService: AgendamentoService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private equipamentoService: EquipamentoSegurancaService) {
+    private equipamentoService: EquipamentoSegurancaService,
+    private estadoManutencao: ManutencaoEstadoService) {
+      this.estadoManutencao.isManutentionDone.subscribe((value) => {
+        if (value)
+          this.agendamentoSeleted = JSON.parse(
+            localStorage.getItem("AgendaSeleted")
+          );
+      });
+  
+      this.estadoManutencao.isAllManutentionDone.subscribe((value) => {
+        this.isFinishInspetion = value;
+      });
 
-    this.estadoInspecao.isInspetionDone.subscribe((value) => {
-      if (value)
-        this.agendamentoSeleted = JSON.parse(
-          localStorage.getItem("AgendaSeleted")
-        );
-    });
-
-    this.estadoInspecao.isAllInspetionDone.subscribe((value) => {
-      this.isFinishInspetion = value;
-    });
   }
 
   ngOnInit(): void {
+    this.usuarioAtual = JSON.parse(localStorage.getItem("cacheUsuario"));
     this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
     this.ageId = !this.agendamentoId ? this.agendamentoSeleted.ageId : this.agendamentoId;
   }
@@ -49,8 +52,8 @@ export class InspecaoDetalheComponent implements OnInit {
     this.agendamentoService.finalizaAgendamentoById(this.ageId.toString()).subscribe(
       () => {
         localStorage.removeItem("AgendaSeleted");
-        this.router.navigate(["/inspecoes"], { relativeTo: this.route });
-        this.agendamentoService.showMessage('Inspeção finalizada.');
+        this.router.navigate(["/manutencoes"], { relativeTo: this.route });
+        this.agendamentoService.showMessage('Manutenção finalizada.');
       },
       (error) =>{
         this.agendamentoService.erroHandler(error);
@@ -83,7 +86,7 @@ export class InspecaoDetalheComponent implements OnInit {
   }
 
   openDialogInspecao(extintor : any): void {
-    const dialogRef = this.dialog.open(InspecaoEquipamentoComponent, {
+    const dialogRef = this.dialog.open(ManutencaoEquipamentoComponent, {
       data: {equip: extintor, dataIncial: this.date},
       autoFocus: true,
       disableClose: true
@@ -97,8 +100,9 @@ export class InspecaoDetalheComponent implements OnInit {
           this.agendamentoSeleted.qtdNotInsp--;
           localStorage.setItem("AgendaSeleted", JSON.stringify(this.agendamentoSeleted));
         }
-        this.estadoInspecao.isInspetionDone.next(true);
+        this.estadoManutencao.isManutentionDone.next(true);
       }
     });
   }
+
 }

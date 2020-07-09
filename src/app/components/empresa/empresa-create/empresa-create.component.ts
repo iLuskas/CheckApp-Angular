@@ -151,7 +151,6 @@ export class EmpresaCreateComponent implements OnInit {
     this.imgPreview = '';
     this.metodoApi = 'putEmpresaCliente';
     this.empresa = Object.assign(modeloEmpresa);
-    console.log(modeloEmpresa);
     if(modeloEmpresa.imagemUrlBase64)
       this.getImagemFromBase64(modeloEmpresa.imagemUrlBase64);    
     
@@ -190,7 +189,6 @@ export class EmpresaCreateComponent implements OnInit {
     if(event.target.files && event.target.files.length)
     {
       this.file = event.target.files;
-      console.log(this.file);
       this.formCreate.controls.imagemUrl.setValue(this.file[0].name);
     }
   }

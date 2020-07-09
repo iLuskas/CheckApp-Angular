@@ -6,6 +6,8 @@ export interface AgendaInspManutDTO {
     empresa: string;
     TtipoEquipamento: string;
     tipoAgendamento: string;
+    tipoManutencao: string;
+    ocorrenciaInspecao: boolean;
     dataInicial: Date;
     dataFinal?: Date;
     duracao: string;

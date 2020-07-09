@@ -3,6 +3,7 @@ import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { BarcodeFormat } from "@zxing/library";
+import { Usuario } from 'src/app/models/Usuario';
 
 @Component({
   selector: 'app-qr-code-reader',
@@ -18,7 +19,7 @@ export class QrCodeReaderComponent implements OnInit {
   hasCameras = false;
   hasPermission: boolean;
   qrResultString: string;
-
+  usuarioAtual : Usuario;
   availableDevices: MediaDeviceInfo[];
   selectedDevice: MediaDeviceInfo;
 
@@ -43,7 +44,7 @@ export class QrCodeReaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    
   }
 
   clearResult(): void {

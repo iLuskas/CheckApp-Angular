@@ -1,0 +1,328 @@
+<h1 mat-dialog-title>
+  MANUTENÇÃO EQUIPAMENTO - {{ data.equip.numeroExtintor }}
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formManutencao">
+    <div fxLayout="row wrap">
+      <div fxFlex fxLayout="column">
+        <div fxLayout="row wrap">
+          <!-- Tipo -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-tipoExt">
+              <mat-label>Tipo:</mat-label>
+              <mat-select
+                name="tipoExt"
+                formControlName="tipoExt"
+                (selectionChange)="SelectionTipoChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let tipo of tipoExtintor" [value]="tipo.tipo">
+                  {{ tipo.tipo }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-icon-button aria-label="Icone com tipos de extintores" 
+            matTooltip="
+            EM - ESPUMA MECÂNICA               
+            CLA K - CLASSE K            
+            AMP CO2 - AMPOLA CO2          
+            AMP N2 - AMPOLA N2           	    
+            CO2 - GÁS CARBONICO       
+            PQS ABC - PÓ QUÍMICO SECO ABC 
+            PQS BC - PÓ QUÍMICO SECO BC  
+            CLA D - CLASSE D             
+            ">
+              <mat-icon>battery_unknown</mat-icon>
+            </button>
+            <mat-error *ngIf="isFieldInvalid('tipoExt')">
+              Informe a Tipo.
+            </mat-error>
+          </div>
+          <!-- Tipo -->
+
+          <!-- Capacidade -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-capacidade">
+              <mat-label>Capacidade:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Capacidade"
+                name="capacidade"
+                formControlName="capacidade"
+              />
+              <span matSuffix>{{pesoExtintor}}</span>
+            </mat-form-field>            
+            <mat-error *ngIf="isFieldInvalid('capacidade')">
+              Informe a Capacidade.
+            </mat-error>
+          </div>
+          <!-- Capacidade -->
+
+          <!-- Ano -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-Capacidade">
+              <mat-label>Ano:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ano de Fabricaçao"
+                name="anoFabricacao"
+                formControlName="anoFabricacao"
+              />
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('anoFabricacao')">
+              Informe o Ano.
+            </mat-error>
+            <mat-error *ngIf="hasError('anoFabricacao', 'pattern')">
+              Somente números
+            </mat-error>
+          </div>
+          <!-- Ano  -->
+
+          <!-- Fabricante  -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-fabricanteExt">
+              <mat-label>Fabricante:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Fabricante"
+                name="fabricanteExt"
+                formControlName="fabricanteExt"
+              />
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('fabricanteExt')">
+              Informe o Fabricante.
+            </mat-error>
+          </div>
+          <!-- Fabricante  -->
+
+          <!-- Último Teste -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Último Teste:</mat-label>
+              <mat-select
+              name="ultimoTeste"
+              formControlName="ultimoTeste"
+              (selectionChange)="selectionChangeUtmTeste($event.value)"
+              required
+            >
+              <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                {{ date.date }}
+              </mat-option>
+            </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('ultimoTeste')">
+              Informe a Último Teste.
+            </mat-error>
+          </div>
+          <!-- Último Teste -->
+          
+          <!-- Data Reteste -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-dataReteste">
+              <mat-label>Data Reteste:</mat-label>
+              <mat-select
+                name="dataReteste"
+                formControlName="dataReteste"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('dataReteste')">
+              Informe a Último Teste.
+            </mat-error>
+          </div>
+          <!-- Data Reteste -->
+
+          <!-- Número Cilíndro -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-Norma">
+              <mat-label>Número Cilíndro:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Número Cilíndro"
+                name="numCilindro"
+                formControlName="numCilindro"
+              />
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('numCilindro')">
+              Informe o Número.
+            </mat-error>
+            <mat-error *ngIf="hasError('numCilindro', 'pattern')">
+              Somente números
+            </mat-error>
+          </div>
+          <!-- Número Cilíndro -->
+
+          <!-- Selo Inmetro -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-Norma">
+              <mat-label>Selo Inmetro:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Selo Inmetro"
+                name="seloInmetro"
+                formControlName="seloInmetro"
+              />
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('seloInmetro')">
+              Informe o Selo Inmetro.
+            </mat-error>
+            <mat-error *ngIf="hasError('seloInmetro', 'pattern')">
+              Somente números
+            </mat-error>
+          </div>
+          <!-- Selo Inmetro -->
+
+          <!-- Data Recarga -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-dataRecarga">
+              <mat-label>Data Recarga:</mat-label>
+              <mat-select
+                name="dataRecarga"
+                formControlName="dataRecarga"
+                (selectionChange)="SelectionDtRecargaChange($event.value)"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('dataRecarga')">
+              Informe a Data Recarga.
+            </mat-error>
+          </div>
+          <!-- Data Recarga -->
+          
+          <!-- Próxima Recarga -->
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-dataProximoRecarga">
+              <mat-label>Próxima Recarga:</mat-label>
+              <mat-select
+                name="dataProximaRecarga"
+                formControlName="dataProximaRecarga"
+                required
+              >
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="isFieldInvalid('dataProximaRecarga')">
+              Informe a Próxima Recarga.
+            </mat-error>
+          </div>
+          <!-- Próxima Recarga -->
+
+          <div fxFlex>
+            <section class="example-section">
+              <mat-checkbox
+                class="chk-aprovado"
+                formControlName="aprovado"
+                (change)="chkAprovadoChange()"
+                matTooltip="Marcar caso o equipamento esteja Aprovado"
+                >Aprovado</mat-checkbox
+              >
+              <mat-checkbox
+                class="example-margin"
+                formControlName="reprovado"
+                (change)="chkReprovadoChange()"
+                matTooltip="Marcar caso o equipamento esteja Reprovado."
+                >Reprovado</mat-checkbox
+              >
+            </section>
+          </div>
+          <div fxFlex></div>
+        </div>
+        <div fxFlex *ngIf="this.formManutencao.controls.reprovado.value">
+          <!-- Observação -->
+          <div fxFlex>
+            <mat-form-field class="input-ObsManut" appearance="outline">
+              <mat-label>Observação</mat-label>
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                name="obsManut"
+                formControlName="obsManut"
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="5"
+                cdkAutosizeMaxRows="50"
+              ></textarea></mat-form-field>
+          </div>
+          <!-- Observação -->
+        </div>
+        <div fxFlex fxLayout="row wrap" *ngIf="data.manutencao">
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Inicial:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataInicial"
+                formControlName="dataInicial"
+                [matDatepicker]="picker2"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Data Final:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex: 01/01/1900"
+                name="dataFinal"
+                formControlName="dataFinal"
+                [matDatepicker]="picker1"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field appearance="outline" class="input-duracao">
+              <mat-label>Duraçao:</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Duraçao"
+                name="duracao"
+                formControlName="duracao"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Voltar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="salvarManutencao()"
+    [disabled]="!formManutencao.valid || isLoading"
+  >
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    Salvar
+  </button>
+</div>

@@ -21,7 +21,6 @@
                   formControlName="razaoSocial"
                   [matAutocomplete]="auto"
                   (input)="onSearchEmpChange($event.target.value)"
-
                   required
                 />
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -132,15 +131,16 @@
                 class="container-fields-extintor"
                 ngClass.xs="container-fields-extintor-mobile"
               >
-                <div fxFlex class="div-form-fields">
+                <div fxFlex >
                   <mat-form-field
                     class="input-numExt"
                     [ngStyle.xs]="{ width: '200px' }"
                     appearance="outline"
                   >
+                    <mat-label>Número do Extintor:</mat-label>
                     <input
                       matInput
-                      type="number"
+                      type="text"
                       placeholder="Número do Extintor"
                       name="num_ext"
                       formControlName="num_ext"
@@ -170,6 +170,7 @@
                     [ngStyle.xs]="{ width: '200px' }"
                     appearance="outline"
                   >
+                    <mat-label>Selo Inmetro:</mat-label>
                     <input
                       matInput
                       type="text"
@@ -189,6 +190,11 @@
                     >
                       Somente 14 digitos
                     </mat-error>
+                    <mat-error
+                    *ngIf="hasErrorFieldExtintor('seloInmetro_ext', 'pattern')"
+                  >
+                    Somente números
+                  </mat-error>
                   </mat-form-field>
                 </div>
                 <div fxFlex class="div-form-fields">
@@ -197,6 +203,7 @@
                     [ngStyle.xs]="{ width: '200px' }"
                     appearance="outline"
                   >
+                    <mat-label>Fabricante:</mat-label>
                     <input
                       matInput
                       type="text"
@@ -216,19 +223,40 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <div fxFlex class="div-form-fields">
-                  <mat-form-field
-                    class="input-tipoExt"
-                    [ngStyle.xs]="{ width: '200px' }"
-                    appearance="outline"
-                  >
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Tipo"
-                      name="tipo_ext"
-                      formControlName="tipo_ext"
-                    />
+                <div fxFlex>
+                  <div>
+                    <mat-form-field [ngStyle.xs]="{ width: '150px' }" class="input-tipo_ext" appearance="outline">
+                      <mat-label>Tipo:</mat-label>
+                      <mat-select
+                        name="tipo_ext"
+                        formControlName="tipo_ext"
+                        (selectionChange)="SelectionTipoChange($event.value)"
+                        required
+                      >
+                        <mat-option
+                          *ngFor="let tipo of tipoExtintor"
+                          [value]="tipo.tipo"
+                        >
+                          {{ tipo.tipo }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button
+                      mat-icon-button
+                      aria-label="Icone com tipos de extintores"
+                      matTooltip="
+                  EM - ESPUMA MECÂNICA               
+                  CLA K - CLASSE K            
+                  AMP CO2 - AMPOLA CO2          
+                  AMP N2 - AMPOLA N2           	    
+                  CO2 - GÁS CARBONICO       
+                  PQS ABC - PÓ QUÍMICO SECO ABC 
+                  PQS BC - PÓ QUÍMICO SECO BC  
+                  CLA D - CLASSE D             
+                  "
+                    >
+                      <mat-icon>battery_unknown</mat-icon>
+                    </button>
                     <mat-error *ngIf="isFieldExtintorInvalid('tipo_ext')">
                       Informe o Tipo.
                     </mat-error>
@@ -237,7 +265,7 @@
                     >
                       Somente 100 digitos
                     </mat-error>
-                  </mat-form-field>
+                  </div>
                 </div>
                 <div fxFlex class="div-form-fields">
                   <mat-form-field
@@ -245,13 +273,15 @@
                     [ngStyle.xs]="{ width: '200px' }"
                     appearance="outline"
                   >
+                    <mat-label>Capacidade:</mat-label>
                     <input
                       matInput
-                      type="number"
+                      type="text"
                       placeholder="Capacidade"
                       name="capacidade_ext"
                       formControlName="capacidade_ext"
                     />
+                    <span matSuffix>{{ pesoExtintor }}</span>
                     <mat-error *ngIf="isFieldExtintorInvalid('capacidade_ext')">
                       Informe a Capcidade.
                     </mat-error>
@@ -268,6 +298,7 @@
                     [ngStyle.xs]="{ width: '200px' }"
                     appearance="outline"
                   >
+                    <mat-label>Ano de Fabricação:</mat-label>
                     <input
                       matInput
                       type="text"
@@ -293,7 +324,11 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div fxFlex ngClass.xs="form-part2-mobile-layout" fxLayout="column">
+              <div
+                fxFlex
+                ngClass.xs="form-part2-mobile-layout"
+                fxLayout="column"
+              >
                 <div fxFlex fxLayout="row">
                   <div fxFlex class="div-form-fields">
                     <mat-form-field
@@ -358,8 +393,8 @@
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="5"
                       cdkAutosizeMaxRows="50"
-                    ></textarea></mat-form-field
-                  >|
+                    ></textarea>
+                  </mat-form-field>
                   <mat-error
                     *ngIf="isFieldInvalid('localizacao_equipamento')"
                     class="localizacao-field-error"

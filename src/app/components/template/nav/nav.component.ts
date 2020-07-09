@@ -42,7 +42,6 @@ export class NavComponent implements OnInit {
 
   navItensUser: any[] = [
     { link: "/home", icon: "home", nameMenu: "Início" },
-    { link: "/perfilFuncionario", icon: "assignment_ind", nameMenu: "Perfil" },
     { link: "/inspecoes", icon: "fact_check", nameMenu: "Inspeções" },
     { link: "/manutencoes", icon: "construction", nameMenu: "Manutenções" },
     { link: "/equipamentos", icon: "whatshot", nameMenu: "Equipamentos" },

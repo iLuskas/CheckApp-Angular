@@ -1,29 +1,22 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  AfterContentInit,
-  AfterViewInit,
-} from "@angular/core";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { DatePipe } from "@angular/common";
-import { AgendamentoService } from "src/app/services/agendamento.service";
-import { InspecaoEstadoService } from "../../inspecao-estado.service";
-import { InspecaoEquipamentoComponent } from "../inspecao-equipamento/inspecao-equipamento.component";
-import { MatDialog } from "@angular/material/dialog";
-import { InspecaoService } from "src/app/services/Inspecao.service";
-import { InspecaoDTO } from "src/app/models/InspecaoDTO";
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { AgendamentoService } from 'src/app/services/agendamento.service';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ManutencaoEquipamentoComponent } from '../manutencao-equipamento/manutencao-equipamento.component';
+import { ManutencaoService } from 'src/app/services/manutencao.service';
+import { ManutencaoDTO } from 'src/app/models/ManutencaoDTO';
+import { ManutencaoEstadoService } from '../../manutencao-estado.service';
 
 @Component({
-  selector: "app-inspecao-detalhe-inpecionados",
-  templateUrl: "./inspecao-detalhe-inpecionados.component.html",
-  styleUrls: ["./inspecao-detalhe-inpecionados.component.css"],
+  selector: 'app-detalhe-manutencao-manutenidos',
+  templateUrl: './detalhe-manutencao-manutenidos.component.html',
+  styleUrls: ['./detalhe-manutencao-manutenidos.component.css']
 })
-export class InspecaoDetalheInpecionadosComponent
-  implements OnInit, AfterViewInit {
+export class DetalheManutencaoManutenidosComponent implements OnInit {
+
   @Input() agendamentoId: any;
   EquipamentosInsp: any[];
   agendamentoSeleted: any;
@@ -46,15 +39,14 @@ export class InspecaoDetalheInpecionadosComponent
   
   constructor(
     private agendamentoService: AgendamentoService,
-    private datePipe: DatePipe,
-    private estadoInspecao: InspecaoEstadoService,
     public dialog: MatDialog,
-    private inspecaoService: InspecaoService
+    private manutencaoService: ManutencaoService,
+    private estadoManutencao: ManutencaoEstadoService
   ) {
-    this.estadoInspecao.isInspetionDone.subscribe((value) => {
+    this.estadoManutencao.isManutentionDone.subscribe((value) => {
       if (value) {
         this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));       
-        this.getAllEquipInspByAgendamentoId();
+        this.getAllEquipManutByAgendamentoId();
       }
     });
   }
@@ -66,12 +58,12 @@ export class InspecaoDetalheInpecionadosComponent
 
   ngOnInit(): void {
     this.agendamentoSeleted = JSON.parse(localStorage.getItem("AgendaSeleted"));
-    this.getAllEquipInspByAgendamentoId();
+    this.getAllEquipManutByAgendamentoId();
   }
 
-  getAllEquipInspByAgendamentoId(): void {
+  getAllEquipManutByAgendamentoId(): void {
     this.agendamentoService
-      .getAllEquipInspByAgendamentoId(this.agendamentoSeleted.ageId.toString())
+      .getAllEquipManutByAgendamentoId(this.agendamentoSeleted.ageId.toString())
       .subscribe((agendamentos) => {
         if (agendamentos) {
           this.EquipamentosInsp = agendamentos
@@ -81,17 +73,17 @@ export class InspecaoDetalheInpecionadosComponent
   }
 
   openDialog(equipamento: any): void {
-    this.inspecaoService
-      .GetInspecaoByEquipIdAndAgeId(
+    this.manutencaoService
+      .GetManutencaoByEquipIdAndAgeId(
         equipamento.equipamentoId,
         this.agendamentoSeleted.ageId.toString()
       )
-      .subscribe((equipamentoInspecao: InspecaoDTO) => {
-        const dialogRef = this.dialog.open(InspecaoEquipamentoComponent, {
+      .subscribe((equipamentoManutencao: ManutencaoDTO) => {
+        const dialogRef = this.dialog.open(ManutencaoEquipamentoComponent, {
           data: {
             equip: equipamento,
             dataIncial: this.date,
-            inspecao: equipamentoInspecao,
+            manutencao: equipamentoManutencao,
           },
           autoFocus: true,
           disableClose: true,
@@ -100,9 +92,10 @@ export class InspecaoDetalheInpecionadosComponent
         dialogRef.afterClosed().subscribe((result) => {
           console.log("The dialog was closed", result);
           if (result) {
-            this.getAllEquipInspByAgendamentoId();
+            this.getAllEquipManutByAgendamentoId();
           }
         });
       });
   }
+
 }

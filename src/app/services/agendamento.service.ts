@@ -115,6 +115,18 @@ export class AgendamentoService {
     );
   }
 
+  getAllEquipManutByAgendamentoId(ageId: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllEquipManutByAgendamentoId?agendamentoId=${ageId}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
+  getAllEquipNotManutByAgendamentoId(ageId: string, token: string = null): Observable<any[]> {
+    return this.http.get<string[]>(`${this.baseURL}/getAllEquipNotManutByAgendamentoId?agendamentoId=${ageId}`).pipe(
+      map((obj) => obj)
+    );
+  }
+
   postAgendamento(agendamento: ModeloAgendaInspManut, token: string = null) {
     const options: Object = {
       headers: new HttpHeaders({

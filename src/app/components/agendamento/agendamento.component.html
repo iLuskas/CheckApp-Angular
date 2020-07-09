@@ -166,12 +166,11 @@
                     name="tipoAgendamento"
                     formControlName="tipoAgendamento"
                     (selectionChange)="tipoAgendamentoSelecionado($event.value)"
-                    [value]="tipoAgendamento"
                     required
                   >
                     <mat-option
                       *ngFor="let tipo of tiposAgendamentos"
-                      [value]="tipo"
+                      [value]="tipo.tipoAgenda"
                     >
                       {{ tipo.tipoAgenda }}
                     </mat-option>
@@ -191,17 +190,46 @@
                     name="statusInspManut"
                     formControlName="statusInspManut"
                     (selectionChange)="statusSelecionado($event.value)"
-                    [value]="tipoStatus"
                     required
                   >
                     <mat-option
                       *ngFor="let status of tiposStatus"
-                      [value]="status"
+                      [value]="status.statusAgenda"
                     >
                       {{ status.statusAgenda }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
+              </div>
+              <div fxFlex fxLayout="row wrap" *ngIf="formAgenda.controls.tipoAgendamento.value === 'Manutenção'">
+                <div fxFlex>
+                  <mat-form-field
+                    appearance="outline"
+                    class="input-tipoManutencao"
+                  >
+                    <mat-label>Tipo de Manutenção:</mat-label>
+                    <mat-select
+                      name="tipoManutencao"
+                      formControlName="tipoManutencao"                   
+                    >
+                      <mat-option
+                        *ngFor="let tipo of TipoManutencao"
+                        [value]="tipo.tipo"
+                      >
+                        {{ tipo.tipo }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex *ngIf="formAgenda.controls.tipoAgendamento.value === 'Manutenção'">
+                  <section class="example-section">
+                    <mat-checkbox
+                      formControlName="ocorrenciaInspecao"
+                      matTooltip="Somente os equipamentos marcados com 'Manutenção' na última inspeção para está empresa."
+                      >Ocorrêncoa Inspeção</mat-checkbox
+                    >
+                  </section>
+                </div>
               </div>
               <div fxFlex *ngIf="formAgenda.controls.dataFinal.value">
                 <mat-form-field appearance="outline" class="input-dataFinal">
@@ -236,7 +264,6 @@
                   />
                 </mat-form-field>
               </div>
-              <div fxFlex *ngIf="formAgenda.controls.duracao.value"></div>
             </div>
           </div>
         </form>
@@ -262,9 +289,14 @@
       </div>
     </mat-card>
   </div>
-  <div *ngIf="pesquisouAgenda && formAgenda.controls.tipoAgendamento.value !== 'Manutenção'">
+  <div *ngIf="pesquisouAgenda && formAgenda.controls.tipoAgendamento.value === 'Inspeção'">
     <app-inspecao-detalhe
       [agendamentoId]="formAgenda.controls.id.value"
     ></app-inspecao-detalhe>
+  </div>
+  <div *ngIf="pesquisouAgenda && formAgenda.controls.tipoAgendamento.value === 'Manutenção'">
+    <app-detalhe-manutencao
+      [agendamentoId]="formAgenda.controls.id.value"
+    ></app-detalhe-manutencao>
   </div>
 </div>

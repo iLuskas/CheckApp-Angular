@@ -121,7 +121,6 @@ export class FuncionarioService {
       responseType: 'text'
     };
 
-    console.log(JSON.stringify(options));
     return this.http.delete(this.baseURL, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))

@@ -81,6 +81,26 @@ export class EmpresaClienteService {
       );
   }
 
+  getRelatOcorrenciaForEmp(
+    token: string = null
+  ): Observable<any> {
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token
+    //   })
+    // };
+
+    return this.http
+      .get<any>(
+        `${this.baseURL}/getRelatOcorrenciaForEmp`
+      )
+      .pipe(
+        map((obj) => obj),
+        catchError((e) => this.erroHandler(e))
+      );
+  }
+
   postEmpresaCliente(
     empresaClienteDTO: EmpresaClienteDTO,
     token: string = null
@@ -146,7 +166,6 @@ export class EmpresaClienteService {
       responseType: 'text'
     };
 
-    console.log(JSON.stringify(options));
     return this.http.delete(this.baseURL, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))

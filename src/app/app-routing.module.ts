@@ -20,13 +20,14 @@ import { PerfilFuncionarioComponent } from './components/funcionario/perfil-func
 import { InspecaoComponent } from './components/inspecao/inspecao.component';
 import { ManutencaoComponent } from './components/manutencao/manutencao.component';
 import { InspecaoDetalheComponent } from './components/inspecao/inspecao-detalhe/inspecao-detalhe.component';
+import { DetalheManutencaoComponent } from './components/manutencao/detalhe-manutencao/detalhe-manutencao.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
@@ -72,6 +73,10 @@ const routes: Routes = [
       {
         path: "manutencoes",
         component: ManutencaoComponent,
+      },
+      {
+        path: "detalhe-manutencao",
+        component: DetalheManutencaoComponent,
       },
       {
         path: "perfilFuncionario",

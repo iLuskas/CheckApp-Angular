@@ -33,11 +33,11 @@
               <mat-select
                 name="ultimaRec_Insp"
                 formControlName="ultimaRec_Insp"
-                (selectionChange)="selectionChange($event.value)"
+                (selectionChange)="SelectionDtRecargaChange($event.value)"
                 required
               >
-                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
-                  {{ date }}
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -53,12 +53,11 @@
               <mat-label>Próxima Recarga</mat-label>
               <mat-select
                 name="proximoRec_Insp"
-                formControlName="proximoRec_Insp"
-                (selectionChange)="selectionChange($event.value)"
+                formControlName="proximoRec_Insp"              
                 required
               >
-                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
-                  {{ date }}
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -78,11 +77,11 @@
               <mat-select
                 name="ultimoReteste_Insp"
                 formControlName="ultimoReteste_Insp"
-                (selectionChange)="selectionChange($event.value)"
+                (selectionChange)="selectionUltRetesteChange($event.value)"
                 required
               >
-                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
-                  {{ date }}
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -102,11 +101,10 @@
               <mat-select
                 name="proximoReteste_Insp"
                 formControlName="proximoReteste_Insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
-                <mat-option *ngFor="let date of dateMonthYear" [value]="date">
-                  {{ date }}
+                <mat-option *ngFor="let date of dateMonthYear" [value]="date.date">
+                  {{ date.date }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -126,7 +124,6 @@
               <mat-select
                 name="estadoCilindro_Insp"
                 formControlName="estadoCilindro_Insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
                 <mat-option
@@ -150,7 +147,6 @@
               <mat-select
                 name="estadoLocal_Insp"
                 formControlName="estadoLocal_Insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
                 <mat-option
@@ -174,7 +170,6 @@
               <mat-select
                 name="seloLacre_insp"
                 formControlName="seloLacre_insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
                 <mat-option
@@ -197,11 +192,10 @@
               appearance="outline"
               class="input-sinalizacaoPiso_insp"
             >
-              <mat-label> Piso de Sinalização</mat-label>
+              <mat-label>Sinalização de Piso </mat-label>
               <mat-select
                 name="sinalizacaoPiso_insp"
                 formControlName="sinalizacaoPiso_insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
                 <mat-option
@@ -228,7 +222,6 @@
               <mat-select
                 name="sinalizacaoAcesso_insp"
                 formControlName="sinalizacaoAcesso_insp"
-                (selectionChange)="selectionChange($event.value)"
                 required
               >
                 <mat-option
@@ -259,7 +252,7 @@
                 cdkAutosizeMinRows="5"
                 cdkAutosizeMaxRows="50"
               ></textarea></mat-form-field
-            >|
+            >
             <mat-error *ngIf="isFieldInvalid('obs_Insp')">
               Informe a Localização
             </mat-error>

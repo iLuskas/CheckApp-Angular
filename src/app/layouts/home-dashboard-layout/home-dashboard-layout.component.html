@@ -1,0 +1,59 @@
+<div fxLayout="row wrap">
+    <div fxFlex>
+        <mat-card class="barChart-EquipInsp" ngClass.xs="mobile-layout-chart">
+            <mat-card-header fxLayoutAlign="center center">
+                <mat-card-title>Qtd. Equipamentos</mat-card-title>
+                <mat-card-subtitle>INSPECIONADOS</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="display: block" >
+                    <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                    ></canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex class="barChart-EquipInsp" ngClass.xs="mobile-layout-chart">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="center center">
+                <mat-card-title>Qtd. Equipamentos</mat-card-title>
+                <mat-card-subtitle>NÃO INSPECIONADOS</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="display: block">
+                    <canvas baseChart
+                        [datasets]="barChartDataNotInsp"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                    ></canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex>
+        <mat-card class="barChar-OcorrenciaEmp">
+            <mat-card-header fxLayoutAlign="center center">
+                <mat-card-title>Qtd. Ocorrências</mat-card-title>
+                <mat-card-subtitle>Empresas</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="display: block">
+                    <canvas baseChart
+                        [datasets]="barChartDataOcorrenciaEmp"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                    ></canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

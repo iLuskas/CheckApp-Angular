@@ -61,6 +61,11 @@ import { MatTableResponsiveModule } from './directives/mat-table-responsive/mat-
 import { QrCodeReaderComponent } from './components/qr-code-reader/qr-code-reader.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { EquipamentosReadLayoutComponent } from './components/equipamento/equipamento-read/equipamentos-read-layout/equipamentos-read-layout.component';
+import { DetalheManutencaoComponent } from './components/manutencao/detalhe-manutencao/detalhe-manutencao.component';
+import { DetalheManutencaoManutenidosComponent } from './components/manutencao/detalhe-manutencao/detalhe-manutencao-manutenidos/detalhe-manutencao-manutenidos.component';
+import { DetalheManutencaoNaomanutenidosComponent } from './components/manutencao/detalhe-manutencao/detalhe-manutencao-naomanutenidos/detalhe-manutencao-naomanutenidos.component';
+import { ManutencaoEquipamentoComponent } from './components/manutencao/detalhe-manutencao/manutencao-equipamento/manutencao-equipamento.component';
+import { ChartsModule } from 'ng2-charts';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -109,7 +114,11 @@ registerLocaleData(localePt);
     InspecaoDetalheNaoinpecionadosComponent,
     InspecaoEquipamentoComponent,
     QrCodeReaderComponent,
-    EquipamentosReadLayoutComponent
+    EquipamentosReadLayoutComponent,
+    DetalheManutencaoComponent,
+    DetalheManutencaoManutenidosComponent,
+    DetalheManutencaoNaomanutenidosComponent,
+    ManutencaoEquipamentoComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +132,8 @@ registerLocaleData(localePt);
     LayoutModule,
     QRCodeModule,
     MatTableResponsiveModule,
-    ZXingScannerModule 
+    ZXingScannerModule,
+    ChartsModule
   ],
   providers: [{
     provide: LOCALE_ID,

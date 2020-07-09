@@ -6,4 +6,6 @@ export interface ModeloAgendaInspManut {
     tipoAgendamentoId: number;
     dataInicial: string;
     statusInspManutId: number;
+    tipoManutencao: string;
+    ocorrenciaInspecao: boolean;
 }

@@ -42,6 +42,20 @@ export class EquipamentoCreateComponent implements OnInit {
   elementType: 'url' | 'canvas' | 'img' = 'url';
   isLoading: boolean;
   metodoApi: string = 'postEquipamento';
+  dateMonthYear: { id: number; date: string }[] = [];
+  tipoExtintor: {tipo: string; peso: string}[] = [
+    {tipo: "ÁGUA", peso: "LT"},
+    {tipo: "EM", peso: "LT"},
+    {tipo: "CLA K", peso: "LT"},
+    {tipo: "AMP CO2", peso: "KG"},
+    {tipo: "AMP N2", peso: "KG"},
+    {tipo: "FE36", peso: "KG"},
+    {tipo: "CO2", peso: "KG"},
+    {tipo: "PQS ABC", peso: "KG"},
+    {tipo: "PQS BC", peso: "KG"},
+    {tipo: "CLA D", peso: "KG"}
+  ];
+  pesoExtintor: string = "";
   private formSubmitAttempt: boolean;
   @ViewChild("autosize") autosize: CdkTextareaAutosize;
 
@@ -81,6 +95,7 @@ export class EquipamentoCreateComponent implements OnInit {
     this.criaFormCreateTipoEquipamento();
     this.getAllTipoEquipamento();
     this.getAllEmpresa();
+    this.createDropdownMonthYear();
   }
 
   triggerResize() {
@@ -147,11 +162,11 @@ export class EquipamentoCreateComponent implements OnInit {
       id: [null],
       equipamentoId: [null],
       num_ext: [null, Validators.compose([Validators.required, Validators.pattern("^[0-9]*$")])],
-      seloInmetro_ext: ['', Validators.compose([Validators.required, Validators.maxLength(14)])],
+      seloInmetro_ext: ['', Validators.compose([Validators.required, Validators.maxLength(14), Validators.pattern("^[0-9]*$")])],
       fabricante_ext: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       tipo_ext: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       capacidade_ext: [null, Validators.compose([Validators.required, Validators.pattern("^[0-9]*$")])],
-      anoFabricacao_ext: ['', Validators.compose([Validators.required, Validators.maxLength(4)])],
+      anoFabricacao_ext: ['', Validators.compose([Validators.required, Validators.maxLength(4), Validators.pattern("^[0-9]*$")])],
     });
   }
 
@@ -289,6 +304,43 @@ export class EquipamentoCreateComponent implements OnInit {
   getNomenclaturaQrCode(): string {
     const formGroup = this.formCreate.get("extintorDTO") as FormGroup;
     return `QrCode_${formGroup.controls['num_ext'].value}`
+  }
+
+  createDropdownMonthYear(): void {
+    var date = new Date();
+    let id: number = 0;
+    var currentYear = date.getFullYear();
+    var months;
+    months = [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ];
+
+    for (var i = 0; i <= 5; i++) {
+      for (const key in months) {
+        if (months.hasOwnProperty(key)) {
+          const element = months[key];
+          this.dateMonthYear.push({
+            id: id++,
+            date: `${element}-${(currentYear + i).toString().substring(2, 4)}`,
+          });
+        }
+      }
+    }
+  }
+
+  SelectionTipoChange(value) : void {
+    this.pesoExtintor = this.tipoExtintor.find(tipo => tipo.tipo === value).peso;   
   }
 
   limparForm(stepper: any = null) {

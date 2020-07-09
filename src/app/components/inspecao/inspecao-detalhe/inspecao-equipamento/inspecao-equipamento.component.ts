@@ -21,7 +21,7 @@ export class InspecaoEquipamentoComponent implements OnInit {
   formInspecao: FormGroup;
   inspecao: InspecaoDTO;
   date = new FormControl(new Date());
-  dateMonthYear: any[] = [];
+  dateMonthYear: { id: number; date: string }[] = [];
   agendamentoSeleted: any;
   usuarioAtual: any;
   precisaManutencao: boolean;
@@ -60,7 +60,6 @@ export class InspecaoEquipamentoComponent implements OnInit {
 
   montaInfoInspecao() {
     this.metodoApi = "putInspecao";
-    console.log(this.data.inspecao);
     this.formInspecao = this.fb.group({
       id: [this.data.inspecao.id],
       statusInspManutId: [this.data.inspecao.statusInspManutId],
@@ -187,11 +186,25 @@ export class InspecaoEquipamentoComponent implements OnInit {
     );
   }
 
-  selectionChange(event): void {}
+  SelectionDtRecargaChange(event): void {
+    const MESES_EM_1_ANOS = 12;
+    var index = this.dateMonthYear.find((data) => data.date === event).id;
+    this.formInspecao.controls.proximoRec_Insp.setValue(
+      this.dateMonthYear[index + MESES_EM_1_ANOS].date
+    );
+  }
+
+  selectionUltRetesteChange(event) : void {
+    const MESES_EM_5_ANOS = 60;
+    var index = this.dateMonthYear.find((data) => data.date === event).id;
+    this.formInspecao.controls.proximoReteste_Insp.setValue(
+      this.dateMonthYear[index + MESES_EM_5_ANOS].date
+    );
+  }
 
   createDropdownMonthYear(): void {
-    var controlForMothnYear = true;
     var date = new Date();
+    let id: number = 0;
     var currentYear = date.getFullYear();
     var months;
     months = [
@@ -209,24 +222,14 @@ export class InspecaoEquipamentoComponent implements OnInit {
       "Dez",
     ];
 
-    for (var i = 1; i == 1; i++) {
+    for (var i = 0; i <= 5; i++) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {
           const element = months[key];
-          this.dateMonthYear.push(
-            `${element}-${(currentYear + i).toString().substring(2, 4)}`
-          );
-        }
-      }
-    }
-
-    for (var i = 0; i <= 1; i++) {
-      for (const key in months) {
-        if (months.hasOwnProperty(key)) {
-          const element = months[key];
-          this.dateMonthYear.push(
-            `${element}-${(currentYear - i).toString().substring(2, 4)}`
-          );
+          this.dateMonthYear.push({
+            id: id++,
+            date: `${element}-${(currentYear + i).toString().substring(2, 4)}`,
+          });
         }
       }
     }
@@ -242,7 +245,6 @@ export class InspecaoEquipamentoComponent implements OnInit {
 
     if (event.target.files && event.target.files.length) {
       this.file = event.target.files;
-      console.log(this.file);
       
       this.formInspecao.controls.imagemOcorrencia.setValue(this.file[0].name);
     }

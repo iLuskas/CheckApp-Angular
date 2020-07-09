@@ -16,10 +16,6 @@ button {
     width: calc(100% - 20px - 2em);
 }
 
-.input-TipoEquipamento {
-    width: calc(100% - 20px - 2em);
-}
-
 .check-margin {
     margin: 0 10px;
   }

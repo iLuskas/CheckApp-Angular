@@ -52,20 +52,29 @@ button {
 
 .container-fields-extintor-mobile {
     height: 60vh !important;
-}
-
-.div-form-fields {
-    height: 50px;
+    margin-top: 15px;
 }
 
 .iconAnoFabricao-size {
     font-size: 1em;
 }
 
+.input-tipo_ext{
+    width: 10vmax;
+}
+
 .form-part2-mobile-layout {
-    margin-top: 10px;
+    margin-top: 70px;
 }
 
 .localizacao-field-mobile {
     width: 60vw !important;
+}
+
+::ng-deep .mat-tooltip  {
+    white-space: pre-line    !important;
+}
+
+.input-num_ext-mobile{
+    margin-top: 15px;
 }

@@ -45,6 +45,11 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
   isLoading: boolean;
   pesquisouAgenda: boolean;
   metodoApi: string = 'postAgendamento';
+  TipoManutencao: {tipo:string}[] = [
+    {tipo: "1º NIVEL"},
+    {tipo:"2º NIVEL (ANUAL - RECARGA)"},
+    {tipo:"3º NIVEL (A CADA 5 ANOS - RETESTE)"}
+  ];
   private formSubmitAttempt: boolean;
 
   private _filter(value: string): FuncionarioDTO[] {
@@ -97,8 +102,10 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       nomeFuncionario: ['', Validators.compose([Validators.required])],
       empresa: ['', Validators.compose([Validators.required])],
       tipoEquipamento: new FormControl('', Validators.compose([Validators.required])),
-      tipoAgendamento: new FormControl('', Validators.compose([Validators.required])),
-      statusInspManut: new FormControl(''),
+      tipoAgendamento: ['', Validators.compose([Validators.required])],
+      statusInspManut: [''],
+      tipoManutencao: [''],
+      ocorrenciaInspecao: [false],
       dataInicial: [this.date.value, Validators.compose([Validators.required])],
       dataFinal: [''],
       duracao: [''],
@@ -115,7 +122,9 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
         tipoAgendamentoId: 0,
         dataInicial: '',
         statusInspManutId: 1,
-        tipoEquipamentoId: 0
+        tipoEquipamentoId: 0,
+        ocorrenciaInspecao: false,
+        tipoManutencao: ''
       };    
 
     this.getAllFuncionario();
@@ -211,10 +220,9 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.modeloAgendamento.funcionarioId = funcionario.id;
   }
 
-  statusSelecionado(status: StatusAgendaDTO): void {
-    this.tipoStatus = status;
-    this.modeloAgendamento.statusInspManutId
-     = status.id;
+  statusSelecionado(status: any): void {
+    this.tipoStatus = this.tiposStatus.find(stt => stt.statusAgenda === status);
+    this.modeloAgendamento.statusInspManutId = this.tipoStatus.id;
   }
 
   tipoEquipamentoSelecionado(tipoEquipamento: TipoEquipamentoDTO): void {
@@ -222,9 +230,9 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.modeloAgendamento.tipoEquipamentoId = tipoEquipamento.id;
   }
 
-  tipoAgendamentoSelecionado(tipoAgendamento: TipoAgendamentoDTO): void {
-    this.tipoAgendamento = tipoAgendamento;
-    this.modeloAgendamento.tipoAgendamentoId = tipoAgendamento.id;
+  tipoAgendamentoSelecionado(tipoAgendamento: any): void {
+    this.tipoAgendamento = this.tiposAgendamentos.find(agenda => agenda.tipoAgenda === tipoAgendamento);
+    this.modeloAgendamento.tipoAgendamentoId = this.tipoAgendamento.id;
   }
 
 
@@ -239,6 +247,8 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
       this.modeloAgendamento.tipoAgendamentoId = this.tipoAgendamento.id;
       this.modeloAgendamento.tipoEquipamentoId = this.tipoEquipamento.id;
     }
+    this.modeloAgendamento.tipoManutencao = this.formAgenda.controls.tipoManutencao.value;
+    this.modeloAgendamento.ocorrenciaInspecao = this.formAgenda.controls.ocorrenciaInspecao.value;
 
     this.agendamentoService[this.metodoApi](this.modeloAgendamento).subscribe(
       () => {
@@ -259,7 +269,7 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
     this.formAgenda.patchValue(agendamento);
     this.formAgenda.controls.tipoAgendamento.setValue(this.tiposAgendamentos.find(tipoAgenda => tipoAgenda.tipoAgenda.match(this.formAgenda.controls.tipoAgendamento.value)).tipoAgenda);
     this.formAgenda.controls.tipoEquipamento.setValue(this.tiposEquipamentos.find(tipoEquip => tipoEquip.tipo.match(this.formAgenda.controls.tipoEquipamento.value)).tipo);
-    this.formAgenda.controls.statusInspManut.setValue(this.tiposStatus.find(status => status.statusAgenda.match(this.formAgenda.controls.statusInspManut.value)));
+    this.formAgenda.controls.statusInspManut.setValue(this.tiposStatus.find(status => status.statusAgenda.match(this.formAgenda.controls.statusInspManut.value)).statusAgenda);
     this.tipoAgendamento = this.tiposAgendamentos.find(tipoAgenda => tipoAgenda.tipoAgenda.match(this.formAgenda.controls.tipoAgendamento.value));
     this.tipoEquipamento = this.tiposEquipamentos.find(tipoEquip => tipoEquip.tipo.match(this.formAgenda.controls.tipoEquipamento.value));
     this.tipoStatus = this.tiposStatus.find(status => status.statusAgenda.match(this.formAgenda.controls.statusInspManut.value));

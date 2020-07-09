@@ -1,1 +1,63 @@
-<p>manutencao works!</p>
+<div>
+    <mat-card class="home">
+      <mat-card-title class="title" fxLayoutAlign="center center"
+        >Manutenção</mat-card-title
+      >
+      <mat-card-subtitle class="subtitle" fxLayoutAlign="center center"
+        >Contém todas as manutenções agendadas.</mat-card-subtitle
+      >
+      <mat-card-content>
+        <div fxLayout="column">
+          <div fxFlex *ngIf="!agendamentos" fxLayoutAlign="center center">
+            <h2>Não há manutenções em seu nome.</h2>
+          </div>
+          <div fxFlex>
+            <mat-card
+              *ngFor="let agenda of agendamentos"
+              class="cards-agendamentos cards mat-elevation-z4"
+            >
+              <div fxLayout="row wrap" fxLayout.xs="column">
+                <div fxFlex="16" fxFlex.xs="100" class="container-img" ngClass.xs="container-img-mobile">
+                  <img
+                    [src]="
+                      agenda.imagemUrl
+                        ? 'data:image/png;base64,' + agenda.imagemUrl
+                        : '../../../assets/img/no-image.png'
+                    "
+                    class="img-card"
+                    ngClass.xs="img-card-mobile"
+                    alt="Imagem Empresa"
+                  />
+                </div>
+                <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
+                  <div fxFlex="60">
+                    <p>Empresa: {{ agenda.empresa }}</p>
+                    <p>Inspetor: {{ agenda.nomeFunc }}</p>
+                    <p>Data Início: {{ agenda.data | date: "dd/MM/yyyy" }}</p>
+                    <p>Equipamento: {{ agenda.tipoEquip }}</p>
+                    <p>Ocorrência Inspeção: {{agenda.ocorrenciaInsp ? 'NÃO' : 'SIM'}}</p>
+                  </div>
+                  <div fxFlex>
+                    <p>Número do Agendamento: {{ agenda.ageId }}</p>
+                    <p>Status: {{ agenda.statusAgenda }}</p>
+                    <p>Total Manutenidos: {{ agenda.qtdManut }}</p>
+                    <p>Total Não Manutenidos: {{ agenda.qtdNotManut }}</p>
+                    <p>Tipo Manutenção: {{agenda.tipoManut}}</p>
+                  </div>
+                </div>
+              </div>
+              <mat-card-actions align="end">
+                  <button mat-raised-button color="primary" (click)="ContinuarManut(agenda)" *ngIf="agenda.statusAgenda === 'Em Andamento'">
+                    Continuar Manutenção 
+                  </button>
+                  <button mat-raised-button color="primary" (click)="iniciarManut(agenda)" *ngIf="agenda.statusAgenda === 'Pendente'">
+                    Iniciar Manutenção
+                  </button>
+                </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

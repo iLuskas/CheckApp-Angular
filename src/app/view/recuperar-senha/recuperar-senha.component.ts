@@ -73,7 +73,6 @@ export class RecuperarSenhaComponent implements OnInit {
     this.usuarioService.RecuperarSenhaUsuario(email).subscribe((response) => {
       if(response){
         this.usuarioService.showMessage("E-mail Enviado com sucesso!");
-        console.log(response);
         this.isLoading = !this.isLoading;
         this.EmailEnviado = !this.EmailEnviado;
       }
@@ -90,7 +89,6 @@ export class RecuperarSenhaComponent implements OnInit {
       email: this.formAlteraSenha.controls.email.value,
       senha: this.formAlteraSenha.controls.senha.value
     }
-    console.log("asdasdas",modelo)
     this.usuarioService.AlterarSenha(modelo, this.token).subscribe((response) => {
       if(response){
         this.usuarioService.showMessage("Senha alterada com sucesso!");

@@ -144,7 +144,6 @@ export class EquipamentoReadComponent implements OnInit {
     this.equipamentoService
       .getAllEquipamento()
       .subscribe((equipamentos: EquipamentoSegurancaDTO[]) => {
-        console.log(equipamentos);
         this.equipamentos = equipamentos;
         equipamentos.forEach(equip =>
           this.equipFormatado.push({

@@ -141,6 +141,46 @@ export class EquipamentoSegurancaService {
       );
   }
 
+  getRelatEquipNotInsp(
+    token: string = null
+  ): Observable<any> {
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token
+    //   })
+    // };
+
+    return this.http
+      .get<any>(
+        `${this.baseURL}/getRelatEquipNotInsp`
+      )
+      .pipe(
+        map((obj) => obj),
+        catchError((e) => this.erroHandler(e))
+      );
+  }
+
+  getRelatEquipInsp(
+    token: string = null
+  ): Observable<any> {
+    // const options = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token
+    //   })
+    // };
+
+    return this.http
+      .get<any>(
+        `${this.baseURL}/getRelatEquipInsp`
+      )
+      .pipe(
+        map((obj) => obj),
+        catchError((e) => this.erroHandler(e))
+      );
+  }
+
   postEquipamento(
     equipamentoSegurancaDTO: EquipamentoSegurancaDTO,
     token: string = null
@@ -196,7 +236,6 @@ export class EquipamentoSegurancaService {
       responseType: 'text'
     };
 
-    console.log(JSON.stringify(options));
     return this.http.delete(this.baseURL, options).pipe(
       map((obj) => obj),
       catchError((e) => this.erroHandler(e))
