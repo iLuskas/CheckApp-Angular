@@ -57,7 +57,7 @@ export class ManutencaoComponent implements OnInit {
         agendamento.statusAgenda = "Em Andamento";
         localStorage.setItem("AgendaSeleted", JSON.stringify(agendamento));
         this.router.navigate(["/detalhe-manutencao"], { relativeTo: this.route });
-        this.agendamentoService.showMessage('Inspeção Em Andamento.');
+        this.agendamentoService.showMessage('Manutenção Em Andamento.');
       }
     );
   } 
