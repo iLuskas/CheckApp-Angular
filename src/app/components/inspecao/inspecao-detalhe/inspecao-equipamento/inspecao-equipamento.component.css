@@ -2,3 +2,32 @@
     width: 40vmax;
 }
 
+.section-manutencao {
+    margin: 20px;
+}
+
+.container-anexaImg {
+    align-items: center;
+    justify-content: center;
+}
+
+.lblManutencao-invalida {
+    font-size: 0.8em;
+}
+
+.lblManutencao-valida {
+    font-size: 0.8em;
+}
+
+@keyframes btnIcon-Alert {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0; }
+}
+.btnIcon-Alert {
+  -webkit-animation: btnIcon-Alert .75s linear infinite;
+  -moz-animation: btnIcon-Alert .75s linear infinite;
+  -ms-animation: btnIcon-Alert .75s linear infinite;
+  -o-animation: btnIcon-Alert .75s linear infinite;
+  animation: btnIcon-Alert .75s linear infinite;
+}

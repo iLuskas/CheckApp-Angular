@@ -27,6 +27,9 @@ button {
 .input-pesquisar {
     width: calc(100% - 5px - 2em);
 }
+.section-ocorrencia {
+    margin: 10px
+}
 
 
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}

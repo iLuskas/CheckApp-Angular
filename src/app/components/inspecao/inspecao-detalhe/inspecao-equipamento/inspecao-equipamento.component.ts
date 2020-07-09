@@ -126,6 +126,7 @@ export class InspecaoEquipamentoComponent implements OnInit {
   }
 
   createFormInpecao(): void {
+    console.log(this.data.equip.ultManutencao);
     this.formInspecao = this.fb.group({
       id: [""],
       statusInspManutId: [3],
@@ -133,10 +134,10 @@ export class InspecaoEquipamentoComponent implements OnInit {
       empresaClienteId: [this.agendamentoSeleted.empId],
       agendaInspManutId: [this.agendamentoSeleted.ageId],
       equipamentoSegurancaId: [this.data.equip.equipamentoId],
-      ultimaRec_Insp: ["", Validators.compose([Validators.required])],
-      proximoRec_Insp: ["", Validators.compose([Validators.required])],
-      ultimoReteste_Insp: ["", Validators.compose([Validators.required])],
-      proximoReteste_Insp: ["", Validators.compose([Validators.required])],
+      ultimaRec_Insp: [this.data.equip.ultManutencao ? this.data.equip.ultManutencao.dataRecarga : "", Validators.compose([Validators.required])],
+      proximoRec_Insp: [this.data.equip.ultManutencao ? this.data.equip.ultManutencao.dataProximaRecarga : "", Validators.compose([Validators.required])],
+      ultimoReteste_Insp: [this.data.equip.ultManutencao ? this.data.equip.ultManutencao.ultimoTeste : "", Validators.compose([Validators.required])],
+      proximoReteste_Insp: [this.data.equip.ultManutencao ? this.data.equip.ultManutencao.dataReteste : "", Validators.compose([Validators.required])],
       estadoCilindro_Insp: ["", Validators.compose([Validators.required])],
       estadoLocal_Insp: ["", Validators.compose([Validators.required])],
       seloLacre_insp: ["", Validators.compose([Validators.required])],
@@ -221,6 +222,18 @@ export class InspecaoEquipamentoComponent implements OnInit {
       "Nov",
       "Dez",
     ];
+
+    for (var i = 5; i >= 0; i--) {
+      for (const key in months) {
+        if (months.hasOwnProperty(key)) {
+          const element = months[key];
+          this.dateMonthYear.push({
+            id: id++,
+            date: `${element}-${(currentYear - i).toString().substring(2, 4)}`,
+          });
+        }
+      }
+    }
 
     for (var i = 0; i <= 5; i++) {
       for (const key in months) {

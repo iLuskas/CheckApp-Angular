@@ -1,13 +1,18 @@
 .barChart-EquipInsp {
     width: 35vmax;
-    margin-top: 20px;
+    margin: 20px;
 }
 
 .barChar-OcorrenciaEmp {
     width: 60vmax;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .mobile-layout-chart {
     width: 450px !important;
+}
+
+.barChart-EquipNotInsp {
+    width: 35vmax;
+    margin-top: 20px;
 }

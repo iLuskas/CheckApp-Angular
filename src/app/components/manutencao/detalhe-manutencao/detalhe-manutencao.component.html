@@ -1,115 +1,147 @@
 <div>
-    <mat-card>
-      <mat-card-content>
-        <div fxLayout="column">
-          <mat-card class="cards-agendamentos cards mat-elevation-z4" *ngIf="!agendamentoId">
-            <mat-card-content>
-              <div fxLayout="row wrap" fxLayout.xs="column">
-                <div
-                  fxFlex="16"
-                  class="container-img"
-                  ngClass.xs="container-img-mobile"
-                >
-                  <img
-                    [src]="
-                      agendamentoSeleted.imagemUrl
-                        ? 'data:image/png;base64,' + agendamentoSeleted.imagemUrl
-                        : '../../../../assets/img/no-image.png'
-                    "
-                    class="img-card"
-                    ngClass.xs="img-card-mobile"
-                    alt="Imagem Empresa"
-                  />
-                </div>
-                <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
-                  <div fxFlex="60">
-                    <p>Empresa: {{ agendamentoSeleted.empresa }}</p>
-                    <p>Inspetor: {{ agendamentoSeleted.nomeFunc }}</p>
-                    <p>
-                      Data Início:
-                      {{ agendamentoSeleted.data | date: "dd/MM/yyyy" }}
-                    </p>
-                    <p>Equipamento: {{ agendamentoSeleted.tipoEquip }}</p>
-                    <p>Ocorrência Inspeção: {{agendamentoSeleted.ocorrenciaInsp ? 'NÃO' : 'SIM'}}</p>
-                  </div>
-                  <div fxFlex>
-                    <p>Número do Agendamento: {{ agendamentoSeleted.ageId }}</p>
-                    <p>Status: {{ agendamentoSeleted.statusAgenda }}</p>
-                    <p>Total Manutenidos: {{ agendamentoSeleted.qtdManut }}</p>
-                    <p>Total Não Manutenidos: {{ agendamentoSeleted.qtdNotManut }} </p>
-                    <p>Tipo Manutenção: {{agendamentoSeleted.tipoManut}}</p>
-                    <button
-                      mat-raised-button
-                      color="warn"
-                      (click)="finalizarAgendamento()"
-                      [disabled]="isLoading"
-                      *ngIf="isFinishInspetion"
-                    >
-                      <mat-progress-bar
-                        *ngIf="isLoading"
-                        mode="indeterminate"
-                      ></mat-progress-bar>
-                      Finalizar Inspeção
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </mat-card-content>
-            <mat-card-actions *ngIf="false">
-              <button
-                mat-raised-button
-                color="warn"
-                (click)="finalizarAgendamento()"
-                [disabled]="isLoading"
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="column">
+        <mat-card
+          class="cards-agendamentos cards mat-elevation-z4"
+          *ngIf="!agendamentoId"
+        >
+          <mat-card-content>
+            <div fxLayout="row wrap" fxLayout.xs="column">
+              <div
+                fxFlex="16"
+                class="container-img"
+                ngClass.xs="container-img-mobile"
               >
-                <mat-progress-bar
-                  *ngIf="isLoading"
-                  mode="indeterminate"
-                ></mat-progress-bar>
-                Finalizar Manutenção
-              </button>
-            </mat-card-actions>
-          </mat-card>
-          <div fxLayout="column">
-            <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
-              <span class="spacer-flex-right-left"></span>
-              <div fxFlex fxLayoutAlign="center center">
-                <h2>Equipamentos</h2>
+                <img
+                  [src]="
+                    agendamentoSeleted.imagemUrl
+                      ? 'data:image/png;base64,' + agendamentoSeleted.imagemUrl
+                      : '../../../../assets/img/no-image.png'
+                  "
+                  class="img-card"
+                  ngClass.xs="img-card-mobile"
+                  alt="Imagem Empresa"
+                />
               </div>
-              
-              <div fxFlex dir="rtl"> 
-                <button
+              <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
+                <div fxFlex="60">
+                  <p>
+                    <span class="titulo-card">Empresa:</span>
+                    {{ agendamentoSeleted.empresa }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Inspetor:</span>
+                    {{ agendamentoSeleted.nomeFunc }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Data Início:</span>
+                    {{ agendamentoSeleted.data | date: "dd/MM/yyyy" }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Equipamento:</span>
+                    {{ agendamentoSeleted.tipoEquip }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Ocorrência Inspeção:</span>
+                    {{ agendamentoSeleted.ocorrenciaInsp ? "NÃO" : "SIM" }}
+                  </p>
+                </div>
+                <div fxFlex>
+                  <p>
+                    <span class="titulo-card">Número do Agendamento:</span>
+                    {{ agendamentoSeleted.ageId }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Status:</span>
+                    {{ agendamentoSeleted.statusAgenda }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Total Manutenidos:</span>
+                    {{ agendamentoSeleted.qtdManut }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Total Não Manutenidos:</span>
+                    {{ agendamentoSeleted.qtdNotManut }}
+                  </p>
+                  <p>
+                    <span class="titulo-card">Tipo Manutenção:</span>
+                    {{ agendamentoSeleted.tipoManut }}
+                  </p>
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="finalizarAgendamento()"
+                    [disabled]="isLoading"
+                    *ngIf="isFinishInspetion"
+                  >
+                    <mat-progress-bar
+                      *ngIf="isLoading"
+                      mode="indeterminate"
+                    ></mat-progress-bar>
+                    Finalizar Inspeção
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions *ngIf="false">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="finalizarAgendamento()"
+              [disabled]="isLoading"
+            >
+              <mat-progress-bar
+                *ngIf="isLoading"
+                mode="indeterminate"
+              ></mat-progress-bar>
+              Finalizar Manutenção
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <div fxLayout="column">
+          <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
+            <span class="spacer-flex-right-left"></span>
+            <div fxFlex fxLayoutAlign="center center">
+              <h2>Equipamentos</h2>
+            </div>
+
+            <div fxFlex dir="rtl">
+              <button
                 mat-raised-button
                 color="primary"
                 (click)="openDialog()"
                 matTooltip="QrCode Scanner"
-              >              
+              >
                 QrCode
                 <mat-icon>qr_code_scanner</mat-icon>
               </button>
-              </div>            
-            </div>
-            <div fxFlex>
-              <mat-tab-group>
-                <mat-tab>
-                  <ng-template mat-tab-label>
-                    MANUTENIDOS
-                  </ng-template>
-                  <app-detalhe-manutencao-manutenidos #insp [agendamentoId]="agendamentoId"
-                  ></app-detalhe-manutencao-manutenidos>
-                </mat-tab>
-                <mat-tab>
-                  <ng-template mat-tab-label>
-                    NÃO MANUTENIDOS
-                  </ng-template>
-                  <app-detalhe-manutencao-naomanutenidos [agendamentoIdNotInsp]="insp.agendamentoId"
-                  ></app-detalhe-manutencao-naomanutenidos>
-                </mat-tab>
-              </mat-tab-group>
             </div>
           </div>
+          <div fxFlex>
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  MANUTENIDOS
+                </ng-template>
+                <app-detalhe-manutencao-manutenidos
+                  #insp
+                  [agendamentoId]="agendamentoId"
+                ></app-detalhe-manutencao-manutenidos>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  NÃO MANUTENIDOS
+                </ng-template>
+                <app-detalhe-manutencao-naomanutenidos
+                  [agendamentoIdNotInsp]="insp.agendamentoId"
+                ></app-detalhe-manutencao-naomanutenidos>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

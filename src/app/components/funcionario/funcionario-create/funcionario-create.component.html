@@ -33,7 +33,7 @@
                   </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="isFieldInvalid('nome')">
-                  Por favor, Informe a Nome.
+                  Por favor, Informe o Nome.
                 </mat-error>
                 <mat-error *ngIf="hasError('nome', 'maxlength')">
                   O máximo de caracteres é 255
@@ -72,7 +72,7 @@
                   formControlName="email"
                 />
                 <mat-error *ngIf="isFieldInvalid('email')">
-                  Por favor, Informe a Email.
+                  Por favor, Informe o Email.
                 </mat-error>
                 <mat-error *ngIf="hasError('email', 'maxlength')">
                   O máximo de caracteres é 50

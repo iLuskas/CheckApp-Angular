@@ -293,6 +293,18 @@ export class ManutencaoEquipamentoComponent implements OnInit {
       "Dez",
     ];
 
+    for (var i = 5; i >= 0; i--) {
+      for (const key in months) {
+        if (months.hasOwnProperty(key)) {
+          const element = months[key];
+          this.dateMonthYear.push({
+            id: id++,
+            date: `${element}-${(currentYear - i).toString().substring(2, 4)}`,
+          });
+        }
+      }
+    }
+
     for (var i = 0; i <= 5; i++) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {

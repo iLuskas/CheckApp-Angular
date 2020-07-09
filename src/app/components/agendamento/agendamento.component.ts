@@ -237,6 +237,11 @@ export class AgendamentoComponent implements OnInit, AfterContentInit {
 
 
   agendar() : void {
+   console.log(this.formAgenda.controls.dataInicial.value < this.date.value);
+    if(this.formAgenda.controls.dataInicial.value < this.date.value) {
+      this.agendamentoService.showMessage("A data precisa ser maior ou igual a data de hoje.", true);
+      return;
+    }
     this.isLoading = !this.isLoading;
     this.modeloAgendamento.dataInicial = this.transformDate(this.formAgenda.controls.dataInicial.value);    
     if(this.pesquisouAgenda) {

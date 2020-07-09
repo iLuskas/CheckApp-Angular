@@ -20,3 +20,7 @@ p {
 .container-img-mobile {
     border: none;
 } 
+
+.titulo-card {
+    font-weight: 500;
+}

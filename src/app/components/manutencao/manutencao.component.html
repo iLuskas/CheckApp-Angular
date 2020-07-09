@@ -31,18 +31,18 @@
                 </div>
                 <div fxFlex fxLayout="row wrap" fxLayout.xs="column">
                   <div fxFlex="60">
-                    <p>Empresa: {{ agenda.empresa }}</p>
-                    <p>Inspetor: {{ agenda.nomeFunc }}</p>
-                    <p>Data Início: {{ agenda.data | date: "dd/MM/yyyy" }}</p>
-                    <p>Equipamento: {{ agenda.tipoEquip }}</p>
-                    <p>Ocorrência Inspeção: {{agenda.ocorrenciaInsp ? 'NÃO' : 'SIM'}}</p>
+                    <p><span class="titulo-card">Empresa:</span> {{ agenda.empresa }}</p>
+                    <p><span class="titulo-card">Inspetor:</span> {{ agenda.nomeFunc }}</p>
+                    <p><span class="titulo-card">Data Início:</span> {{ agenda.data | date: "dd/MM/yyyy" }}</p>
+                    <p><span class="titulo-card">Equipamento:</span> {{ agenda.tipoEquip }}</p>
+                    <p><span class="titulo-card">Ocorrência Inspeção:</span> {{agenda.ocorrenciaInsp === true ? 'SIM' : 'NÃO'}}</p>
                   </div>
                   <div fxFlex>
-                    <p>Número do Agendamento: {{ agenda.ageId }}</p>
-                    <p>Status: {{ agenda.statusAgenda }}</p>
-                    <p>Total Manutenidos: {{ agenda.qtdManut }}</p>
-                    <p>Total Não Manutenidos: {{ agenda.qtdNotManut }}</p>
-                    <p>Tipo Manutenção: {{agenda.tipoManut}}</p>
+                    <p><span class="titulo-card">Número do Agendamento:</span> {{ agenda.ageId }}</p>
+                    <p><span class="titulo-card">Status:</span> {{ agenda.statusAgenda }}</p>
+                    <p><span class="titulo-card">Total Manutenidos:</span> {{ agenda.qtdManut }}</p>
+                    <p><span class="titulo-card">Total Não Manutenidos:</span> {{ agenda.qtdNotManut }}</p>
+                    <p><span class="titulo-card">Tipo Manutenção:</span> {{agenda.tipoManut}}</p>
                   </div>
                 </div>
               </div>
