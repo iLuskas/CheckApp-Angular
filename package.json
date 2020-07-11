@@ -29,6 +29,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "ng2-charts": "^2.3.2",
+    "ngx-mask": "^9.1.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.13.0",
     "typescript": "~3.8.3",

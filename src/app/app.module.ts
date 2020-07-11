@@ -66,7 +66,9 @@ import { DetalheManutencaoManutenidosComponent } from './components/manutencao/d
 import { DetalheManutencaoNaomanutenidosComponent } from './components/manutencao/detalhe-manutencao/detalhe-manutencao-naomanutenidos/detalhe-manutencao-naomanutenidos.component';
 import { ManutencaoEquipamentoComponent } from './components/manutencao/detalhe-manutencao/manutencao-equipamento/manutencao-equipamento.component';
 import { ChartsModule } from 'ng2-charts';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 registerLocaleData(localePt);
+
 
 @NgModule({
   declarations: [
@@ -133,7 +135,8 @@ registerLocaleData(localePt);
     QRCodeModule,
     MatTableResponsiveModule,
     ZXingScannerModule,
-    ChartsModule
+    ChartsModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [{
     provide: LOCALE_ID,
