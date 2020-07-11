@@ -223,7 +223,7 @@ export class InspecaoEquipamentoComponent implements OnInit {
       "Dez",
     ];
 
-    for (var i = 5; i >= 0; i--) {
+    for (var i = 5; i >= 1; i--) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {
           const element = months[key];

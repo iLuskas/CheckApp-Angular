@@ -244,7 +244,7 @@ export class ManutencaoEquipamentoComponent implements OnInit {
 
   SelectionDtRecargaChange(event) : void {
     const MESES_EM_1_ANOS = 12;
-    var index = this.dateMonthYear.find((data) => data.date === event).id;
+    var index = this.dateMonthYear.find((data) => data.date === event).id;   
     this.formManutencao.controls.dataProximaRecarga.setValue(
       this.dateMonthYear[index + MESES_EM_1_ANOS].date
     );
@@ -293,7 +293,7 @@ export class ManutencaoEquipamentoComponent implements OnInit {
       "Dez",
     ];
 
-    for (var i = 5; i >= 0; i--) {
+    for (var i = 5; i >= 1; i--) {
       for (const key in months) {
         if (months.hasOwnProperty(key)) {
           const element = months[key];
