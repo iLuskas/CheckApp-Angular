@@ -26,7 +26,7 @@
     "@zxing/ngx-scanner": "^3.0.0",
     "angularx-qrcode": "^2.3.4",
     "chart.js": "^2.9.4",
-    "express": "^4.17.3",
+    "express": "^4.21.0",
     "file-saver": "^2.0.2",
     "ng2-charts": "^2.3.2",
     "ngx-mask": "^9.1.2",
